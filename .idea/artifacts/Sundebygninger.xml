@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="Sundebygninger">
+    <output-path>$PROJECT_DIR$/out/artifacts/sundebygninger</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="sundebygninger" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="mysql:mysql-connector-java:6.0.4" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="sundebygninger/web/Web" />
+    </root>
+  </artifact>
+</component>
