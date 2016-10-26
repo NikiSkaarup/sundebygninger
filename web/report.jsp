@@ -64,7 +64,7 @@
                                 </div>
 
                                 <div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         Hvornår?   
                                         <div class='input-group date' id='datetimepicker1'>
                                             <input type='text' class="form-control" />
@@ -73,7 +73,7 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-md-6">
                                         Hvor?   
                                         <div class='input-group date' id='location'>
                                             <input type='text' class="form-control" />
