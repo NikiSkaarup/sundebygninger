@@ -15,69 +15,63 @@
     <body>
         <%@include file="navigation.jsp"  %>
         <div class="container-fluid">
-            
+
             <h1>Add building</h1>
             <div class="row">
                 <div class="col-md-6"> 
-                    <form action="action" class="form-horizontal">
+                    <form action="buildingController.jsp" method="POST" class="form-horizontal">
                         <div class="form-group">
                             <label class="col-md-3 control-label">Navn på bygning</label>
                             <div class="col-md-9">
-                                <input class="form-control" type="text"  value="Navn på bygning"/> 
+                                <input class="form-control" type="text"  placeholder="Navn på bygning" name="Name"/> 
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-md-3 control-label">Adresse</label>
                             <div class="col-md-9">
-                                <input class="form-control" type="text" value="Adresse"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Postnummer</label>
-                            <div class="col-md-9">
-                                <input class="form-control" type="text" value="Postnummer"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">By</label>
-                            <div class="col-md-9">
-                                <input class="form-control" type="text" value="By"/>
+                                <input class="form-control" type="text" placeholder="Adresse" name="Address"/>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-md-3 control-label">Billeder af hus eller bygning</label>
                             <div class="col-md-9">
-                                <input type="file"/>
+                                <input type="file" name="image"/>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-md-3 control-label">Byggeår</label>
                             <div class="col-md-9">
-                                <input class="form-control" type="text" value="Byggeår"/>
+                                <input class="form-control" type="text" placeholder="Byggeår" name="ConstructionYear"/>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-md-3 control-label">Bygningsareal i m2</label>
                             <div class="col-md-9">
-                                <input class="form-control" type="text" value="Bygningsareal i m2"/>
+                                <input class="form-control" type="text" placeholder="Bygningsareal i m2" name="Area"/>
                                 <label>(Hver etage tælles seperat)</label>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Benyttelse</label>
+                            <label class="col-md-3 control-label">Nuværende benyttelse</label>
                             <div class="col-md-9">
-                                <input class="form-control" type="text" value="Benyttelse"/>
-                                <label>(Hvad bruges bygningen til? / Hvad har bygningen været brugt til?)</label>
+                                <input class="form-control" type="text" placeholder="Nuværende enyttelse" name="CurrentUse"/>
+                                <label>(Hvad bruges bygningen til?)</label>
                             </div>
                         </div>
 
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Tidligere benyttelse</label>
+                            <div class="col-md-9">
+                                <input class="form-control" type="text" placeholder="tidligere benyttelse" name="PreviousUse"/>
+                                <label>(Hvad har bygningen været brugt til?)</label>
+                            </div>
+                        </div>
+                        
                         <div class="col-md-offset-3">
                             <button class="btn btn-primary">Send</button>
                         </div>
@@ -86,7 +80,7 @@
                 </div>
             </div>
         </div>
-        <script src="Js/bootstrap.js" type="text/javascript"></script>
         <script src="Js/jquery-2.2.4.js" type="text/javascript"></script>
+        <script src="Js/bootstrap.js" type="text/javascript"></script>
     </body>
 </html>
