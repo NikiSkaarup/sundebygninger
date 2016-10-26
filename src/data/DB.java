@@ -1,9 +1,7 @@
 package data;
 
-import com.mysql.cj.jdbc.MysqlDataSource;
 import java.sql.Connection;
-import java.sql.SQLException;
-
+import java.sql.DriverManager;
 /**
  * Created by Niki on 2016-10-26.
  *
@@ -23,13 +21,9 @@ public class DB {
     public static Connection getConnection() {
         if (conn == null) {
             try {
-                MysqlDataSource dataSource = new MysqlDataSource();
-                dataSource.setUser(user);
-                dataSource.setPassword(password);
-                dataSource.setServerName(ip);
-                dataSource.setDatabaseName(db);
-                conn = dataSource.getConnection();
-            } catch (SQLException e) {
+                Class.forName(driver);
+                conn = DriverManager.getConnection(url, user, password);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

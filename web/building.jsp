@@ -13,8 +13,9 @@
         <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
+        <%@include file="navigation.jsp"  %>
         <div class="container-fluid">
-
+            
             <h1>Add building</h1>
             <div class="row">
                 <div class="col-md-6"> 
