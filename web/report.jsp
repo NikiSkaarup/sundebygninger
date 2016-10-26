@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : report
     Created on : 26-10-2016, 13:02:00
     Author     : Jamie
@@ -18,7 +18,7 @@
 
             <h1>Sundhedstjek rapport</h1>
             <div class="row">
-                <div class="col-md-6"> 
+                <div class="col-md-6">
                     <form action="action" class="form-horizontal">
                         <div class="form-group">
                             <label class="col-md-3 control-label">Bygning</label>
@@ -31,28 +31,31 @@
                                         <li><a href="#">Bygning 2</a></li>
                                         <li><a href="#">Bygning 3</a></li>
                                     </ul>
-                                </div> 
+                                </div>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Adresse</label>
+                            <label class="col-md-3 control-label">Tag</label>
                             <div class="col-md-9">
-                                <input class="form-control" type="text" value="Adresse"/>
+                                <label for="roof">Bemærkninger:</label>
+                                <textarea class="form-control" rows="3" id="roof"></textarea>
+                                <span>Billede: <input type="file"/></span>
                             </div>
                         </div>
-
-                        
-
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Billeder af hus eller bygning</label>
+                            <label class="col-md-3 control-label">Ydervægge</label>
                             <div class="col-md-9">
-                                <input type="file"/>
+                                <label for="outerWalls">Bemærkninger:</label>
+                                <textarea class="form-control" rows="3" id="outerWalls"></textarea>
+                                <span>Billede: <input type="file"/></span>
                             </div>
                         </div>
 
 
-                        
+
+
+
                         <div class="col-md-offset-3">
                             <button class="btn btn-primary">Send</button>
                         </div>
@@ -61,7 +64,7 @@
                 </div>
             </div>
         </div>
-        <script src="Js/jquery-2.2.4.js" type="text/javascript"></script>
-        <script src="Js/bootstrap.js" type="text/javascript"></script>
+        <script src="js/jquery-2.2.4.js" type="text/javascript"></script>
+        <script src="js/bootstrap.js" type="text/javascript"></script>
     </body>
 </html>
