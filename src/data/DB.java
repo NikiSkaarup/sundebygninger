@@ -29,7 +29,7 @@ public class DB {
                 dataSource.setServerName(ip);
                 dataSource.setDatabaseName(db);
                 conn = dataSource.getConnection();
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
