@@ -1,0 +1,30 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Niki
+  Date: 2016-10-26
+  Time: 11:38 AM
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">Sundebygninger</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="building.jsp">add Building</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="index.html">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
