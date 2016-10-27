@@ -1,4 +1,5 @@
-<%--
+<%@ page import="java.io.Writer" %>
+<%@ page import="model.Image" %><%--
   Created by IntelliJ IDEA.
   User: Niki
   Date: 2016-10-27
@@ -32,6 +33,14 @@
                     <button class="btn btn-primary">Send</button>
                 </div>
             </form>
+        </div>
+        <div class="col-md-6">
+            <% if (request.getAttribute("image") != null) {
+                Image image = (Image) request.getAttribute("image");
+                response.getWriter().print("<img src='" + image.getPath() + "' " +
+                        "alt='" + image.getName() + "'>");
+            }%>
+            <%--<img src="${requestScope.image.path}" alt="${requestScope.image.name}">--%>
         </div>
     </div>
 </div>
