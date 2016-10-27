@@ -45,7 +45,9 @@ public class ImageController extends HttpServlet {
         if (request.getParts().isEmpty())
             response.sendRedirect(request.getRequestURL().toString());
 
-        int buildingId = Integer.parseInt(request.getParameter("building"));
+        int buildingId = -1;
+        if (request.getParameter("edit") != null)
+            buildingId = Integer.parseInt(request.getParameter("building"));
 
         String appPath = request.getServletContext().getRealPath("");
         String savePath = appPath + File.separator + SAVE_DIR;
@@ -144,7 +146,7 @@ public class ImageController extends HttpServlet {
             }
 
         }
-        RequestDispatcher rd = request.getRequestDispatcher("document.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("image.jsp");
         rd.forward(request, response);
     }
 }

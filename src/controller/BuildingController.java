@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -80,13 +81,30 @@ public class BuildingController extends HttpServlet {
             Connection conn = data.DB.getConnection();
             
             // Execute SQL query
-            Statement stmt = conn.createStatement();
-            String sql;
-            sql = "INSERT INTO building";
-            ResultSet rs = stmt.executeQuery(sql);
+            PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement("INSERT INTO building (Name, Address, ConstructionYear, CurrentUse, Area, PreviousUse) VALUES (?, ?, ?, ?, ?, ?); SELECT LAST_INSERT_ID();");
+            
+            pstmt.setString(1, name);
+            pstmt.setString(2, address);
+            pstmt.setString(3, constructionYear);
+            pstmt.setString(4, currentUse);
+            pstmt.setString(5, area);
+            pstmt.setString(6, previousUse);
+            
+            ResultSet rs = pstmt.executeQuery();
+            
+            if (rs.getFetchSize() == 1) {
+                rs.next();
+                System.out.println("Inserted with success");
+            }
+            else{
+                System.out.println("Failed");
+            }
+            
         } catch (SQLException ex) {
             Logger.getLogger(BuildingController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        
     }
 
     /**
