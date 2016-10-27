@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import static manipulator.File.generateSemiUniqueFileName;
 
 /**
  *
@@ -58,7 +60,12 @@ public class BuildingController extends HttpServlet {
             String area = request.getParameter("Area");
             String currentUse = request.getParameter("CurrentUse");
             String previousUse = request.getParameter("PreviousUse");
-            
+
+            int buildingId = -1;
+            if (request.getParameter("edit") != null) {
+                buildingId = Integer.parseInt(request.getParameter("building"));
+            }
+
             //image data
             // gets absolute path of the web application
             String appPath = request.getServletContext().getRealPath("");
@@ -69,48 +76,53 @@ public class BuildingController extends HttpServlet {
             if (!fileSaveDir.exists()) {
                 fileSaveDir.mkdir();
             }
-           
+
             String imageName = extractFileName(request.getParts().iterator().next());
-            
-            String fileExtension = imageName.split("\\.") [1];
-            String 
-            
+
+            String fileExtension = imageName.split("\\.")[1];
+            String fileName;
+      
+            do {
+                fileName = generateSemiUniqueFileName() + "." + fileExtension;
+            } while (new File(savePath + File.separator + fileName).exists());
+
             for (Part part : request.getParts()) {
-                String fileName = extractFileName(part);
                 part.write(savePath + File.separator + fileName);
             }
-            request.setAttribute("message", "Billede(r) uploaded med succes");
-            getServletContext().getRequestDispatcher("/message.jsp").forward(
-                    request, response);
-            
+
             //get the database connection
             Connection conn = data.DB.getConnection();
-            
+
             // Execute SQL query
-            PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement("INSERT INTO building (Name, Address, ConstructionYear, CurrentUse, Area, PreviousUse) VALUES (?, ?, ?, ?, ?, ?); SELECT LAST_INSERT_ID();");
-            
+            PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement("INSERT INTO"
+                    + "building ([building].[Name], [building].[Address], [building].[ConstructionYear], [building].[CurrentUse], [building].[Area], [building].PreviousUse) VALUES (?, ?, ?, ?, ?, ?); SELECT LAST_INSERT_ID();");
+
             pstmt.setString(1, name);
             pstmt.setString(2, address);
             pstmt.setString(3, constructionYear);
             pstmt.setString(4, currentUse);
             pstmt.setString(5, area);
             pstmt.setString(6, previousUse);
-            
+
+            pstmt = conn.prepareStatement("INSERT INTO image ([image].[Name], [image].[FkBuildingId], [image].[Path]) VALUES (?,?,?)");
+
+            pstmt.setString(1, imageName);
+            pstmt.setInt(2, buildingId);
+            pstmt.setString(3, fileName);
+
             ResultSet rs = pstmt.executeQuery();
-            
+
             if (rs.getFetchSize() == 1) {
                 rs.next();
-                
+
+            } else {
+
             }
-            else{
-           
-            }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(BuildingController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
+
     }
 
     /**
@@ -126,7 +138,5 @@ public class BuildingController extends HttpServlet {
         }
         return "";
     }
-    
-    
-    
+
 }
