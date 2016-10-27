@@ -57,7 +57,7 @@
                             <hr>
                             <label class="col-md-3 control-label">Lokale</label>
                             <div class="col-md-9">
-                                <input class="form-control" type="text" placeholder="Lokalenr."/>
+                                <input class="form-control" type="text" placeholder="Lokale ID"/>
 
                                 <div>
                                     Har der været skade i lokalet? 
@@ -97,7 +97,7 @@
 
 
                                 <div>
-                                    <label for="outerWalls">Bemærkninger:</label>
+                                    Bemærkninger:
                                     <textarea class="form-control" rows="2" id="outerWalls"></textarea>
                                     <span>Billede: <input type="file"/></span>
                                 </div>
