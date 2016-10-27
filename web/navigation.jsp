@@ -20,6 +20,8 @@
             <ul class="nav navbar-nav">
                 <li><a href="building.jsp">add Building</a></li>
                 <li><a href="report.jsp">add Report</a></li>
+                <li><a href="document">add document</a></li>
+                <li><a href="image">add image</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="index.html">Logout</a></li>
