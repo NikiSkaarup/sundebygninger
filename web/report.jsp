@@ -17,6 +17,7 @@
         <div class="container-fluid">
 
             <h1>Sundhedstjek rapport</h1>
+            <hr>
             <div class="row">
                 <div class="col-md-6">
                     <form method="POST" action="ReportController" class="form-horizontal">
@@ -53,6 +54,7 @@
 
 
                         <div class="form-group">
+                            <hr>
                             <label class="col-md-3 control-label">Lokale</label>
                             <div class="col-md-9">
                                 <input class="form-control" type="text" placeholder="Lokalenr."/>
@@ -63,38 +65,27 @@
                                     <label><input type="radio" name="optradio">Nej</label>
                                 </div>
 
-                                <div>
-                                    <div class="col-md-6">
-                                        Hvornår?   
-                                        <div class='input-group date' id='datetimepicker1'>
-                                            <input type='text' class="form-control" />
-                                            <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-calendar"></span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        Hvor?   
-                                        <div class='input-group date' id='location'>
-                                            <input type='text' class="form-control" />
-                                        </div>                                
-                                    </div>
 
-                                    <div class="col-md-6">
-                                        Hvad er der sket?   
-                                        <div class='input-group date' id='location'>
-                                            <input type='text' class="form-control" />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        Hvad er repareret?   
-                                        <div class='input-group date' id='location'>
-                                            <input type='text' class="form-control" />
-                                        </div>                                
-                                    </div>
+                                <div class="col-md-6">
+                                    Hvornår?   
+                                    <input type="date" class="form-control" id="date">
                                 </div>
-                                
-                                
+                                <div class="col-md-6">
+                                    Hvor?   
+                                    <input type="text" class="form-control" id="location">                               
+                                </div>
+
+                                <div class="col-md-6">
+                                    Hvad er der sket?   
+                                    <input type="text" class="form-control" id="incident">
+                                </div>
+                                <div class="col-md-6">
+                                    Hvad er repareret?   
+                                    <input type="text" class="form-control" id="repair">                             
+                                </div>
+
+
+
                                 <div>
                                     Skadetype? 
                                     <label><input type="radio" name="optradio">Fugt</label>
@@ -103,21 +94,18 @@
                                     <label><input type="radio" name="optradio">Brand</label>
                                     <label><input type="radio" name="optradio">Andet</label>
                                 </div>
-                                
-                                
+
+
                                 <div>
                                     <label for="outerWalls">Bemærkninger:</label>
                                     <textarea class="form-control" rows="2" id="outerWalls"></textarea>
                                     <span>Billede: <input type="file"/></span>
                                 </div>
+                                <hr>
+                                <a id="add_room" class="btn btn-default pull-left">Tilføj lokale</a>
                             </div>
-                            
-                            <div class="col-md-3">
-                            </div>
-                            <a id="add_room" class="btn btn-default pull-left">Tilføj lokale</a>
                         </div>
-
-
+                        <hr>
                         <div class="col-md-offset-3">
                             <button class="btn btn-primary">Send</button>
                         </div>
@@ -129,12 +117,6 @@
 
         <script src="js/jquery-2.2.4.js" type="text/javascript"></script>
         <script src="js/bootstrap.js" type="text/javascript"></script>
-        <script type="text/javascript">
-            $(function () {
-                $('#datetimepicker1').datetimepicker({
-                    defaultDate: "11/1/2013"
-                });
-            });
-        </script>
+        
     </body>
 </html>
