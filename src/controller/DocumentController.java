@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.Statement;
+import java.sql.ResultSet;
 
 /**
  * Created by Niki on 2016-10-26.
@@ -47,11 +47,8 @@ public class DocumentController extends HttpServlet {
         if (!fileSaveDir.exists())
             fileSaveDir.mkdir();
 
-        String name = "";
-        for (Part part : request.getParts()) {
-            name = extractFileName(part);
-            break;
-        }
+        String name = extractFileName(request.getParts().iterator().next());
+
         String fileExt = name.split("\\.")[1];
         String fileName;
         do {
@@ -66,31 +63,30 @@ public class DocumentController extends HttpServlet {
         Connection conn = data.DB.getConnection();
         try {
             PreparedStatement statement;
-            if (id <= 0) {
-                statement = conn.prepareStatement("INSERT " +
-                        "INTO " +
-                        "Document (Name, FkBuildingId, Path) VALUES (?,?," +
-                        "?)");
+            if (id < 0) {
+                statement = conn.prepareStatement("INSERT INTO Document " +
+                        "(Name, FkBuildingId, Path) VALUES (?,?,?)");
 
                 statement.setString(1, name);
-                statement.setString(2, buildingId + "");
+                statement.setString(2, Integer.toString(buildingId));
                 statement.setString(3, fileName);
 
             } else {
-                statement = conn.prepareStatement("UPDATE Document SET NAME=?, Path=? WHERE Id=?");
+                statement = conn.prepareStatement("UPDATE Document SET " +
+                        "NAME=?, Path=? WHERE Id=? AND FkBuildingId=?");
 
                 statement.setString(1, name);
                 statement.setString(2, fileName);
-                statement.setString(3, name);
+                statement.setString(3, Integer.toString(id));
+                statement.setString(4, Integer.toString(buildingId));
             }
 
             statement.executeQuery();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        response.sendRedirect("/document/" + fileName);
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse

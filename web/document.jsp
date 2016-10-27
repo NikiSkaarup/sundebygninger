@@ -16,7 +16,7 @@
 
 <div class="container-fluid">
 
-    <h1>${action} Document</h1>
+    <h1>${requestScope.action} Document</h1>
     <div class="row">
             <div class="col-md-6">
             <form action="document" method="post" class="form-horizontal" enctype="multipart/form-data">
