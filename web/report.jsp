@@ -24,8 +24,8 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">Bygning</label>
                             <div class="col-md-9">
-                                <label for="sel1">Vælg bygning</label>
-                                <select class="form-control" id="sel1">
+                                <label for="building">Vælg bygning</label>
+                                <select class="form-control" id="building">
                                     <option>Bygning 1</option>
                                     <option>Bygning 2</option>
                                     <option>Bygning 3</option>
