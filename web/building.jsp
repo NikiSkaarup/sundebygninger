@@ -19,7 +19,7 @@
             <h1>Add building</h1>
             <div class="row">
                 <div class="col-md-6"> 
-                    <form action="buildingController.jsp" method="POST" class="form-horizontal">
+                    <form action="Building" method="POST" class="form-horizontal" enctype="multipart/form-data">
                         <div class="form-group">
                             <label class="col-md-3 control-label">Navn på bygning</label>
                             <div class="col-md-9">
@@ -73,7 +73,7 @@
                         </div>
                         
                         <div class="col-md-offset-3">
-                            <button class="btn btn-primary" action="buildingController.java">Send</button>
+                            <button class="btn btn-primary">Send</button>
                         </div>
 
                     </form>

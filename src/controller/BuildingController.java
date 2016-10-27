@@ -7,12 +7,10 @@ package controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -27,7 +25,7 @@ import javax.servlet.http.Part;
  *
  * @author Menja
  */
-@WebServlet(name = "BuildingController", urlPatterns = {"/BuildingController"})
+@WebServlet(name = "BuildingController", urlPatterns = {"/Building"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024 * 2, // 2MB
         maxFileSize = 1024 * 1024 * 10, // 10MB
@@ -52,6 +50,7 @@ public class BuildingController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+            //data from form put into variables
             processRequest(request, response);
             String name = request.getParameter("Name");
             String address = request.getParameter("Address");
@@ -60,6 +59,7 @@ public class BuildingController extends HttpServlet {
             String currentUse = request.getParameter("CurrentUse");
             String previousUse = request.getParameter("PreviousUse");
             
+            //image data
             // gets absolute path of the web application
             String appPath = request.getServletContext().getRealPath("");
             // constructs path of the directory to save uploaded file
@@ -69,6 +69,12 @@ public class BuildingController extends HttpServlet {
             if (!fileSaveDir.exists()) {
                 fileSaveDir.mkdir();
             }
+           
+            String imageName = extractFileName(request.getParts().iterator().next());
+            
+            String fileExtension = imageName.split("\\.") [1];
+            String 
+            
             for (Part part : request.getParts()) {
                 String fileName = extractFileName(part);
                 part.write(savePath + File.separator + fileName);
@@ -94,10 +100,10 @@ public class BuildingController extends HttpServlet {
             
             if (rs.getFetchSize() == 1) {
                 rs.next();
-                System.out.println("Inserted with success");
+                
             }
             else{
-                System.out.println("Failed");
+           
             }
             
         } catch (SQLException ex) {
