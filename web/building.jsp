@@ -73,7 +73,7 @@
                         </div>
                         
                         <div class="col-md-offset-3">
-                            <button class="btn btn-primary">Send</button>
+                            <button class="btn btn-primary" action="buildingController.java">Send</button>
                         </div>
 
                     </form>
