@@ -36,9 +36,9 @@ public class ReportController extends javax.servlet.http.HttpServlet {
             Building building = new Building();
             building.setId(rs.getInt(1));
             
-            HashMap<Integer, Comment> comments;
+            HashMap<Integer, Comment> comments = new HashMap<>();
             
-            HashMap<Integer, Room> rooms;
+            HashMap<Integer, Room> rooms = new HashMap<>();
             
             Calendar calendar = Calendar.getInstance();
             java.util.Date now = calendar.getTime();
