@@ -57,7 +57,7 @@
                             <hr>
                             <label class="col-md-3 control-label">Lokale</label>
                             <div class="col-md-9">
-                                <input class="form-control" type="text" placeholder="Lokale ID"/>
+                                <input class="form-control" type="text" placeholder="Lokale ID" id="room"/>
 
                                 <div>
                                     Har der været skade i lokalet? 
@@ -114,9 +114,9 @@
                 </div>
             </div>
         </div>
-
         <script src="js/jquery-2.2.4.js" type="text/javascript"></script>
         <script src="js/bootstrap.js" type="text/javascript"></script>
-        
+
+        <script src="js/report.js" type="text/javascript"></script>
     </body>
 </html>
