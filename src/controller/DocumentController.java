@@ -1,9 +1,5 @@
 package controller;
 
-import model.Building;
-import model.Document;
-import model.Image;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -37,15 +33,14 @@ public class DocumentController extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse
             response) throws ServletException, IOException {
+
         int id = -1;
-        if (request.getParameter("edit") != null)
-            id = Integer.parseInt(request.getParameter("edit"));
+        if (!request.getParameter("id").equals(""))
+            id = Integer.parseInt(request.getParameter("id"));
 
-        if (request.getParts().isEmpty())
-            response.sendRedirect(request.getRequestURL().toString());
-
-        int buildingId = Integer.parseInt(request.getParameter("building"));
-
+        int buildingId = -1;
+        if (!request.getParameter("buildingId").equals(""))
+            buildingId = Integer.parseInt(request.getParameter("buildingId"));
 
         String appPath = request.getServletContext().getRealPath("");
         String savePath = appPath + File.separator + SAVE_DIR;
@@ -54,89 +49,95 @@ public class DocumentController extends HttpServlet {
         if (!fileSaveDir.exists())
             fileSaveDir.mkdir();
 
-        String name = extractFileName(request.getParts().iterator().next());
-
-        String fileExt = name.split("\\.")[1];
-        String fileName;
-        do {
-            fileName = generateSemiUniqueFileName() + "." + fileExt;
-        }
-        while (new File(savePath + File.separator + fileName).exists());
+        String name = "", fileExt, fileName = "";
 
         for (Part part : request.getParts()) {
+            if (!part.getName().equals("file"))
+                continue;
+            if (name.equals("")) {
+                name = extractFileName(part);
+                fileExt = name.split("\\.")[1];
+                do fileName = generateSemiUniqueFileName() + "." + fileExt;
+                while (new File(savePath + File.separator + fileName).exists());
+            }
             part.write(savePath + File.separator + fileName);
         }
 
-        Connection conn = data.DB.getConnection();
         try {
-            PreparedStatement statement;
+            Connection conn = data.DB.getConnection();
+            PreparedStatement stmt;
             if (id < 0) {
-                statement = conn.prepareStatement("INSERT INTO Document " +
+                stmt = conn.prepareStatement("INSERT INTO Document " +
                         "(Name, FkBuildingId, Path) VALUES (?,?,?)");
 
-                statement.setString(1, name);
-                statement.setString(2, Integer.toString(buildingId));
-                statement.setString(3, fileName);
-
+                stmt.setString(1, name);
+                stmt.setInt(2, buildingId);
+                stmt.setString(3, fileName);
             } else {
-                statement = conn.prepareStatement("UPDATE Document SET " +
+                stmt = conn.prepareStatement("UPDATE Document SET " +
                         "NAME=?, Path=? WHERE Id=? AND FkBuildingId=?");
 
-                statement.setString(1, name);
-                statement.setString(2, fileName);
-                statement.setString(3, Integer.toString(id));
-                statement.setString(4, Integer.toString(buildingId));
+                stmt.setString(1, name);
+                stmt.setString(2, fileName);
+                stmt.setInt(3, id);
+                stmt.setInt(4, buildingId);
             }
-            statement.executeQuery();
+            stmt.executeUpdate();
+            conn.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        if (buildingId < 0)
+            response.sendRedirect("/building?id=" + buildingId);
+        else
+            response.sendRedirect("/allBuildings.jsp");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse
             response) throws ServletException, IOException {
+
+        int id = -1;
         if (request.getParameter("edit") == null) {
             request.setAttribute("action", "add");
         } else {
             request.setAttribute("action", "edit");
-            int id = Integer.parseInt(request.getParameter("edit"));
-            int buildingId = -1;
-            if (request.getParameter("building") != null)
-                buildingId = Integer.parseInt(request.getParameter("building"));
+            id = Integer.parseInt(request.getParameter("edit"));
+        }
 
-            Connection conn = data.DB.getConnection();
+        int buildingId = -1;
+        if (request.getParameter("building") != null)
+            buildingId = Integer.parseInt(request.getParameter("building"));
 
+        if (id > 0 && buildingId > 0) {
             try {
-                PreparedStatement stmt = conn.prepareStatement("SELECT Name, " +
-                        "Path FROM Document WHERE Id=? AND FkBuildingId=?");
+                Connection conn = data.DB.getConnection();
+                PreparedStatement stmt = conn.prepareStatement("SELECT " +
+                        "Name, Path FROM Document WHERE Id=? AND " +
+                        "FkBuildingId=?");
                 stmt.setInt(1, id);
                 stmt.setInt(2, buildingId);
 
-                ResultSet resultSet = stmt.executeQuery();
+                ResultSet rs = stmt.executeQuery();
 
-                if (resultSet.getFetchSize() == 1) {
-                    Document document = new Document();
+                if (rs.getFetchSize() == 1) {
+                    rs.next();
 
-                    resultSet.next();
-                    document.setId(id);
-                    Building building = new Building();
-                    building.setId(buildingId);
-                    document.setBuilding(building);
-
-                    document.setName(resultSet.getString("Name"));
-                    document.setPath(resultSet.getString("Path"));
-
-                    request.setAttribute("document", document);
+                    request.setAttribute("dId", id);
+                    request.setAttribute("bId", buildingId);
+                    request.setAttribute("name", rs.getString
+                            ("Name"));
+                    request.setAttribute("path", rs.getString
+                            ("Path"));
                 } else {
                     if (buildingId < 0)
-                        response.sendRedirect("/building?id=" + buildingId);
-                    else
                         response.sendRedirect("MainMenuIsh");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
+        } else
+            request.setAttribute("bId", buildingId);
+
         RequestDispatcher rd = request.getRequestDispatcher("document.jsp");
         rd.forward(request, response);
     }

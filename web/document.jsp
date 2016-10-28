@@ -21,6 +21,9 @@
         <div class="col-md-6">
             <form action="document" method="post" class="form-horizontal"
                   enctype="multipart/form-data">
+                <input type="hidden" value="${requestScope.bId}" name="buildingId">
+                <input type="hidden" value="${requestScope.dId}" name="id">
+
                 <div class="form-group">
                     <label class="col-md-3 control-label">Upload
                         Document</label>
@@ -30,7 +33,7 @@
                 </div>
 
                 <div class="col-md-offset-3">
-                    <button class="btn btn-primary">Send</button>
+                    <button class="btn btn-primary" type="submit">Send</button>
                 </div>
             </form>
         </div>

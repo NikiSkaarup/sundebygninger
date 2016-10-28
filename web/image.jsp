@@ -1,5 +1,5 @@
-<%@ page import="java.io.Writer" %>
-<%@ page import="model.Image" %><%--
+<%@ page import="model.Image" %>
+<%--
   Created by IntelliJ IDEA.
   User: Niki
   Date: 2016-10-27
@@ -22,6 +22,9 @@
         <div class="col-md-6">
             <form action="image" method="post" class="form-horizontal"
                   enctype="multipart/form-data">
+                <input type="hidden" value="${requestScope.bId}" name="buildingId">
+                <input type="hidden" value="${requestScope.iId}" name="id">
+
                 <div class="form-group">
                     <label class="col-md-3 control-label">Upload Image</label>
                     <div class="col-md-9">
