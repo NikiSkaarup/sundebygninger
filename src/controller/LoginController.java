@@ -8,12 +8,18 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.User;
+import java.sql.*;
 
 /**
  *
@@ -21,6 +27,8 @@ import model.User;
  */
 @WebServlet(name = "LoginController", urlPatterns = {"/LoginController"})
 public class LoginController extends HttpServlet {
+
+    private Object Validate;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,8 +41,8 @@ public class LoginController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
-        response.setContentType("text/html;charset=UTF-8");       
+
+        response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
@@ -62,9 +70,9 @@ public class LoginController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-     
+
     }
-        
+
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -76,26 +84,32 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-        
-        Connection conn = data.DB.getConnection();
 
-        response.setContentType("text/html;charset=UTF-8");
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        User user = null;
-        
-        //Læs DB2 SQL
-        
-        if (user != null) {
-            request.getSession().getAttribute(email).equals(password);
-            response.sendRedirect("");
-        } else {
-            request.setAttribute("Unknown user, please try again", "");
-            request.getRequestDispatcher("/login.jsp").forward(request, response);            
+        try {
+            response.setContentType("text/html;charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+            
+            Connection conn = data.DB.getConnection();
+            PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement("SELECT * FROM 'User' WHERE 'email' = ? AND 'password' = ?");
+          
+            pstmt.setString(1,email);
+            pstmt.setString(2,password);
+            ResultSet rs = pstmt.executeQuery();
+            
+            
+//            if(Validate.checkUser(email, password)){
+//                out.println("Email or password are incorrect");
+//                request.getRequestDispatcher("index.html").include(request, response);
+//               
+//            }
+//            else{
+//                request.getRequestDispatcher("Welcome").forward(request, response);
+//            }
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
-}
-
+}         
 

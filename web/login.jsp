@@ -1,7 +1,7 @@
 <%-- 
     Document   : login
     Created on : 26-10-2016, 22:51:17
-    Author     : tanja_ntppkcs
+    Author     : Tanja
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -29,6 +29,7 @@ and open the template in the editor.
              
             <div class="row">
                 <div class="col-md-6">
+                    <!--Add email-->
                     <form method="POST" action="LoginController" class="form-horizontal">
                         <div class="form-group"> 
                             <label class="col-md-3" for="email">Email:</label>
@@ -37,7 +38,8 @@ and open the template in the editor.
                                        placeholder="Enter email" name="email">
                             </div>
                         </div>
-
+                        <div id="formholder">
+                    <!--Add password-->
                         <div class="form-group">
                             <label class="col-md-3" for="pwd">Password:</label>
                             <div class="col-md-9">
