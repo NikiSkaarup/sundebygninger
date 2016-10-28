@@ -61,8 +61,8 @@
 
                                 <div>
                                     Har der været skade i lokalet? 
-                                    <label><input type="radio" name="optradio">Ja</label>
-                                    <label><input type="radio" name="optradio">Nej</label>
+                                    <label><input type="radio" name="damradio">Ja</label>
+                                    <label><input type="radio" name="damradio">Nej</label>
                                 </div>
 
 
@@ -88,11 +88,11 @@
 
                                 <div>
                                     Skadetype? 
-                                    <label><input type="checkbox" name="optradio">Fugt</label>
-                                    <label><input type="checkbox" name="optradio">Råd og svamp</label>
-                                    <label><input type="checkbox" name="optradio">Skimmel</label>
-                                    <label><input type="checkbox" name="optradio">Brand</label>
-                                    <label><input type="checkbox" name="optradio">Andet</label>
+                                    <label><input type="checkbox" value="mold" >Fugt</label>
+                                    <label><input type="checkbox" value="" >Råd og svamp</label>
+                                    <label><input type="checkbox" value="" >Skimmel</label>
+                                    <label><input type="checkbox" value="" >Brand</label>
+                                    <label><input type="checkbox" value="" >Andet</label>
                                 </div>
 
 
@@ -101,6 +101,24 @@
                                     <textarea class="form-control" rows="2" name="roomComment"></textarea>
                                     <span>Billede: <input type="file"/></span>
                                 </div>
+                                
+                                <br>
+                                <div>
+                                    Fugtighedsscanning? 
+                                    <label><input type="radio" name="moistradio">Ja</label>
+                                    <label><input type="radio" name="moistradio">Nej</label>
+                                </div>      
+                                
+                                <div class="col-md-6">
+                                    Fugtscanning:  
+                                    <input type="date" class="form-control" name="moistureScan">
+                                </div>
+                                <div class="col-md-6">
+                                    Målepunkt   
+                                    <input type="text" class="form-control" name="measureSpot">                               
+                                </div>
+
+                                <br>
                                 <hr>
                                 <a id="add_room" class="btn btn-default pull-left">Tilføj lokale</a>
                             </div>
