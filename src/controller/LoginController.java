@@ -90,26 +90,27 @@ public class LoginController extends HttpServlet {
             PrintWriter out = response.getWriter();
             String email = request.getParameter("email");
             String password = request.getParameter("password");
-            
+
             Connection conn = data.DB.getConnection();
             PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement("SELECT * FROM 'User' WHERE 'email' = ? AND 'password' = ?");
-          
-            pstmt.setString(1,email);
-            pstmt.setString(2,password);
+
+            pstmt.setString(1, email);
+            pstmt.setString(2, password);
             ResultSet rs = pstmt.executeQuery();
+            rs.next();
             
+            if(email == password && password == email){
+                request.getSession().setAttribute("user", email);
+                response.sendRedirect("home");
+            }
+            else{
+                request.setAttribute("error", "Unknown user, please try again");
+                request.getRequestDispatcher("/login.jsp").forward(request, response);
+            }
             
-//            if(Validate.checkUser(email, password)){
-//                out.println("Email or password are incorrect");
-//                request.getRequestDispatcher("index.html").include(request, response);
-//               
-//            }
-//            else{
-//                request.getRequestDispatcher("Welcome").forward(request, response);
-//            }
         } catch (SQLException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }
-}         
-
+}
