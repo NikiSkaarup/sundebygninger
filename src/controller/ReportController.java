@@ -37,20 +37,32 @@ public class ReportController extends javax.servlet.http.HttpServlet {
             building.setId(rs.getInt(1));
             
             HashMap<Integer, Comment> comments = new HashMap<>();
-            
+            Comment roof = new Comment();
+            roof.setComment(request.getParameter("roof"));
+            comments.put(Integer.SIZE, roof);
+            Comment outerWalls = new Comment();
+            roof.setComment(request.getParameter("outerWalls"));
+            comments.put(Integer.SIZE, outerWalls);
+                        
             HashMap<Integer, Room> rooms = new HashMap<>();
+            Room r = new Room();
+            r.setNum(request.getParameter("room"));
+            r.setDamage(request.getParameter("optradio").equals("Ja"));
+            r.setWhen(request.getParameter("date"));
+            r.
+            
             
             Calendar calendar = Calendar.getInstance();
             java.util.Date now = calendar.getTime();
             java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
             Timestamp submission = currentTimestamp;
             
-            Report r = new Report();
-            r.setBuilding(building);
-            r.setComments(comments);
-            r.setRooms(rooms);
-            r.setSubmission(submission);
-            reports.put(Integer.SIZE, r);
+            Report report = new Report();
+            report.setBuilding(building);
+            report.setComments(comments);
+            report.setRooms(rooms);
+            report.setSubmission(submission);
+            reports.put(Integer.SIZE, report);
             
         } catch (SQLException ex) {
             Logger.getLogger(ReportController.class.getName()).log(Level.SEVERE, null, ex);
