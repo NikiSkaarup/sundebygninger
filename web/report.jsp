@@ -57,7 +57,7 @@
                             <hr>
                             <label class="col-md-3 control-label">Lokale</label>
                             <div class="col-md-9">
-                                <input class="form-control" type="text" placeholder="Lokale ID" id="room"/>
+                                <input class="form-control" type="text" placeholder="Lokale ID" name="room"/>
 
                                 <div>
                                     Har der været skade i lokalet? 
@@ -68,37 +68,37 @@
 
                                 <div class="col-md-6">
                                     Hvornår?   
-                                    <input type="date" class="form-control" id="date">
+                                    <input type="date" class="form-control" name="date">
                                 </div>
                                 <div class="col-md-6">
                                     Hvor?   
-                                    <input type="text" class="form-control" id="location">                               
+                                    <input type="text" class="form-control" name="location">                               
                                 </div>
 
                                 <div class="col-md-6">
                                     Hvad er der sket?   
-                                    <input type="text" class="form-control" id="incident">
+                                    <input type="text" class="form-control" name="incident">
                                 </div>
                                 <div class="col-md-6">
                                     Hvad er repareret?   
-                                    <input type="text" class="form-control" id="repair">                             
+                                    <input type="text" class="form-control" name="repair">                             
                                 </div>
 
 
 
                                 <div>
                                     Skadetype? 
-                                    <label><input type="radio" name="optradio">Fugt</label>
-                                    <label><input type="radio" name="optradio">Råd og svamp</label>
-                                    <label><input type="radio" name="optradio">Skimmel</label>
-                                    <label><input type="radio" name="optradio">Brand</label>
-                                    <label><input type="radio" name="optradio">Andet</label>
+                                    <label><input type="checkbox" name="optradio">Fugt</label>
+                                    <label><input type="checkbox" name="optradio">Råd og svamp</label>
+                                    <label><input type="checkbox" name="optradio">Skimmel</label>
+                                    <label><input type="checkbox" name="optradio">Brand</label>
+                                    <label><input type="checkbox" name="optradio">Andet</label>
                                 </div>
 
 
                                 <div>
                                     Bemærkninger:
-                                    <textarea class="form-control" rows="2" id="outerWalls"></textarea>
+                                    <textarea class="form-control" rows="2" name="roomComment"></textarea>
                                     <span>Billede: <input type="file"/></span>
                                 </div>
                                 <hr>
