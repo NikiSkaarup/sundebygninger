@@ -53,7 +53,7 @@
 
 
 
-                        <div class="form-group">
+                        <div class="form-group" id="room-1">
                             <hr>
                             <label class="col-md-3 control-label">Lokale</label>
                             <div class="col-md-9">
@@ -119,10 +119,10 @@
                                 </div>
 
                                 <br>
-                                <hr>
-                                <a id="add_room" class="btn btn-default pull-left">Tilføj lokale</a>
                             </div>
                         </div>
+                        <hr>
+                        <a id="add_room" class="btn btn-default pull-left">Tilføj lokale</a>
                         <hr>
                         <div class="col-md-offset-3">
                             <button class="btn btn-primary">Send</button>
