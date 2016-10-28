@@ -28,6 +28,8 @@ public class ReportController extends javax.servlet.http.HttpServlet {
 
     protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
         try {
+            Report report = new Report();
+            
             String b = request.getParameter("building");
             PreparedStatement pstmt = DB.getConnection().prepareStatement("select Id from building where Name=?");
             pstmt.setString(1, b);
@@ -48,16 +50,19 @@ public class ReportController extends javax.servlet.http.HttpServlet {
             Room r = new Room();
             r.setNum(request.getParameter("room"));
             r.setDamage(request.getParameter("optradio").equals("Ja"));
-            r.setWhen(request.getParameter("date"));
-            r.
-            
+            r.setWhen((TimeStamp) request.getParameter("date"));
+            r.setWhere(request.getParameter("location"));
+            r.setWhathappend(request.getParameter("incident"));
+            r.setWhatwasfixed(request.getParameter("repair"));
+            //TODO: damagetypes from checkboxes
+            r.setReport(report);
             
             Calendar calendar = Calendar.getInstance();
             java.util.Date now = calendar.getTime();
             java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
             Timestamp submission = currentTimestamp;
             
-            Report report = new Report();
+            
             report.setBuilding(building);
             report.setComments(comments);
             report.setRooms(rooms);
