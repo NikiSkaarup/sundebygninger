@@ -5,7 +5,9 @@
 var counter = 1;
 
 $("#add_room").on('click', function () {
+    console.log("Creating room " + counter);
     $('#room-' + counter).after(createRoom());
+    console.log("Created room " + counter);
 });
 
 var formGroup = $(document.createElement('div')).addClass('form-group');
@@ -13,9 +15,11 @@ var input = $(document.createElement('input')).addClass('form-control');
 var label = $(document.createElement('label')).addClass('control-label');
 
 function createRoom() {
+    console.log("Incrementing counter: " + counter);
     counter++;
+    console.log("counter: " + counter);
 
-    var room = formGroup.clone();
+    var room = formGroup.clone().attr({id: 'room-' + counter});
 
     room.append($(document.createElement('hr')));
     room.append(label.clone()
@@ -122,40 +126,40 @@ function createRoom() {
     div14.append(label.clone()
         .append(input.clone()
             .attr({
-                type:'checkbox',
-                name:'moisture-' + counter
+                type: 'checkbox',
+                name: 'moisture-' + counter
             })
             .removeClass('form-control'))
         .append('Fugt'));
     div14.append(label.clone()
         .append(input.clone()
             .attr({
-                type:'checkbox',
-                name:'rot-' + counter
+                type: 'checkbox',
+                name: 'rot-' + counter
             })
             .removeClass('form-control'))
         .append('Råd og svamp'));
     div14.append(label.clone()
         .append(input.clone()
             .attr({
-                type:'checkbox',
-                name:'mold-' + counter
+                type: 'checkbox',
+                name: 'mold-' + counter
             })
             .removeClass('form-control'))
         .append('Skimmel'));
     div14.append(label.clone()
         .append(input.clone()
             .attr({
-                type:'checkbox',
-                name:'fire-' + counter
+                type: 'checkbox',
+                name: 'fire-' + counter
             })
             .removeClass('form-control'))
         .append('Brand'));
     div14.append(label.clone()
         .append(input.clone()
             .attr({
-                type:'checkbox',
-                name:'other-' + counter
+                type: 'checkbox',
+                name: 'other-' + counter
             })
             .removeClass('form-control'))
         .append('Andet'));
@@ -167,15 +171,15 @@ function createRoom() {
     div15.append($(document.createElement('textarea'))
         .attr({
             rows: 2,
-            name:'roomComment-' + counter
+            name: 'roomComment-' + counter
         })
         .addClass('form-control'));
     div15.append($(document.createElement('span'))
         .text('Billede: ')
         .append(input.clone()
             .attr({
-                type:'file',
-                name:'image-' + counter
+                type: 'file',
+                name: 'image-' + counter
             })
             .removeClass('form-control')));
 

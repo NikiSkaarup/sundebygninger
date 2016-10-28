@@ -122,7 +122,7 @@
                             </div>
                         </div>
                         <hr>
-                        <a id="add_room" class="btn btn-default pull-left">Tilføj lokale</a>
+                        <a id="add_room" class="btn btn-default col-md-offset-3">Tilføj lokale</a>
                         <hr>
                         <div class="col-md-offset-3">
                             <button class="btn btn-primary">Send</button>
