@@ -20,6 +20,9 @@
             <div class="row">
                 <div class="col-md-6"> 
                     <form action="Building" method="POST" class="form-horizontal" enctype="multipart/form-data">
+                        <input type="hidden" name="buildingId"/>
+                        <input type="hidden" name="imageId"/>
+                        
                         <div class="form-group">
                             <label class="col-md-3 control-label">Navn på bygning</label>
                             <div class="col-md-9">

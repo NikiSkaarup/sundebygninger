@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import static manipulator.File.extractFileName;
 import static manipulator.File.generateSemiUniqueFileName;
 
 /**
@@ -52,12 +53,17 @@ public class BuildingController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            int id = -1;
-            if (request.getParameter("edit") != null) {
-                id = Integer.parseInt(request.getParameter("edit"));
+            int buildingId = -1;
+            if (request.getParameter("buildingId").equals("")) {
+                buildingId = Integer.parseInt(request.getParameter("buildingId"));
             }
 
-            //data from form put into variables
+            int imageId = -1;
+            if (request.getParameter("imageId").equals("")) {
+                imageId = Integer.parseInt(request.getParameter("imageId"));
+            }
+
+            //BUILDING DATA from form put into variables
             processRequest(request, response);
             String name = request.getParameter("Name");
             String address = request.getParameter("Address");
@@ -66,32 +72,33 @@ public class BuildingController extends HttpServlet {
             String currentUse = request.getParameter("CurrentUse");
             String previousUse = request.getParameter("PreviousUse");
 
-            int buildingId = -1;
-            if (request.getParameter("edit") != null) {
-                buildingId = Integer.parseInt(request.getParameter("building"));
-            }
-
             //IMAGE DATA
             // gets absolute path of the web application
             String appPath = request.getServletContext().getRealPath("");
             // constructs path of the directory to save uploaded file
             String savePath = appPath + File.separator + saveDirectory;
+
             // creates the save directory if it does not exists
             File fileSaveDir = new File(savePath);
             if (!fileSaveDir.exists()) {
                 fileSaveDir.mkdir();
             }
 
-            String imageName = extractFileName(request.getParts().iterator().next());
-
-            String fileExtension = imageName.split("\\.")[1];
-            String fileName;
-
-            do {
-                fileName = generateSemiUniqueFileName() + "." + fileExtension;
-            } while (new File(savePath + File.separator + fileName).exists());
+            String imageName = "";
+            String fileExtension;
+            String fileName = "";
 
             for (Part part : request.getParts()) {
+                if (true) {
+
+                }
+                if (fileName.equals("")) {
+                    fileName = extractFileName(part);
+                    fileExtension = imageName.split("\\.")[1];
+                    do {
+                        fileName = generateSemiUniqueFileName() + "." + fileExtension;
+                    } while (new File(savePath + File.separator + fileName).exists());
+                }
                 part.write(savePath + File.separator + fileName);
             }
 
@@ -101,7 +108,7 @@ public class BuildingController extends HttpServlet {
             // Execute SQL query
             PreparedStatement pstmt;
 
-            if (id < 0) {
+            if (imageId < 0) {
 
                 pstmt = (PreparedStatement) conn.prepareStatement("INSERT INTO"
                         + "building ([building].[Name], [building].[Address], [building].[ConstructionYear], [building].[CurrentUse], [building].[Area], [building].PreviousUse) VALUES (?, ?, ?, ?, ?, ?); SELECT LAST_INSERT_ID() AS Id;");
@@ -129,24 +136,26 @@ public class BuildingController extends HttpServlet {
                 pstmt.setString(3, fileName);
 
                 pstmt.executeQuery();
+                conn.close();
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
+            ex.printStackTrace();
             Logger.getLogger(BuildingController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    /**
-     * Extracts file name from HTTP header content-disposition
-     */
-    private String extractFileName(Part part) {
-        String contentDisp = part.getHeader("content-disposition");
-        String[] items = contentDisp.split(";");
-        for (String s : items) {
-            if (s.trim().startsWith("filename")) {
-                return s.substring(s.indexOf("=") + 2, s.length() - 1);
-            }
-        }
-        return "";
-    }
+//    /**
+//     * Extracts file name from HTTP header content-disposition
+//     */
+//    private String extractFileName(Part part) {
+//        String contentDisp = part.getHeader("content-disposition");
+//        String[] items = contentDisp.split(";");
+//        for (String s : items) {
+//            if (s.trim().startsWith("filename")) {
+//                return s.substring(s.indexOf("=") + 2, s.length() - 1);
+//            }
+//        }
+//        return "";
+//    }
 
 }
