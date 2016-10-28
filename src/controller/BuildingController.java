@@ -52,95 +52,98 @@ public class BuildingController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        int buildingId = -1;
+        if (!request.getParameter("buildingId").equals("")) {
+            buildingId = Integer.parseInt(request.getParameter("buildingId"));
+        }
+
+        int imageId = -1;
+        if (!request.getParameter("imageId").equals("")) {
+            imageId = Integer.parseInt(request.getParameter("imageId"));
+        }
+
+        //BUILDING DATA from form put into variables
+        processRequest(request, response);
+        String name = request.getParameter("Name");
+        String address = request.getParameter("Address");
+        String constructionYear = request.getParameter("ConstructionYear");
+        String area = request.getParameter("Area");
+        String currentUse = request.getParameter("CurrentUse");
+        String previousUse = request.getParameter("PreviousUse");
+
+        //IMAGE DATA
+        // gets absolute path of the web application
+        String appPath = request.getServletContext().getRealPath("");
+        // constructs path of the directory to save uploaded file
+        String savePath = appPath + File.separator + saveDirectory;
+
+        // creates the save directory if it does not exists
+        File fileSaveDir = new File(savePath);
+        if (!fileSaveDir.exists()) {
+            fileSaveDir.mkdir();
+        }
+
+        String imageName = "";
+        String fileExtension;
+        String fileName = "";
+
+        for (Part part : request.getParts()) {
+            if (!part.getName().equals("file")) {
+                continue;
+            }
+            if (fileName.equals("")) {
+                fileName = extractFileName(part);
+                fileExtension = imageName.split("\\.")[1];
+                do {
+                    fileName = generateSemiUniqueFileName() + "." + fileExtension;
+                } while (new File(savePath + File.separator + fileName).exists());
+            }
+            part.write(savePath + File.separator + fileName);
+        }
         try {
-            int buildingId = -1;
-            if (request.getParameter("buildingId").equals("")) {
-                buildingId = Integer.parseInt(request.getParameter("buildingId"));
-            }
-
-            int imageId = -1;
-            if (request.getParameter("imageId").equals("")) {
-                imageId = Integer.parseInt(request.getParameter("imageId"));
-            }
-
-            //BUILDING DATA from form put into variables
-            processRequest(request, response);
-            String name = request.getParameter("Name");
-            String address = request.getParameter("Address");
-            String constructionYear = request.getParameter("ConstructionYear");
-            String area = request.getParameter("Area");
-            String currentUse = request.getParameter("CurrentUse");
-            String previousUse = request.getParameter("PreviousUse");
-
-            //IMAGE DATA
-            // gets absolute path of the web application
-            String appPath = request.getServletContext().getRealPath("");
-            // constructs path of the directory to save uploaded file
-            String savePath = appPath + File.separator + saveDirectory;
-
-            // creates the save directory if it does not exists
-            File fileSaveDir = new File(savePath);
-            if (!fileSaveDir.exists()) {
-                fileSaveDir.mkdir();
-            }
-
-            String imageName = "";
-            String fileExtension;
-            String fileName = "";
-
-            for (Part part : request.getParts()) {
-                if (true) {
-
-                }
-                if (fileName.equals("")) {
-                    fileName = extractFileName(part);
-                    fileExtension = imageName.split("\\.")[1];
-                    do {
-                        fileName = generateSemiUniqueFileName() + "." + fileExtension;
-                    } while (new File(savePath + File.separator + fileName).exists());
-                }
-                part.write(savePath + File.separator + fileName);
-            }
-
             //get the database connection
             Connection conn = data.DB.getConnection();
 
             // Execute SQL query
             PreparedStatement pstmt;
 
-            if (imageId < 0) {
+            pstmt = (PreparedStatement) conn.prepareStatement("INSERT INTO"
+                    + "building ([building].[Name], [building].[Address], [building].[ConstructionYear], [building].[CurrentUse], [building].[Area], [building].PreviousUse) VALUES (?, ?, ?, ?, ?, ?); SELECT LAST_INSERT_ID() AS Id;");
 
-                pstmt = (PreparedStatement) conn.prepareStatement("INSERT INTO"
-                        + "building ([building].[Name], [building].[Address], [building].[ConstructionYear], [building].[CurrentUse], [building].[Area], [building].PreviousUse) VALUES (?, ?, ?, ?, ?, ?); SELECT LAST_INSERT_ID() AS Id;");
+            pstmt.setString(1, name);
+            pstmt.setString(2, address);
+            pstmt.setString(3, constructionYear);
+            pstmt.setString(4, currentUse);
+            pstmt.setString(5, area);
+            pstmt.setString(6, previousUse);
 
-                pstmt.setString(1, name);
-                pstmt.setString(2, address);
-                pstmt.setString(3, constructionYear);
-                pstmt.setString(4, currentUse);
-                pstmt.setString(5, area);
-                pstmt.setString(6, previousUse);
+            ResultSet rs = pstmt.executeQuery();
 
-                ResultSet rs = pstmt.executeQuery();
-
-                //take the Id from building 
-                if (rs.getFetchSize() == 1) {
-                    rs.next();
-                    buildingId = rs.getInt("Id");
-                }
-                conn.close();
-                //image inserted to database
-                pstmt = conn.prepareStatement("INSERT INTO image ([image].[Name], [image].[FkBuildingId], [image].[Path]) VALUES (?,?,?)");
-
-                pstmt.setString(1, imageName);
-                pstmt.setInt(2, buildingId);
-                pstmt.setString(3, fileName);
-
-                pstmt.executeQuery();
-                conn.close();
+            //take the Id from building 
+            if (rs.getFetchSize() == 1) {
+                rs.next();
+                buildingId = rs.getInt("Id");
             }
+            conn.close();
+            //image inserted to database
+            pstmt = conn.prepareStatement("INSERT INTO image ([image].[Name], [image].[FkBuildingId], [image].[Path]) VALUES (?,?,?)");
+
+            pstmt.setString(1, imageName);
+            pstmt.setInt(2, buildingId);
+            pstmt.setString(3, fileName);
+
+            pstmt.executeQuery();
+            conn.close();
+
         } catch (Exception ex) {
             ex.printStackTrace();
             Logger.getLogger(BuildingController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (buildingId < 0) {
+            response.sendRedirect("/building?id=" + buildingId);
+        } else {
+            response.sendRedirect("/allBuildings.jsp");
         }
     }
 
@@ -157,5 +160,4 @@ public class BuildingController extends HttpServlet {
 //        }
 //        return "";
 //    }
-
 }
