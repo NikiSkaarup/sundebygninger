@@ -126,6 +126,7 @@ public class BuildingController extends HttpServlet {
                 buildingId = rs.getInt("Id");
             }
             conn.close();
+            
             //image inserted to database
             pstmt = conn.prepareStatement("INSERT INTO image ([image].[Name], [image].[FkBuildingId], [image].[Path]) VALUES (?,?,?)");
 
@@ -141,7 +142,7 @@ public class BuildingController extends HttpServlet {
             Logger.getLogger(BuildingController.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (buildingId < 0) {
-            response.sendRedirect("/building?id=" + buildingId);
+            response.sendRedirect("/building?id=" + buildingId + "FUCKING IDIOTISKE LORTE LORT");
         } else {
             response.sendRedirect("/allBuildings.jsp");
         }
