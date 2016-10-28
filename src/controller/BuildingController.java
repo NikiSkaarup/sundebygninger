@@ -52,6 +52,11 @@ public class BuildingController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+            int id = -1;
+            if (request.getParameter("edit") != null) {
+                id = Integer.parseInt(request.getParameter("edit"));
+            }
+
             //data from form put into variables
             processRequest(request, response);
             String name = request.getParameter("Name");
@@ -66,7 +71,7 @@ public class BuildingController extends HttpServlet {
                 buildingId = Integer.parseInt(request.getParameter("building"));
             }
 
-            //image data
+            //IMAGE DATA
             // gets absolute path of the web application
             String appPath = request.getServletContext().getRealPath("");
             // constructs path of the directory to save uploaded file
@@ -81,7 +86,7 @@ public class BuildingController extends HttpServlet {
 
             String fileExtension = imageName.split("\\.")[1];
             String fileName;
-      
+
             do {
                 fileName = generateSemiUniqueFileName() + "." + fileExtension;
             } while (new File(savePath + File.separator + fileName).exists());
@@ -94,35 +99,40 @@ public class BuildingController extends HttpServlet {
             Connection conn = data.DB.getConnection();
 
             // Execute SQL query
-            PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement("INSERT INTO"
-                    + "building ([building].[Name], [building].[Address], [building].[ConstructionYear], [building].[CurrentUse], [building].[Area], [building].PreviousUse) VALUES (?, ?, ?, ?, ?, ?); SELECT LAST_INSERT_ID();");
+            PreparedStatement pstmt;
 
-            pstmt.setString(1, name);
-            pstmt.setString(2, address);
-            pstmt.setString(3, constructionYear);
-            pstmt.setString(4, currentUse);
-            pstmt.setString(5, area);
-            pstmt.setString(6, previousUse);
+            if (id < 0) {
 
-            pstmt = conn.prepareStatement("INSERT INTO image ([image].[Name], [image].[FkBuildingId], [image].[Path]) VALUES (?,?,?)");
+                pstmt = (PreparedStatement) conn.prepareStatement("INSERT INTO"
+                        + "building ([building].[Name], [building].[Address], [building].[ConstructionYear], [building].[CurrentUse], [building].[Area], [building].PreviousUse) VALUES (?, ?, ?, ?, ?, ?); SELECT LAST_INSERT_ID() AS Id;");
 
-            pstmt.setString(1, imageName);
-            pstmt.setInt(2, buildingId);
-            pstmt.setString(3, fileName);
+                pstmt.setString(1, name);
+                pstmt.setString(2, address);
+                pstmt.setString(3, constructionYear);
+                pstmt.setString(4, currentUse);
+                pstmt.setString(5, area);
+                pstmt.setString(6, previousUse);
 
-            ResultSet rs = pstmt.executeQuery();
+                ResultSet rs = pstmt.executeQuery();
 
-            if (rs.getFetchSize() == 1) {
-                rs.next();
+                //take the Id from building 
+                if (rs.getFetchSize() == 1) {
+                    rs.next();
+                    buildingId = rs.getInt("Id");
+                }
+                conn.close();
+                //image inserted to database
+                pstmt = conn.prepareStatement("INSERT INTO image ([image].[Name], [image].[FkBuildingId], [image].[Path]) VALUES (?,?,?)");
 
-            } else {
+                pstmt.setString(1, imageName);
+                pstmt.setInt(2, buildingId);
+                pstmt.setString(3, fileName);
 
+                pstmt.executeQuery();
             }
-
         } catch (SQLException ex) {
             Logger.getLogger(BuildingController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     /**
