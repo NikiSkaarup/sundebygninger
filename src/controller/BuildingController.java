@@ -59,11 +59,6 @@ public class BuildingController extends HttpServlet {
             buildingId = Integer.parseInt(request.getParameter("buildingId"));
         }
 
-        int imageId = -1;
-        if (!request.getParameter("imageId").equals("")) {
-            imageId = Integer.parseInt(request.getParameter("imageId"));
-        }
-
         //BUILDING DATA from form put into variables
         processRequest(request, response);
         String name = request.getParameter("Name");
@@ -73,35 +68,6 @@ public class BuildingController extends HttpServlet {
         String currentUse = request.getParameter("CurrentUse");
         String previousUse = request.getParameter("PreviousUse");
 
-        //IMAGE DATA
-        // gets absolute path of the web application
-        String appPath = request.getServletContext().getRealPath("");
-        // constructs path of the directory to save uploaded file
-        String savePath = appPath + File.separator + saveDirectory;
-
-        // creates the save directory if it does not exists
-        File fileSaveDir = new File(savePath);
-        if (!fileSaveDir.exists()) {
-            fileSaveDir.mkdir();
-        }
-
-        String imageName = "";
-        String fileExtension;
-        String fileName = "";
-
-        for (Part part : request.getParts()) {
-            if (!part.getName().equals("file")) {
-                continue;
-            }
-            if (fileName.equals("")) {
-                fileName = extractFileName(part);
-                fileExtension = imageName.split("\\.")[1];
-                do {
-                    fileName = generateSemiUniqueFileName() + "." + fileExtension;
-                } while (new File(savePath + File.separator + fileName).exists());
-            }
-            part.write(savePath + File.separator + fileName);
-        }
         try {
             //get the database connection
             Connection conn = data.DB.getConnection();
@@ -130,15 +96,7 @@ public class BuildingController extends HttpServlet {
             }
             conn.close();
 
-            //image inserted to database
-            pstmt = conn.prepareStatement("INSERT INTO image ([image].[Name], [image].[FkBuildingId], [image].[Path]) VALUES (?,?,?)");
 
-            pstmt.setString(1, imageName);
-            pstmt.setInt(2, buildingId);
-            pstmt.setString(3, fileName);
-
-            pstmt.executeQuery();
-            conn.close();
 
         } catch (Exception ex) {
             ex.printStackTrace();
