@@ -1,6 +1,7 @@
 package db;
 
 import model.Building;
+import model.Org;
 import model.User;
 
 import java.sql.Connection;
@@ -26,20 +27,20 @@ public class Dal {
         return null;
     }
 
-    public List<Building> getBuildings() {
+    public List<Building> getBuildings(Org org) {
         return null;
     }
 
-    public List<Building> getBuildings(int count) {
+    public List<Building> getBuildings(Org org, int count) {
         return null;
-    }
-
-    public boolean updateBuilding(Building b) {
-        return false;
     }
 
     public int insertBuilding(Building b) {
         return 0;
+    }
+
+    public boolean updateBuilding(Building b) {
+        return false;
     }
 
     public User getUser(int id) {
@@ -56,5 +57,21 @@ public class Dal {
 
     public List<User> getUsers(int count) {
         return null;
+    }
+
+    public List<User> getUsers(Org org) {
+        return null;
+    }
+
+    public List<User> getUsers(Org org, int count) {
+        return null;
+    }
+
+    public int insertUser(User u) {
+        return 0;
+    }
+
+    public boolean updateUser(User u) {
+        return false;
     }
 }
