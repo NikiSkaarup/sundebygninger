@@ -75,10 +75,41 @@ public class Dal {
     }
 
     public int insertBuilding(Building b) {
-        return 0;
+        int id = -1;
+        String sql = "INSERT INTO Building (Name, Address, ConstructionYear, CurrentUse, Area, PreviousUse, FkOrgId) VALUES (?, ?, ?, ?, ?, ?, ?); SELECT LAST_INSERT_ID() AS Id;";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, b.getName());
+            stmt.setString(2, b.getAddress());
+            stmt.setTimestamp(3, b.getConstructionYear());
+            stmt.setString(4, b.getCurrentUse());
+            stmt.setString(5, b.getArea());
+            stmt.setString(6, b.getPreviousUse());
+            stmt.setInt(7, b.getOrg().getId());
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                id = rs.getInt("Id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return id;
     }
 
     public boolean updateBuilding(Building b) {
+        String sql = "INSERT INTO Building (Name, Address, ConstructionYear, CurrentUse, Area, PreviousUse, FkOrgId) VALUES (?, ?, ?, ?, ?, ?, ?); SELECT LAST_INSERT_ID() AS Id;";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, b.getName());
+            stmt.setString(2, b.getAddress());
+            stmt.setTimestamp(3, b.getConstructionYear());
+            stmt.setString(4, b.getCurrentUse());
+            stmt.setString(5, b.getArea());
+            stmt.setString(6, b.getPreviousUse());
+            stmt.setInt(7, b.getOrg().getId());
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
