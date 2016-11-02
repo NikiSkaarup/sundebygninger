@@ -15,15 +15,16 @@
     </head>
     <body>
         <%@include file="navigation.jsp"  %>
-        <h3>List of all customers</h3>
+        <h3>Liste over alle kunderne</h3>
         <table class="table table-hower">
         <div>
                 <thead>
                     <tr>
                         <th>Nr.</th>
-                        <th>Name</th>
+                        <th>Navn</th>
                         <th>Email</th>
-                        <th>Link to view</th>
+                        <th>Link til info</th>
+                        <th>Redigere</th>
                     </tr>  
                 </thead>
         </div>
@@ -32,18 +33,21 @@
         <td>?</td>
         <td>?</td>
         <td><a href="#">Link</a> </td>
+        <td><a href="##">Redigere</a> </td>
     </tr>
     <tr>
         <th scope="row">2</th>
         <td>?</td>
         <td>?</td>
         <td><a href="#">Link</a> </td>
+        <td><a href="##">Redigere</a> </td>
     </tr>
     <tr>
         <th scope="row">3</th>
         <td>?</td>
         <td>?</td>
         <td><a href="#">Link</a> </td>
+        <td><a href="##">Redigere</a> </td>
     </tr>
 
 
