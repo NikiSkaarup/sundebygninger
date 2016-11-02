@@ -29,13 +29,17 @@ public class Facade {
         return dal.getBuilding(id);
     }
 
-    public List<Building> getBuildings(Org org) {
+    public List<Building> getBuildings(int orgId) {
         Dal dal = new Dal(Conn.get());
+        Org org = new Org();
+        org.setId(orgId);
         return dal.getBuildings(org);
     }
 
-    public List<Building> getBuildings(Org org, int count) {
+    public List<Building> getBuildings(int orgId, int count) {
         Dal dal = new Dal(Conn.get());
+        Org org = new Org();
+        org.setId(orgId);
         return dal.getBuildings(org, count);
     }
 
@@ -70,18 +74,17 @@ public class Facade {
         return dal.getUsers();
     }
 
-    public List<User> getUsers(int count) {
+    public List<User> getUsers(int orgId) {
         Dal dal = new Dal(Conn.get());
-        return dal.getUsers(count);
-    }
-
-    public List<User> getUsers(Org org) {
-        Dal dal = new Dal(Conn.get());
+        Org org = new Org();
+        org.setId(orgId);
         return dal.getUsers(org);
     }
 
-    public List<User> getUsers(Org org, int count) {
+    public List<User> getUsers(int orgId, int count) {
         Dal dal = new Dal(Conn.get());
+        Org org = new Org();
+        org.setId(orgId);
         return dal.getUsers(org, count);
     }
 
