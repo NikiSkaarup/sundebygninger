@@ -16,6 +16,7 @@ public class Building {
     private String previousUse;
     private String area;
     private Timestamp constructionYear;
+    private Timestamp submission;
     private Org org;
     private HashMap<Integer,Request> requests;
     private HashMap<Integer,Incident> incidents;
@@ -79,6 +80,14 @@ public class Building {
 
     public void setConstructionYear(Timestamp constructionYear) {
         this.constructionYear = constructionYear;
+    }
+
+    public Timestamp getSubmission() {
+        return submission;
+    }
+
+    public void setSubmission(Timestamp submission) {
+        this.submission = submission;
     }
 
     public Org getOrg() {
