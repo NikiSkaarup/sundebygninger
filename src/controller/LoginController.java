@@ -17,8 +17,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.User;
+//import javax.servlet.http.HttpSession;
+//import model.User;
 import java.sql.*;
 
 /**
@@ -28,7 +28,7 @@ import java.sql.*;
 @WebServlet(name = "LoginController", urlPatterns = {"/LoginController"})
 public class LoginController extends HttpServlet {
 
-    private Object Validate;
+    //private Object Validate;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -90,27 +90,31 @@ public class LoginController extends HttpServlet {
             PrintWriter out = response.getWriter();
             String email = request.getParameter("email");
             String password = request.getParameter("password");
-
-            Connection conn = data.DB.getConnection();
-            PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement("SELECT * FROM 'User' WHERE 'email' = ? AND 'password' = ?");
-
+            Boolean svar;
+                  
+            Connection conn = data.DB.getConnection();//Virker ikke
+            PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement("SELECT email FROM User WHERE email = ? AND password = ?");
+                        
             pstmt.setString(1, email);
             pstmt.setString(2, password);
             ResultSet rs = pstmt.executeQuery();
-            rs.next();
+            svar = rs.next();
+            conn.close();
             
-            if(email == password && password == email){
+            
+            //Hvis email og password passer sammen 
+        
+            if (svar == true) {
                 request.getSession().setAttribute("user", email);
                 response.sendRedirect("home");
-            }
-            else{
+            } else {
                 request.setAttribute("error", "Unknown user, please try again");
                 request.getRequestDispatcher("/login.jsp").forward(request, response);
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 }
