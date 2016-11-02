@@ -10,7 +10,8 @@ import java.sql.Timestamp;
 public class Request {
     private int id;
     private Timestamp submission;
-    private Timestamp fulfillment;
+    private Report report;
+    private User user;
     private String description;
     private Building building;
     private ServiceType serviceType;
@@ -34,12 +35,20 @@ public class Request {
         this.submission = submission;
     }
 
-    public Timestamp getFulfillment() {
-        return fulfillment;
+    public Report getReport() {
+        return report;
     }
 
-    public void setFulfillment(Timestamp fulfillment) {
-        this.fulfillment = fulfillment;
+    public void setReport(Report report) {
+        this.report = report;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getDescription() {

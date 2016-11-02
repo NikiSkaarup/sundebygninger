@@ -14,6 +14,7 @@ public class Report {
     private HashMap<Integer,Comment> comments;
     private HashMap<Integer,Room> rooms;
     private Timestamp submission;
+    private User user;
 
     public Report() {
     }
@@ -56,5 +57,13 @@ public class Report {
 
     public void setSubmission(Timestamp submission) {
         this.submission = submission;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
