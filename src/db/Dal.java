@@ -55,10 +55,6 @@ public class Dal {
         return null;
     }
 
-    public List<User> getUsers(int count) {
-        return null;
-    }
-
     public List<User> getUsers(Org org) {
         return null;
     }
