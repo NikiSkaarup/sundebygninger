@@ -55,7 +55,7 @@
 
                         <div class="form-group" id="room-1">
                             <hr>
-                            <label class="col-md-3 control-label">Lokale</label>
+                            <label class="col-md-3 control-label">Lokale 1</label>
                             <div class="col-md-9">
                                 <input class="form-control" type="text" placeholder="Lokale ID" name="room"/>
 
@@ -105,17 +105,17 @@
                                 <br>
                                 <div>
                                     Fugtighedsscanning? 
-                                    <label><input type="radio" name="moistradio">Ja</label>
-                                    <label><input type="radio" name="moistradio">Nej</label>
+                                    <label><input type="radio" name="moistradio-1">Ja</label>
+                                    <label><input type="radio" name="moistradio-1">Nej</label>
                                 </div>      
                                 
                                 <div class="col-md-6">
                                     Fugtscanning:  
-                                    <input type="date" class="form-control" name="moistureScan">
+                                    <input type="date" class="form-control" name="moistureScan-1">
                                 </div>
                                 <div class="col-md-6">
                                     Målepunkt   
-                                    <input type="text" class="form-control" name="measureSpot">                               
+                                    <input type="text" class="form-control" name="measureSpot-1">                               
                                 </div>
 
                                 <br>
