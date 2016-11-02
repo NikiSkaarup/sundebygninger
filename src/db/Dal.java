@@ -29,7 +29,7 @@ public class Dal {
     }
 
     public Building getBuilding(int id) {
-        String sql = "SELECT Id, Name, Address, ConstructionYear, CurrentUse, Area, PreviousUse FROM `Building` WHERE Id=?";
+        String sql = "SELECT Id, `Name`, Address, ConstructionYear, CurrentUse, Area, PreviousUse FROM `Building` WHERE Id=?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -43,7 +43,7 @@ public class Dal {
     }
 
     public List<Building> getBuildings(Org org) {
-        String sql = "SELECT Id, Name, Address, ConstructionYear, CurrentUse, Area, PreviousUse FROM `Building` WHERE FkOrgId=?";
+        String sql = "SELECT Id, `Name`, Address, ConstructionYear, CurrentUse, Area, PreviousUse FROM `Building` WHERE FkOrgId=? ORDER BY Submission DESC";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             List<Building> buildings = new ArrayList<>();
             stmt.setInt(1, org.getId());
@@ -59,7 +59,7 @@ public class Dal {
     }
 
     public List<Building> getBuildings(Org org, int count) {
-        String sql = "SELECT Id, Name, Address, ConstructionYear, CurrentUse, Area, PreviousUse FROM `Building` WHERE FkOrgId=? LIMIT ?";
+        String sql = "SELECT Id, `Name`, Address, ConstructionYear, CurrentUse, Area, PreviousUse FROM `Building` WHERE FkOrgId=? ORDER BY Submission DESC LIMIT ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             List<Building> buildings = new ArrayList<>();
             stmt.setInt(1, org.getId());
@@ -77,7 +77,7 @@ public class Dal {
 
     public int insertBuilding(Building b) {
         int id = -1;
-        String sql = "INSERT INTO `Building` (Name, Address, ConstructionYear, CurrentUse, Area, PreviousUse, FkOrgId) VALUES (?, ?, ?, ?, ?, ?, ?); SELECT LAST_INSERT_ID() AS Id;";
+        String sql = "INSERT INTO `Building` (`Name`, Address, ConstructionYear, CurrentUse, Area, PreviousUse, FkOrgId) VALUES (?, ?, ?, ?, ?, ?, ?); SELECT LAST_INSERT_ID() AS Id;";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, b.getName());
             stmt.setString(2, b.getAddress());
@@ -97,7 +97,7 @@ public class Dal {
     }
 
     public boolean updateBuilding(Building b) {
-        String sql = "UPDATE `Building` SET Name=?, Address=?, ConstructionYear=?, CurrentUse=?, Area=?, PreviousUse=?, FkOrgId=? WHERE Id=?";
+        String sql = "UPDATE `Building` SET `Name`=?, Address=?, ConstructionYear=?, CurrentUse=?, Area=?, PreviousUse=?, FkOrgId=? WHERE Id=?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, b.getName());
             stmt.setString(2, b.getAddress());
@@ -136,7 +136,7 @@ public class Dal {
     }
 
     public User getUser(int id) {
-        String sql = "SELECT Id, Name, Email, Phone, FkRoleId, FkOrgId FROM `User` WHERE Id=?";
+        String sql = "SELECT Id, `Name`, Email, Phone, FkRoleId, FkOrgId FROM `User` WHERE Id=?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -150,7 +150,7 @@ public class Dal {
     }
 
     public User getUserLogin(String email, String pass) {
-        String sql = "SELECT Id, Name, Email, Phone, FkRoleId, FkOrgId FROM `User` WHERE Email=? AND Password=?";
+        String sql = "SELECT Id, `Name`, Email, Phone, FkRoleId, FkOrgId FROM `User` WHERE Email=? AND Password=? GROUP BY FkOrgId ORDER BY `Name`";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, email);
             stmt.setString(2, pass);
@@ -165,7 +165,7 @@ public class Dal {
     }
 
     public List<User> getUsers() {
-        String sql = "SELECT Id, Name, Email, Phone, FkRoleId, FkOrgId FROM `User`";
+        String sql = "SELECT Id, `Name`, Email, Phone, FkRoleId, FkOrgId FROM `User` GROUP BY FkOrgId ORDER BY `Name`";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             List<User> users = new ArrayList<>();
@@ -180,7 +180,7 @@ public class Dal {
     }
 
     public List<User> getUsers(Org org) {
-        String sql = "SELECT Id, Name, Email, Phone, FkRoleId, FkOrgId FROM `User` WHERE FkOrgId=?";
+        String sql = "SELECT Id, `Name`, Email, Phone, FkRoleId, FkOrgId FROM `User` WHERE FkOrgId=?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, org.getId());
             ResultSet rs = stmt.executeQuery();
@@ -196,7 +196,7 @@ public class Dal {
     }
 
     public List<User> getUsers(Org org, int count) {
-        String sql = "SELECT Id, Name, Email, Phone, FkRoleId, FkOrgId FROM `User` WHERE FkOrgId=? LIMIT ?";
+        String sql = "SELECT Id, `Name`, Email, Phone, FkRoleId, FkOrgId FROM `User` WHERE FkOrgId=? LIMIT ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, org.getId());
             stmt.setInt(2, count);
@@ -214,7 +214,7 @@ public class Dal {
 
     public int insertUser(User u) {
         int id = -1;
-        String sql = "INSERT INTO `User` (Name, Email, Phone, FkRoleId, FkOrgId) VALUES (?, ?, ?, ?, ?); SELECT LAST_INSERT_ID() AS Id;";
+        String sql = "INSERT INTO `User` (`Name`, Email, Phone, FkRoleId, FkOrgId) VALUES (?, ?, ?, ?, ?); SELECT LAST_INSERT_ID() AS Id;";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, u.getName());
             stmt.setString(2, u.getEmail());
@@ -231,7 +231,7 @@ public class Dal {
     }
 
     public boolean updateUser(User u) {
-        String sql = "UPDATE `User` SET Name=?, Email=?, Phone=?, FkRoleId=?, FkOrgId=? WHERE Id=?";
+        String sql = "UPDATE `User` SET `Name`=?, Email=?, Phone=?, FkRoleId=?, FkOrgId=? WHERE Id=?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, u.getName());
             stmt.setString(2, u.getEmail());
