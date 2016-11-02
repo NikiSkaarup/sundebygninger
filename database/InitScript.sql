@@ -1,3 +1,5 @@
+USE sundebygninger;
+
 insert into Org(Name, Phone)
 values('Hvidovre Kommune', '46282828'),('Hansen A/S', '66666666');
 
