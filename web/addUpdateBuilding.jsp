@@ -16,12 +16,11 @@
         <%@include file="navigation.jsp"  %>
         <div class="container-fluid">
 
-            <h1>${requestScope.action} Add building</h1>
+            <h1>${requestScope.action} Add or update building</h1>
             <div class="row">
                 <div class="col-md-6"> 
                     <form action="BuildingController" method="POST" class="form-horizontal" enctype="multipart/form-data">
                         <input type="hidden" value="${requestScope.bId}" name="buildingId"/>
-                        <input type="hidden" value="${requestScope.iId}" name="imageId"/>
                         
                         <div class="form-group">
                             <label class="col-md-3 control-label">Navn på bygning</label>
@@ -38,13 +37,6 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Billeder af hus eller bygning</label>
-                            <div class="col-md-9">
-                                <input type="file" name="image"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
                             <label class="col-md-3 control-label">Byggeår</label>
                             <div class="col-md-9">
                                 <input class="form-control" type="text" placeholder="Byggeår" name="ConstructionYear"/>
@@ -55,6 +47,7 @@
                             <label class="col-md-3 control-label">Bygningsareal i m2</label>
                             <div class="col-md-9">
                                 <input class="form-control" type="text" placeholder="Bygningsareal i m2" name="Area"/>
+
                             </div>
                         </div>
 
