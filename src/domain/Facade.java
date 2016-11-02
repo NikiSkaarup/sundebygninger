@@ -1,7 +1,7 @@
 package domain;
 
 import db.Conn;
-import db.Dal;
+import db.DAL;
 import model.Building;
 import model.Org;
 import model.User;
@@ -25,36 +25,36 @@ public class Facade {
     }
 
     public Building getBuilding(int id) {
-        Dal dal = new Dal(Conn.get());
+        DAL dal = new DAL(Conn.get());
         return dal.getBuilding(id);
     }
 
     public List<Building> getBuildings(int orgId) {
-        Dal dal = new Dal(Conn.get());
+        DAL dal = new DAL(Conn.get());
         Org org = new Org();
         org.setId(orgId);
         return dal.getBuildings(org);
     }
 
     public List<Building> getBuildings(int orgId, int count) {
-        Dal dal = new Dal(Conn.get());
+        DAL dal = new DAL(Conn.get());
         Org org = new Org();
         org.setId(orgId);
         return dal.getBuildings(org, count);
     }
 
     public int insertBuilding(Building b) {
-        Dal dal = new Dal(Conn.get());
+        DAL dal = new DAL(Conn.get());
         return dal.insertBuilding(b);
     }
 
     public boolean updateBuilding(Building b) {
-        Dal dal = new Dal(Conn.get());
+        DAL dal = new DAL(Conn.get());
         return dal.updateBuilding(b);
     }
 
     public User getUser(int id) {
-        Dal dal = new Dal(Conn.get());
+        DAL dal = new DAL(Conn.get());
         return dal.getUser(id);
     }
 
@@ -65,36 +65,36 @@ public class Facade {
      * @return user
      */
     public User getUserLogin(String e, String p) {
-        Dal dal = new Dal(Conn.get());
+        DAL dal = new DAL(Conn.get());
         return dal.getUserLogin(e, p);
     }
 
     public List<User> getUsers() {
-        Dal dal = new Dal(Conn.get());
+        DAL dal = new DAL(Conn.get());
         return dal.getUsers();
     }
 
     public List<User> getUsers(int orgId) {
-        Dal dal = new Dal(Conn.get());
+        DAL dal = new DAL(Conn.get());
         Org org = new Org();
         org.setId(orgId);
         return dal.getUsers(org);
     }
 
     public List<User> getUsers(int orgId, int count) {
-        Dal dal = new Dal(Conn.get());
+        DAL dal = new DAL(Conn.get());
         Org org = new Org();
         org.setId(orgId);
         return dal.getUsers(org, count);
     }
 
     public int insertUser(User u) {
-        Dal dal = new Dal(Conn.get());
+        DAL dal = new DAL(Conn.get());
         return dal.insertUser(u);
     }
 
     public boolean updateUser(User u) {
-        Dal dal = new Dal(Conn.get());
+        DAL dal = new DAL(Conn.get());
         return dal.updateUser(u);
     }
 

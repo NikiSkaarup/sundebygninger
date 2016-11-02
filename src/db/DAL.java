@@ -14,18 +14,19 @@ import java.util.List;
 
 /**
  * Created by Niki on 2016-11-02.
- *
+ * DAL == Database Abstraction Layer
  * @author Niki
  */
-public class Dal {
+public class DAL {
+
     private static Connection conn;
 
     /**
      * Connect to database, in given connection
      * @param conn
      */
-    public Dal(Connection conn) {
-        Dal.conn = conn;
+    public DAL(Connection conn) {
+        DAL.conn = conn;
     }
 
     public Building getBuilding(int id) {
