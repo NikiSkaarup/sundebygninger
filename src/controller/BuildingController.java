@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -28,7 +29,7 @@ import static manipulator.File.generateSemiUniqueFileName;
  *
  * @author Menja
  */
-@WebServlet(name = "BuildingController", urlPatterns = {"/Building"})
+@WebServlet(name = "BuildingController", urlPatterns = {"/BuildingController"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024 * 2, // 2MB
         maxFileSize = 1024 * 1024 * 10, // 10MB
@@ -104,12 +105,14 @@ public class BuildingController extends HttpServlet {
         try {
             //get the database connection
             Connection conn = data.DB.getConnection();
-
+            assert conn != null;
             // Execute SQL query
             PreparedStatement pstmt;
 
             pstmt = (PreparedStatement) conn.prepareStatement("INSERT INTO"
-                    + "building ([building].[Name], [building].[Address], [building].[ConstructionYear], [building].[CurrentUse], [building].[Area], [building].PreviousUse) VALUES (?, ?, ?, ?, ?, ?); SELECT LAST_INSERT_ID() AS Id;");
+                    + "building (Name, Address, ConstructionYear, CurrentUse, Area, PreviousUse)"
+                    + "VALUES (?, ?, ?, ?, ?, ?);" 
+                    + "SELECT LAST_INSERT_ID() AS Id;");
 
             pstmt.setString(1, name);
             pstmt.setString(2, address);
@@ -126,7 +129,7 @@ public class BuildingController extends HttpServlet {
                 buildingId = rs.getInt("Id");
             }
             conn.close();
-            
+
             //image inserted to database
             pstmt = conn.prepareStatement("INSERT INTO image ([image].[Name], [image].[FkBuildingId], [image].[Path]) VALUES (?,?,?)");
 
@@ -141,10 +144,11 @@ public class BuildingController extends HttpServlet {
             ex.printStackTrace();
             Logger.getLogger(BuildingController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         if (buildingId < 0) {
-            response.sendRedirect("/building?id=" + buildingId + "FUCKING IDIOTISKE LORTE LORT");
+            forward(request, response, "allBuildings.jsp?id=" + buildingId);
         } else {
-            response.sendRedirect("/allBuildings.jsp");
+            forward(request, response, "allBuildings.jsp");
         }
     }
 
@@ -161,4 +165,9 @@ public class BuildingController extends HttpServlet {
 //        }
 //        return "";
 //    }
+
+    private void forward(HttpServletRequest request, HttpServletResponse response, String string) throws ServletException, IOException {
+        RequestDispatcher rd = request.getRequestDispatcher("/" + string);
+        rd.forward(request, response);
+    }
 }
