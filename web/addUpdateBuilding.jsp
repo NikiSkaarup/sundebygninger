@@ -55,7 +55,6 @@
                             <label class="col-md-3 control-label">Bygningsareal i m2</label>
                             <div class="col-md-9">
                                 <input class="form-control" type="text" placeholder="Bygningsareal i m2" name="Area"/>
-                                <label>(Hver etage tælles seperat)</label>
                             </div>
                         </div>
 

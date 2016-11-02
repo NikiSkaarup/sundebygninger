@@ -14,9 +14,36 @@
     </head>
     <body>
         <%@include file="navigation.jsp"  %>
-        <h1>All Buildings</h1>
-        
+        <div class="container-fluid">
+            <h1>All Buildings</h1>
+            <table class="table table-responsive table-bordered table-hover table-striped">
+                <thead>
+                    <tr class="active">
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Link</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Lyngby</td>
+                        <td>Kanalvej 4, 2800 Lyngby</td>
+                        <td><a href="#">Link til info</a></td>
+                    </tr>
+                    <tr>
+                        <td>Lyngby</td>
+                        <td>Kanalvej 4, 2800 Lyngby</td>
+                        <td><a href="#">Link til info</a></td>
+                    </tr>
+                    <tr>
+                        <td>Lyngby</td>
+                        <td>Kanalvej 4, 2800 Lyngby</td>
+                        <td><a href="#">Link til info</a></td>
+                    </tr>
+                </tbody>
+            </table>
 
+        </div>
         <script src="Js/jquery-2.2.4.js" type="text/javascript"></script>
         <script src="Js/bootstrap.js" type="text/javascript"></script>
     </body>
