@@ -22,7 +22,6 @@
                         <th>Name</th>
                         <th>Address</th>
                         <th>Link</th>
-                        <th>Added</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -30,19 +29,16 @@
                         <td>Lyngby</td>
                         <td>Kanalvej 4, 2800 Lyngby</td>
                         <td><a href="#">Link til info</a></td>
-                        <td>12:03:54</td>
                     </tr>
                     <tr>
                         <td>Lyngby</td>
                         <td>Kanalvej 4, 2800 Lyngby</td>
                         <td><a href="#">Link til info</a></td>
-                        <td>22:13:30</td>
                     </tr>
                     <tr>
                         <td>Lyngby</td>
                         <td>Kanalvej 4, 2800 Lyngby</td>
                         <td><a href="#">Link til info</a></td>
-                        <td>16:37:04</td>
                     </tr>
                 </tbody>
             </table>
