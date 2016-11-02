@@ -94,21 +94,32 @@
                                     <label><input type="checkbox" value="" >Brand</label>
                                     <label><input type="checkbox" value="" >Andet</label>
                                 </div>
+                                <hr>
 
-
+                                <select class="form-control" id="roomComentType-1">
+                                    <option>Vægge</option>
+                                    <option>Loft</option>
+                                    <option>Gulv</option>
+                                    <option>Vinduer/døre</option>                                    
+                                    <option>Andet</option>
+                                </select>
                                 <div>
                                     Bemærkninger:
                                     <textarea class="form-control" rows="2" name="roomComment"></textarea>
                                     <span>Billede: <input type="file"/></span>
                                 </div>
                                 
-                                <br>
+                                <div>
+                                    <a id="add_comment" class="btn btn-default">Tilføj bemærkninger</a>
+                                </div>
+
+                                <hr>
                                 <div>
                                     Fugtighedsscanning? 
                                     <label><input type="radio" name="moistradio-1">Ja</label>
                                     <label><input type="radio" name="moistradio-1">Nej</label>
                                 </div>      
-                                
+
                                 <div class="col-md-6">
                                     Fugtscanning:  
                                     <input type="date" class="form-control" name="moistureScan-1">

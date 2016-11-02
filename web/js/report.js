@@ -170,13 +170,13 @@ function createRoom() {
     var div145 = formGroup.clone();
     div1.append(div145);
 
-    var array = ["Vægge", "Loft", "Gulv", "Vinduer/døre", "Andet"];
+    var array = ["Vægge", "Loft", "Gulv", "Vinduer/døre", "Andet..."];
 
 //Create and append select list
-    var selectList = document.createElement("select");
-    selectList.id = "mySelect";
+    var selectList = $(document.createElement("select"));
+    selectList.attr({'id':'roomComment-'+counter});
+    selectList.addClass('form-control');
     div145.append(selectList);
-    selectList.class = "form-control";
 
 //Create and append the options
     for (var i = 0; i < array.length; i++) {
