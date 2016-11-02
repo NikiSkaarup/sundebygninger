@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `sundebygninger`.`Building` (
   `FkOrgId` INT NOT NULL,
   `Name` VARCHAR(255) NOT NULL,
   `Address` VARCHAR(255) NOT NULL,
-  `ConstructionYear` TIMESTAMP NOT NULL,
+  `ConstructionYear` TIMESTAMP NOT NULL DEFAULT '1990-01-01',
   `CurrentUse` VARCHAR(128) NOT NULL,
   `Area` VARCHAR(512) NOT NULL,
   `PreviousUse` VARCHAR(128) NULL,
