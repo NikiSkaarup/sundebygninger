@@ -22,7 +22,7 @@ and open the template in the editor.
     </head>
     <body>
         <div class="container-fluid">
-            <a href="building.jsp">Add/update building</a>
+            <a href="addUpdateBuilding.jsp">Add/update building</a>
             <h1> Polygon A/S </h1>
             
             <h2>Sign in as customer/admin</h2>

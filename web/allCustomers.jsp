@@ -9,32 +9,52 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
+
         <title>JSP list for all customers</title>
     </head>
     <body>
-        <h2>List of all customers</h2>
+        <%@include file="navigation.jsp"  %>
+        <h3>List of all customers</h3>
         <table class="table table-hower">
-            <thead>
-                <tr>
-                    <th>Nr.</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Link to view</th>
-
-
-                </tr>  
-
-            </thead>
-
-
-            <form>
-
-
-            </form>
+        <div>
+                <thead>
+                    <tr>
+                        <th>Nr.</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Link to view</th>
+                    </tr>  
+                </thead>
         </div>
-    </div>
-    <script src="js/jquery-2.2.4.js" type="text/javascript"></script>
-    <script src="js/bootstrap.js" type="text/javascript"></script>
+    <tr>
+        <th scope="row">1</th>
+        <td>?</td>
+        <td>?</td>
+        <td><a href="#">Link</a> </td>
+    </tr>
+    <tr>
+        <th scope="row">2</th>
+        <td>?</td>
+        <td>?</td>
+        <td><a href="#">Link</a> </td>
+    </tr>
+    <tr>
+        <th scope="row">3</th>
+        <td>?</td>
+        <td>?</td>
+        <td><a href="#">Link</a> </td>
+    </tr>
+
+
+    <form>
+
+
+    </form>
+</div>
+</div>
+<script src="js/jquery-2.2.4.js" type="text/javascript"></script>
+<script src="js/bootstrap.js" type="text/javascript"></script>
 </div>
 </body>
 </html>
