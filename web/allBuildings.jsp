@@ -29,17 +29,17 @@
                         <tr>
                             <td>Lyngby</td>
                             <td>Kanalvej 4, 2800 Lyngby</td>
-                            <td><a href="viewBuilding.jsp">Link til info</a></td>
+                            <td><a href="viewBuilding.jsp">Mere</a></td>
                         </tr>
                         <tr>
                             <td>Lyngby</td>
                             <td>Kanalvej 4, 2800 Lyngby</td>
-                            <td><a href="viewBuilding.jsp">Link til info</a></td>
+                            <td><a href="viewBuilding.jsp">Mere</a></td>
                         </tr>
                         <tr>
                             <td>Lyngby</td>
                             <td>Kanalvej 4, 2800 Lyngby</td>
-                            <td><a href="viewBuilding.jsp">Link til info</a></td>
+                            <td><a href="viewBuilding.jsp">Mere</a></td>
                         </tr>
                     </tbody>
                 </table>

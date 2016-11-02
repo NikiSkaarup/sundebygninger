@@ -16,7 +16,7 @@
         <%@include file="navigation.jsp"  %>
         <div class="container-fluid">
 
-            <h1>${requestScope.action} Add or update building</h1>
+            <h1>${requestScope.action} Tilføj eller rediger bygning</h1>
             <div class="row">
                 <div class="col-md-6"> 
                     <form action="BuildingController" method="POST" class="form-horizontal" enctype="multipart/form-data">
@@ -47,7 +47,6 @@
                             <label class="col-md-3 control-label">Bygningsareal i m2</label>
                             <div class="col-md-9">
                                 <input class="form-control" type="text" placeholder="Bygningsareal i m2" name="Area"/>
-
                             </div>
                         </div>
 

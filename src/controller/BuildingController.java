@@ -71,7 +71,10 @@ public class BuildingController extends HttpServlet {
         try {
             //get the database connection
             Connection conn = data.DB.getConnection();
+            
+            //jeg hævder at conn IKKE er null
             assert conn != null;
+            
             // Execute SQL query
             PreparedStatement pstmt;
 
@@ -95,8 +98,6 @@ public class BuildingController extends HttpServlet {
                 buildingId = rs.getInt("Id");
             }
             conn.close();
-
-
 
         } catch (Exception ex) {
             ex.printStackTrace();
