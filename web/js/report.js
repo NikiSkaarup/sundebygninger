@@ -2,20 +2,15 @@
  * Created by Niki on 2016-10-28.
  */
 
-var counter = 1;
-var cc = 1;
+var counter = 0;
+var cc = 0;
 
 $("#add_room").on('click', function () {
     console.log("Creating room " + counter);
-    $('#room-' + counter).after(createRoom());
+    $('#roomContainer').append(createRoom());
     console.log("Created room " + counter);
 });
 
-$("#add_comment-1").on('click', function () {
-    console.log("add comment " + cc);
-    $('#commentsContainer-1').append(createComment());
-    console.log("added comment " + cc);
-});
 
 var formGroup = $(document.createElement('div')).addClass('form-group');
 var input = $(document.createElement('input')).addClass('form-control');
@@ -58,7 +53,7 @@ function createRoom() {
                     .attr({
                         type: 'radio',
                         value: 'yes',
-                        name: 'damradio-' + counter
+                        name: 'room-' + counter + '_damradio'
                     })
                     .removeClass('form-control'))
             .append('Ja '));
@@ -68,7 +63,7 @@ function createRoom() {
                     .attr({
                         type: 'radio',
                         value: 'no',
-                        name: 'damradio-' + counter
+                        name: 'room-' + counter + '_damradio'
                     })
                     .removeClass('form-control'))
             .append('Nej '));
@@ -86,7 +81,7 @@ function createRoom() {
     div1311.append(input.clone()
             .attr({
                 type: 'date',
-                name: 'date-' + counter
+                name: 'room-' + counter + '_date'
             }));
 
     var div132 = $(document.createElement('div')).addClass('col-md-5').addClass('col-md-offset-2');
@@ -98,7 +93,7 @@ function createRoom() {
     div1321.append(input.clone()
             .attr({
                 type: 'text',
-                name: 'location-' + counter
+                name: 'room-' + counter + '_location'
             }));
 
     var div133 = $(document.createElement('div')).addClass('col-md-5');
@@ -111,7 +106,7 @@ function createRoom() {
     div1331.append(input.clone()
             .attr({
                 type: 'text',
-                name: 'incident-' + counter
+                name: 'room-' + counter + '_incident'
             }));
 
 
@@ -125,7 +120,7 @@ function createRoom() {
     div1341.append(input.clone()
             .attr({
                 type: 'text',
-                name: 'repair-' + counter
+                name: 'room-' + counter + '_repair'
             }));
 
     var div14 = formGroup.clone();
@@ -136,7 +131,7 @@ function createRoom() {
             .append(input.clone()
                     .attr({
                         type: 'checkbox',
-                        name: 'moisture-' + counter
+                        name: 'room-' + counter + '_moisture'
                     })
                     .removeClass('form-control'))
             .append('Fugt '));
@@ -144,7 +139,7 @@ function createRoom() {
             .append(input.clone()
                     .attr({
                         type: 'checkbox',
-                        name: 'rot-' + counter
+                        name: 'room-' + counter + '_rot'
                     })
                     .removeClass('form-control'))
             .append('Råd og svamp '));
@@ -152,7 +147,7 @@ function createRoom() {
             .append(input.clone()
                     .attr({
                         type: 'checkbox',
-                        name: 'mold-' + counter
+                        name: 'room-' + counter + '_mold'
                     })
                     .removeClass('form-control'))
             .append('Skimmel '));
@@ -160,7 +155,7 @@ function createRoom() {
             .append(input.clone()
                     .attr({
                         type: 'checkbox',
-                        name: 'fire-' + counter
+                        name: 'room-' + counter + '_fire'
                     })
                     .removeClass('form-control'))
             .append('Brand '));
@@ -168,7 +163,7 @@ function createRoom() {
             .append(input.clone()
                     .attr({
                         type: 'checkbox',
-                        name: 'other-' + counter
+                        name: 'room-' + counter + '_other'
                     })
                     .removeClass('form-control'))
             .append('Andet '));
@@ -176,7 +171,7 @@ function createRoom() {
     div14.append($(document.createElement('hr')));
 
     var divComments = $(document.createElement('div'))
-            .attr({id: 'commentsContainer-' + counter});
+            .attr({id: 'room-' + counter + '_commentsContainer'});
     div1.append(divComments);
 
     var divCommBtn = formGroup.clone();
@@ -187,15 +182,12 @@ function createRoom() {
     cBtn.attr({id: 'add_comment-' + counter});
     cBtn.text('Tilføj bemærkninger');
     divCommBtn.append(cBtn);
-    $('#add_comment-' + counter).on('click', function () {
-        console.log("add comment " + cc);
-        $('#commentsContainer-' + counter).append(createComment());
-        console.log("added comment " + cc);
+
+    $(document).on('click', ('#add_comment-' + counter), function () {
+        console.log("add comment ");
+        $('#room-' + counter + '_commentsContainer').append(createComment());
+        console.log("added comment ");
     });
-
-
-
-
 
     var div16 = formGroup.clone();
     div1.append(div16);
@@ -206,7 +198,7 @@ function createRoom() {
                     .attr({
                         type: 'radio',
                         value: 'yes',
-                        name: 'moistradio-' + counter
+                        name: 'room-' + counter + '_moistradio'
                     })
                     .removeClass('form-control'))
             .append('Ja '));
@@ -216,7 +208,7 @@ function createRoom() {
                     .attr({
                         type: 'radio',
                         value: 'no',
-                        name: 'moistradio-' + counter
+                        name: 'room-' + counter + '_moistradio'
                     })
                     .removeClass('form-control'))
             .append('Nej '));
@@ -234,7 +226,7 @@ function createRoom() {
     div1711.append(input.clone()
             .attr({
                 type: 'text',
-                name: 'moistureScan-' + counter
+                name: 'room-' + counter + '_moistureScan'
             }));
 
     var div172 = $(document.createElement('div')).addClass('col-md-5').addClass('col-md-offset-2');
@@ -246,21 +238,23 @@ function createRoom() {
     div1721.append(input.clone()
             .attr({
                 type: 'text',
-                name: 'measureSpot-' + counter
+                name: 'room-' + counter + '_measureSpot'
             }));
 
     return room.clone();
 }
 
+
 function createComment() {
 
+    cc++;
     var divComm1 = formGroup.clone();
     var array = ["Vægge", "Loft", "Gulv", "Vinduer/døre", "Andet..."];
 
     //Create and append select list
     var selectType = $(document.createElement("select"));
     console.log('commentCount: ' + cc);
-    selectType.attr({'id': 'roomCommentType-' + counter + '-' + cc});
+    selectType.attr({'id': 'room-' + counter + '_commentType-' + cc});
     selectType.addClass('form-control');
     divComm1.append(selectType);
 
@@ -275,7 +269,7 @@ function createComment() {
     divComm1.append($(document.createElement('textarea'))
             .attr({
                 rows: 2,
-                name: 'roomComment-' + counter + '-' + cc,
+                name: 'room-' + counter + '_comment-' + cc,
                 placeholder: 'Bemærkninger:'
             })
             .addClass('form-control'));
@@ -284,12 +278,11 @@ function createComment() {
             .append(input.clone()
                     .attr({
                         type: 'file',
-                        name: 'commentImage-' + counter + '-' + cc
+                        name: 'room-' + counter + '_commentImage-' + cc
                     })
                     .removeClass('form-control')));
 
     divComm1.append($(document.createElement('hr')));
 
-    cc++;
     return divComm1.clone();
 }

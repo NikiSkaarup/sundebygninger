@@ -44,8 +44,8 @@
                             </div>
                         </div>
 
-
-
+                        <div id="roomContainer"></div>
+<!--
                         <div class="form-group" id="room-1" data-commentCount="1">
                             <hr>
                             <label class="col-md-3 control-label">Lokale 1</label>
@@ -90,7 +90,7 @@
                                 <hr>
 
                                 <div id="commentsContainer-1">
-<!--                                    <select class="form-control" id="roomComentType-1">
+                                    <select class="form-control" id="roomComentType-1">
                                         <option>Vægge</option>
                                         <option>Loft</option>
                                         <option>Gulv</option>
@@ -99,7 +99,7 @@
                                     </select>
                                     <textarea class="form-control" rows="2" placeholder="Bemærkninger:" name="roomComment-1"></textarea>
                                     <span>Billede: <input type="file"/></span>
-                                    <hr>-->
+                                    <hr>
                                 </div>
 
                                 <div>
@@ -123,7 +123,7 @@
 
                                 <br>
                             </div>
-                        </div>
+                        </div>-->
                         <hr>
                         <a id="add_room" class="btn btn-default col-md-offset-3">Tilføj lokale</a>
                         <hr>
