@@ -15,7 +15,7 @@ public class Facade {
 
     private static Facade facade;
 
-    public Facade getFacade() {
+    public static Facade getFacade() {
         if (facade == null) {
             facade = new Facade();
         }
@@ -202,6 +202,50 @@ public class Facade {
     public boolean updateDocument(Document d) {
         DAL dal = new DAL(Conn.get());
         return dal.updateDocument(d);
+    }
+
+    public Report getReport(int id) {
+        DAL dal = new DAL(Conn.get());
+        return dal.getReport(id);
+    }
+
+    public List<Report> getReports() {
+        DAL dal = new DAL(Conn.get());
+        return dal.getReports();
+    }
+
+    public List<Report> getReports(int buildingId) {
+        DAL dal = new DAL(Conn.get());
+        Building b = new Building();
+        b.setId(buildingId);
+        return dal.getReports(b);
+    }
+
+    public List<Report> getReports(int buildingId, int count) {
+        DAL dal = new DAL(Conn.get());
+        Building b = new Building();
+        b.setId(buildingId);
+        return dal.getReports(b, count);
+    }
+
+    public List<Report> getReports(Building b) {
+        DAL dal = new DAL(Conn.get());
+        return dal.getReports(b);
+    }
+
+    public List<Report> getReports(Building b, int count) {
+        DAL dal = new DAL(Conn.get());
+        return dal.getReports(b, count);
+    }
+
+    public int insertReport(Report d) {
+        DAL dal = new DAL(Conn.get());
+        return dal.insertReport(d);
+    }
+
+    public boolean updateReport(Report d) {
+        DAL dal = new DAL(Conn.get());
+        return dal.updateReport(d);
     }
 
 }
