@@ -1,7 +1,7 @@
 package model;
 
 import java.sql.Timestamp;
-import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Niki on 2016-10-26.
@@ -11,8 +11,8 @@ import java.util.HashMap;
 public class Report {
     private int id;
     private Building building;
-    private HashMap<Integer,Comment> comments;
-    private HashMap<Integer,Room> rooms;
+    private List<Comment> comments;
+    private List<Room> rooms;
     private Timestamp submission;
     private User user;
 
@@ -35,19 +35,19 @@ public class Report {
         this.building = building;
     }
 
-    public HashMap<Integer, Comment> getComments() {
+    public List<Comment> getComments() {
         return comments;
     }
 
-    public void setComments(HashMap<Integer, Comment> comments) {
+    public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
 
-    public HashMap<Integer, Room> getRooms() {
+    public List<Room> getRooms() {
         return rooms;
     }
 
-    public void setRooms(HashMap<Integer, Room> rooms) {
+    public void setRooms(List<Room> rooms) {
         this.rooms = rooms;
     }
 
