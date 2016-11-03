@@ -1,21 +1,14 @@
 package controller;
 
-import data.DB;
+
 import javax.servlet.annotation.WebServlet;
 import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import model.Building;
-import model.Comment;
-import model.Report;
-import model.Room;
+import java.util.*;
+
+import com.sun.deploy.net.HttpRequest;
+import domain.Facade;
+import model.*;
 
 /**
  * Created by Niki on 2016-10-26.
@@ -25,64 +18,122 @@ import model.Room;
 @WebServlet(name = "ReportController", urlPatterns = {"/report"})
 public class ReportController extends javax.servlet.http.HttpServlet {
 
-    HashMap<Integer, Report> reports;
+    HashMap<Integer, Room> rooms = new HashMap<>();
 
-    protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
-        try {
-            Report report = new Report();
+    protected void doPost(javax.servlet.http.HttpServletRequest req,
+                          javax.servlet.http.HttpServletResponse res)
+            throws javax.servlet.ServletException, IOException {
 
-            String b = request.getParameter("building");
-            PreparedStatement pstmt = DB.getConnection().prepareStatement("select Id from building where Name=?");
-            pstmt.setString(1, b);
-            ResultSet rs = pstmt.executeQuery();
-            rs.next();
-            Building building = new Building();
-            building.setId(rs.getInt(1));
+        Facade facade = Facade.getFacade();
 
-            HashMap<Integer, Comment> comments = new HashMap<>();
-            Comment roof = new Comment();
-            roof.setComment(request.getParameter("roof"));
-            comments.put(Integer.SIZE, roof);
-            Comment outerWalls = new Comment();
-            outerWalls.setComment(request.getParameter("outerWalls"));
-            comments.put(Integer.SIZE, outerWalls);
-            
-            
+        Report report = new Report();
+        Building b = null;
+        if (req.getParameter("building") != null
+                && !req.getParameter("building").equals("")) {
+            int i = Integer.parseInt(req.getParameter("building"));
+            b = facade.getBuilding(i);
+        }
 
-            HashMap<Integer, Room> rooms = new HashMap<>();
+        switcher(req);
+
+        List<Comment> comments = new ArrayList<>();
+        Comment roof = new Comment();
+        roof.setComment(req.getParameter("roof"));
+        comments.add(roof);
+        Comment outerWalls = new Comment();
+        outerWalls.setComment(req.getParameter("outerWalls"));
+        comments.add(outerWalls);
+    }
+
+    protected void doGet(javax.servlet.http.HttpServletRequest request, javax
+            .servlet.http.HttpServletResponse response) throws javax.servlet
+            .ServletException, IOException {
+
+    }
+
+    private void switcher(javax.servlet.http.HttpServletRequest req) {
+        int rc = 1;
+        String lastReTemp = "";
+        while (req.getAttributeNames().hasMoreElements()) {
+            String attrName = req.getAttributeNames().nextElement();
+            String[] temp, reTemp, roTemp;
             Room r = new Room();
-            r.setNum(request.getParameter("room"));
-            r.setDamage(request.getParameter("optradio").equals("Ja"));
-            Date d = new Date(request.getParameter("date"));
-            r.setWhen(new java.sql.Timestamp(d.getTime()));
-            r.setWhere(request.getParameter("location"));
-            r.setWhathappend(request.getParameter("incident"));
-            r.setWhatwasfixed(request.getParameter("repair"));
-            // TODO: damagetypes from checkboxes
-            
-            
-            
-            r.setMoistureScan(request.getParameter("moistureScan"));
-            r.setMoistureTarget(request.getParameter("measureSpot"));
-            r.setReport(report);
 
-            Calendar calendar = Calendar.getInstance();
-            java.util.Date now = calendar.getTime();
-            java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
-            Timestamp submission = currentTimestamp;
+            temp = attrName.split("_");
+            reTemp = temp[0].split("-");
 
-            report.setBuilding(building);
-            report.setComments(comments);
-            report.setRooms(rooms);
-            report.setSubmission(submission);
-            reports.put(Integer.SIZE, report);
+            if (temp.length > 1) {
+                roTemp = temp[1].split("-");
+            } else {
+                if (reTemp[0].equals("room")) {
+                    lastReTemp = reTemp[1];
+                    r.setNum(req.getParameter(attrName));
+                    r.setComments(new ArrayList<>());
+                    r.setDamageTypes(new ArrayList<>());
 
-        } catch (SQLException ex) {
-            Logger.getLogger(ReportController.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+                    rooms.put(rc, r);
+                    rc++;
+                }
+                continue;
+            }
+
+            if (roTemp.length == 1 && reTemp.length > 1) {
+                // Room
+                switch (roTemp[0]) {
+                    case "damradio":
+                        boolean dam = req.getParameter(attrName).equals("yes");
+                        rooms.get(rc).setDamage(dam);
+                        break;
+                    case "date":
+                        rooms.get(rc).setWhen(Timestamp.valueOf(
+                                req.getParameter(attrName)));
+                        break;
+                    case "location":
+                        rooms.get(rc).setWhere(req.getParameter(attrName));
+                        break;
+                    case "incident":
+                        rooms.get(rc).setWhathappend(
+                                req.getParameter(attrName));
+                        break;
+                    case "repair":
+                        rooms.get(rc).setWhatwasfixed(
+                                req.getParameter(attrName));
+                        break;
+                    case "moisture":
+                    case "rot":
+                    case "mold":
+                    case "fire":
+                    case "other":
+                        DamageType dt = new DamageType();
+                        dt.setId(Integer.parseInt(req.getParameter(attrName)));
+                        rooms.get(rc).getDamageTypes().add(dt);
+                        break;
+                    case "moistradio":
+                        boolean moist = req.getParameter(attrName)
+                                .equals("yes");
+                        rooms.get(rc).setDamage(moist);
+                        break;
+                    case "moisturescan":
+                        rooms.get(rc).setMoistureScan(
+                                req.getParameter(attrName));
+                        break;
+                    case "measurespot":
+                        rooms.get(rc).setMoistureTarget(
+                                req.getParameter(attrName));
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                // Comments
+                switch (roTemp[0]) {
+                    case "":
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
     }
 
-    protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
-
-    }
 }
