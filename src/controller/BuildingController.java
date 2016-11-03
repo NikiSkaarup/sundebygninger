@@ -55,7 +55,8 @@ public class BuildingController extends HttpServlet {
         Facade facade = new Facade();
         Building b = new Building();
         b.setId(-1);
-        if (!request.getParameter("buildingId").equals("")) {
+        if (request.getParameter("buildingId") != null 
+                && !request.getParameter("buildingId").equals("")) {
             b.setId(Integer.parseInt(request.getParameter("buildingId")));
         }
 
