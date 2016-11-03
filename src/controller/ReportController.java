@@ -44,8 +44,10 @@ public class ReportController extends javax.servlet.http.HttpServlet {
             roof.setComment(request.getParameter("roof"));
             comments.put(Integer.SIZE, roof);
             Comment outerWalls = new Comment();
-            roof.setComment(request.getParameter("outerWalls"));
+            outerWalls.setComment(request.getParameter("outerWalls"));
             comments.put(Integer.SIZE, outerWalls);
+            
+            
 
             HashMap<Integer, Room> rooms = new HashMap<>();
             Room r = new Room();
@@ -57,6 +59,9 @@ public class ReportController extends javax.servlet.http.HttpServlet {
             r.setWhathappend(request.getParameter("incident"));
             r.setWhatwasfixed(request.getParameter("repair"));
             // TODO: damagetypes from checkboxes
+            
+            
+            
             r.setMoistureScan(request.getParameter("moistureScan"));
             r.setMoistureTarget(request.getParameter("measureSpot"));
             r.setReport(report);
