@@ -19,13 +19,13 @@
             <h1>Sundhedstjek rapport</h1>
             <hr>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <form method="POST" action="ReportController" class="form-horizontal">
                         <div class="form-group">
                             <label class="col-md-3 control-label">Bygning</label>
                             <div class="col-md-9">
                                 <label for="building">Vælg bygning</label>
-                                <select class="form-control" id="building">
+                                <select class="form-control" name="building">
                                     <option>Bygning 1</option>
                                     <option>Bygning 2</option>
                                     <option>Bygning 3</option>
@@ -37,23 +37,21 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">Tag</label>
                             <div class="col-md-9">
-                                <label for="roof">Bemærkninger:</label>
-                                <textarea class="form-control" rows="2" id="roof"></textarea>
+                                <textarea class="form-control" rows="2" placeholder="Bemærkninger:" name="roof"></textarea>
                                 <span>Billede: <input type="file"/></span>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-3 control-label">Ydervægge</label>
                             <div class="col-md-9">
-                                <label for="outerWalls">Bemærkninger:</label>
-                                <textarea class="form-control" rows="2" id="outerWalls"></textarea>
+                                <textarea class="form-control" rows="2" placeholder="Bemærkninger:" name="outerWalls"></textarea>
                                 <span>Billede: <input type="file"/></span>
                             </div>
                         </div>
 
 
 
-                        <div class="form-group" id="room-1">
+                        <div class="form-group" id="room-1" data-commentCount="1">
                             <hr>
                             <label class="col-md-3 control-label">Lokale 1</label>
                             <div class="col-md-9">
@@ -61,8 +59,8 @@
 
                                 <div>
                                     Har der været skade i lokalet? 
-                                    <label><input type="radio" name="damradio">Ja</label>
-                                    <label><input type="radio" name="damradio">Nej</label>
+                                    <label><input type="radio" name="damradio">Ja </label>
+                                    <label><input type="radio" name="damradio">Nej </label>
                                 </div>
 
 
@@ -88,11 +86,11 @@
 
                                 <div>
                                     Skadetype? 
-                                    <label><input type="checkbox" value="mold" >Fugt</label>
-                                    <label><input type="checkbox" value="" >Råd og svamp</label>
-                                    <label><input type="checkbox" value="" >Skimmel</label>
-                                    <label><input type="checkbox" value="" >Brand</label>
-                                    <label><input type="checkbox" value="" >Andet</label>
+                                    <label><input type="checkbox" name="moisture-1" >Fugt </label>
+                                    <label><input type="checkbox" name="rot-1" >Råd og svamp </label>
+                                    <label><input type="checkbox" name="mold-1" >Skimmel </label>
+                                    <label><input type="checkbox" name="fire-1" >Brand </label>
+                                    <label><input type="checkbox" name="other-1" >Andet </label>
                                 </div>
                                 <hr>
 
@@ -104,8 +102,8 @@
                                     <option>Andet</option>
                                 </select>
                                 <div>
-                                    Bemærkninger:
-                                    <textarea class="form-control" rows="2" name="roomComment"></textarea>
+                                    
+                                    <textarea class="form-control" rows="2" placeholder="Bemærkninger:" name="roomComment-1"></textarea>
                                     <span>Billede: <input type="file"/></span>
                                 </div>
                                 
@@ -116,8 +114,8 @@
                                 <hr>
                                 <div>
                                     Fugtighedsscanning? 
-                                    <label><input type="radio" name="moistradio-1">Ja</label>
-                                    <label><input type="radio" name="moistradio-1">Nej</label>
+                                    <label><input type="radio" name="moistradio-1">Ja </label>
+                                    <label><input type="radio" name="moistradio-1">Nej </label>
                                 </div>      
 
                                 <div class="col-md-6">
