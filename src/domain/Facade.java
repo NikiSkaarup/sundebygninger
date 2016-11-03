@@ -2,9 +2,7 @@ package domain;
 
 import db.Conn;
 import db.DAL;
-import model.Building;
-import model.Org;
-import model.User;
+import model.*;
 
 import java.util.List;
 
@@ -40,6 +38,16 @@ public class Facade {
         DAL dal = new DAL(Conn.get());
         Org org = new Org();
         org.setId(orgId);
+        return dal.getBuildings(org, count);
+    }
+
+    public List<Building> getBuildings(Org org) {
+        DAL dal = new DAL(Conn.get());
+        return dal.getBuildings(org);
+    }
+
+    public List<Building> getBuildings(Org org, int count) {
+        DAL dal = new DAL(Conn.get());
         return dal.getBuildings(org, count);
     }
 
@@ -88,6 +96,16 @@ public class Facade {
         return dal.getUsers(org, count);
     }
 
+    public List<User> getUsers(Org org) {
+        DAL dal = new DAL(Conn.get());
+        return dal.getUsers(org);
+    }
+
+    public List<User> getUsers(Org org, int count) {
+        DAL dal = new DAL(Conn.get());
+        return dal.getUsers(org, count);
+    }
+
     public int insertUser(User u) {
         DAL dal = new DAL(Conn.get());
         return dal.insertUser(u);
@@ -96,6 +114,94 @@ public class Facade {
     public boolean updateUser(User u) {
         DAL dal = new DAL(Conn.get());
         return dal.updateUser(u);
+    }
+
+    public Image getImage(int id) {
+        DAL dal = new DAL(Conn.get());
+        return dal.getImage(id);
+    }
+
+    public List<Image> getImages() {
+        DAL dal = new DAL(Conn.get());
+        return dal.getImages();
+    }
+
+    public List<Image> getImages(int buildingId) {
+        DAL dal = new DAL(Conn.get());
+        Building b = new Building();
+        b.setId(buildingId);
+        return dal.getImages(b);
+    }
+
+    public List<Image> getImages(int buildingId, int count) {
+        DAL dal = new DAL(Conn.get());
+        Building b = new Building();
+        b.setId(buildingId);
+        return dal.getImages(b, count);
+    }
+
+    public List<Image> getImages(Building b) {
+        DAL dal = new DAL(Conn.get());
+        return dal.getImages(b);
+    }
+
+    public List<Image> getImages(Building b, int count) {
+        DAL dal = new DAL(Conn.get());
+        return dal.getImages(b, count);
+    }
+
+    public int insertImage(Image i) {
+        DAL dal = new DAL(Conn.get());
+        return dal.insertImage(i);
+    }
+
+    public boolean updateImage(Image i) {
+        DAL dal = new DAL(Conn.get());
+        return dal.updateImage(i);
+    }
+
+    public Document getDocument(int id) {
+        DAL dal = new DAL(Conn.get());
+        return dal.getDocument(id);
+    }
+
+    public List<Document> getDocuments() {
+        DAL dal = new DAL(Conn.get());
+        return dal.getDocuments();
+    }
+
+    public List<Document> getDocuments(int buildingId) {
+        DAL dal = new DAL(Conn.get());
+        Building b = new Building();
+        b.setId(buildingId);
+        return dal.getDocuments(b);
+    }
+
+    public List<Document> getDocuments(int buildingId, int count) {
+        DAL dal = new DAL(Conn.get());
+        Building b = new Building();
+        b.setId(buildingId);
+        return dal.getDocuments(b, count);
+    }
+
+    public List<Document> getDocuments(Building b) {
+        DAL dal = new DAL(Conn.get());
+        return dal.getDocuments(b);
+    }
+
+    public List<Document> getDocuments(Building b, int count) {
+        DAL dal = new DAL(Conn.get());
+        return dal.getDocuments(b, count);
+    }
+
+    public int insertDocument(Document d) {
+        DAL dal = new DAL(Conn.get());
+        return dal.insertDocument(d);
+    }
+
+    public boolean updateDocument(Document d) {
+        DAL dal = new DAL(Conn.get());
+        return dal.updateDocument(d);
     }
 
 }
