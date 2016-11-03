@@ -24,13 +24,8 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">Bygning</label>
                             <div class="col-md-9">
-                                <label for="building">Vælg bygning</label>
-                                <select class="form-control" name="building">
-                                    <option>Bygning 1</option>
-                                    <option>Bygning 2</option>
-                                    <option>Bygning 3</option>
-                                    <option>Bygning 4</option>
-                                </select>
+                                <label for="building">Bygning</label>
+                                //TODO: fix somthing with buildings
                             </div>
                         </div>
 
@@ -94,24 +89,23 @@
                                 </div>
                                 <hr>
 
-                                <select class="form-control" id="roomComentType-1">
-                                    <option>Vægge</option>
-                                    <option>Loft</option>
-                                    <option>Gulv</option>
-                                    <option>Vinduer/døre</option>                                    
-                                    <option>Andet</option>
-                                </select>
-                                <div>
-                                    
+                                <div id="commentsContainer-1">
+<!--                                    <select class="form-control" id="roomComentType-1">
+                                        <option>Vægge</option>
+                                        <option>Loft</option>
+                                        <option>Gulv</option>
+                                        <option>Vinduer/døre</option>                                    
+                                        <option>Andet</option>
+                                    </select>
                                     <textarea class="form-control" rows="2" placeholder="Bemærkninger:" name="roomComment-1"></textarea>
                                     <span>Billede: <input type="file"/></span>
-                                </div>
-                                
-                                <div>
-                                    <a id="add_comment" class="btn btn-default">Tilføj bemærkninger</a>
+                                    <hr>-->
                                 </div>
 
-                                <hr>
+                                <div>
+                                    <a id="add_comment-1" class="btn btn-default ">Tilføj bemærkninger</a>
+                                </div>
+                                
                                 <div>
                                     Fugtighedsscanning? 
                                     <label><input type="radio" name="moistradio-1">Ja </label>

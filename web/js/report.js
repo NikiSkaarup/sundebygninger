@@ -3,11 +3,18 @@
  */
 
 var counter = 1;
+var cc = 1;
 
 $("#add_room").on('click', function () {
     console.log("Creating room " + counter);
     $('#room-' + counter).after(createRoom());
     console.log("Created room " + counter);
+});
+
+$("#add_comment-1").on('click', function () {
+    console.log("add comment " + cc);
+    $('#commentsContainer-1').append(createComment());
+    console.log("added comment " + cc);
 });
 
 var formGroup = $(document.createElement('div')).addClass('form-group');
@@ -20,7 +27,8 @@ function createRoom() {
     console.log("counter: " + counter);
 
     var room = formGroup.clone().attr({id: 'room-' + counter});
-    room.attr({'data-commentCount': 2});//$('#room-'+counter).attr({'data-commentCount':1});
+    cc = 1;
+    //room.attr({'data-commentCount': 2});//$('#room-'+counter).attr({'data-commentCount':1});
 
     room.append($(document.createElement('hr')));
     room.append(label.clone()
@@ -167,15 +175,27 @@ function createRoom() {
 
     div14.append($(document.createElement('hr')));
 
-    var divComments = formGroup.clone();
+    var divComments = $(document.createElement('div'))
+            .attr({id: 'commentsContainer-' + counter});
     div1.append(divComments);
 
     var divCommBtn = formGroup.clone();
     div1.append(divCommBtn);
-    divCommBtn.append(input.clone().attr({
-        type:'button',
-        value:"Tilføj bemærkninger"
-    }));
+
+    var cBtn = $(document.createElement('a'));
+    cBtn.addClass('btn').addClass('btn-default');
+    cBtn.attr({id: 'add_comment-' + counter});
+    cBtn.text('Tilføj bemærkninger');
+    divCommBtn.append(cBtn);
+    $('#add_comment-' + counter).on('click', function () {
+        console.log("add comment " + cc);
+        $('#commentsContainer-' + counter).append(createComment());
+        console.log("added comment " + cc);
+    });
+
+
+
+
 
     var div16 = formGroup.clone();
     div1.append(div16);
@@ -235,12 +255,10 @@ function createRoom() {
 function createComment() {
 
     var divComm1 = formGroup.clone();
-    divComments.append(divComm1);
     var array = ["Vægge", "Loft", "Gulv", "Vinduer/døre", "Andet..."];
 
     //Create and append select list
     var selectType = $(document.createElement("select"));
-    var cc = $('#room-2').attr("data-commentCount");
     console.log('commentCount: ' + cc);
     selectType.attr({'id': 'roomCommentType-' + counter + '-' + cc});
     selectType.addClass('form-control');
@@ -257,7 +275,7 @@ function createComment() {
     divComm1.append($(document.createElement('textarea'))
             .attr({
                 rows: 2,
-                name: 'roomComment-' + counter,
+                name: 'roomComment-' + counter + '-' + cc,
                 placeholder: 'Bemærkninger:'
             })
             .addClass('form-control'));
@@ -266,11 +284,12 @@ function createComment() {
             .append(input.clone()
                     .attr({
                         type: 'file',
-                        name: 'commentImage-' + counter
+                        name: 'commentImage-' + counter + '-' + cc
                     })
                     .removeClass('form-control')));
 
-
-
     divComm1.append($(document.createElement('hr')));
+
+    cc++;
+    return divComm1.clone();
 }
