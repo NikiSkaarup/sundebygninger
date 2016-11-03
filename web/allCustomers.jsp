@@ -11,11 +11,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
 
-        <title>JSP list for all customers</title>
+        <title>List for all customers</title>
     </head>
     <body>
         <%@include file="navigation.jsp"  %>
-        <h3>Liste over alle kunderne</h3>
+        <h3>Liste over alle kunder</h3>
         <table class="table table-hower">
         <div>
                 <thead>
@@ -24,7 +24,7 @@
                         <th>Navn</th>
                         <th>Email</th>
                         <th>Link til info</th>
-                        <th>Redigere</th>
+                        <th>Redigere info</th>
                     </tr>  
                 </thead>
         </div>
@@ -33,21 +33,21 @@
         <td>?</td>
         <td>?</td>
         <td><a href="#">Link</a> </td>
-        <td><a href="##">Redigere</a> </td>
+        <td><a href="##">Redigere info</a> </td>
     </tr>
     <tr>
         <th scope="row">2</th>
         <td>?</td>
         <td>?</td>
         <td><a href="#">Link</a> </td>
-        <td><a href="##">Redigere</a> </td>
+        <td><a href="##">Redigere info</a> </td>
     </tr>
     <tr>
         <th scope="row">3</th>
         <td>?</td>
         <td>?</td>
         <td><a href="#">Link</a> </td>
-        <td><a href="##">Redigere</a> </td>
+        <td><a href="##">Redigere info</a> </td>
     </tr>
 
 

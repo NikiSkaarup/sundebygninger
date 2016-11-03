@@ -23,9 +23,9 @@ and open the template in the editor.
     <body>
         <div class="container-fluid">
             <a href="addUpdateBuilding.jsp">Add/update building</a>
-            <h1> Polygon A/S </h1>
+            <h2> Polygon A/S </h2>
             
-            <h2>Sign in as customer/admin</h2>
+            <h3>Sign in as customer/admin</h3>
              
             <div class="row">
                 <div class="col-md-6">
