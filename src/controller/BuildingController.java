@@ -24,12 +24,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import static manipulator.File.extractFileName;
 import static manipulator.File.generateSemiUniqueFileName;
+import model.Building;
 
 /**
  *
  * @author Menja
  */
-@WebServlet(name = "BuildingController", urlPatterns = {"/BuildingController"})
+@WebServlet(name = "BuildingController", urlPatterns = {"/Building"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024 * 2, // 2MB
         maxFileSize = 1024 * 1024 * 10, // 10MB
@@ -54,60 +55,25 @@ public class BuildingController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        int buildingId = -1;
+        Building b = new Building();
+        b.setId(-1);
         if (!request.getParameter("buildingId").equals("")) {
-            buildingId = Integer.parseInt(request.getParameter("buildingId"));
+            b.setId(Integer.parseInt(request.getParameter("buildingId")));
         }
 
         //BUILDING DATA from form put into variables
-        processRequest(request, response);
         String name = request.getParameter("Name");
         String address = request.getParameter("Address");
         String constructionYear = request.getParameter("ConstructionYear");
         String area = request.getParameter("Area");
         String currentUse = request.getParameter("CurrentUse");
         String previousUse = request.getParameter("PreviousUse");
-
-        try {
-            //get the database connection
-            Connection conn = data.DB.getConnection();
-            
-            //jeg hævder at conn IKKE er null
-            assert conn != null;
-            
-            // Execute SQL query
-            PreparedStatement pstmt;
-
-            pstmt = (PreparedStatement) conn.prepareStatement("INSERT INTO"
-                    + "building (Name, Address, ConstructionYear, CurrentUse, Area, PreviousUse)"
-                    + "VALUES (?, ?, ?, ?, ?, ?);" 
-                    + "SELECT LAST_INSERT_ID() AS Id;");
-
-            pstmt.setString(1, name);
-            pstmt.setString(2, address);
-            pstmt.setString(3, constructionYear);
-            pstmt.setString(4, currentUse);
-            pstmt.setString(5, area);
-            pstmt.setString(6, previousUse);
-
-            ResultSet rs = pstmt.executeQuery();
-
-            //take the Id from building 
-            if (rs.getFetchSize() == 1) {
-                rs.next();
-                buildingId = rs.getInt("Id");
-            }
-            conn.close();
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            Logger.getLogger(BuildingController.class.getName()).log(Level.SEVERE, null, ex);
-        }
         
-        if (buildingId < 0) {
-            forward(request, response, "allBuildings.jsp?id=" + buildingId);
+       
+        if (b.getId() < 0) {
+            forward(request, response, "allBuildings.jsp?id=" + b.getId());
         } else {
-            forward(request, response, "allBuildings.jsp");
+            forward(request, response, "addUpdateBuilding.jsp");
         }
     }
 
