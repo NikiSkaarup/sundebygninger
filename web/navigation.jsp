@@ -18,7 +18,7 @@
 
         <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="building.jsp">add Building</a></li>
+                <li><a href="allBuildings.jsp">add Building</a></li>
                 <li><a href="report.jsp">add Report</a></li>
                 <li><a href="document">add document</a></li>
                 <li><a href="image">add image</a></li>
