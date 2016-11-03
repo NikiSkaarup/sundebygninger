@@ -5,6 +5,7 @@
  */
 package controller;
 
+import domain.Facade;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
@@ -12,6 +13,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -31,14 +34,8 @@ import model.Building;
  * @author Menja
  */
 @WebServlet(name = "BuildingController", urlPatterns = {"/Building"})
-@MultipartConfig(
-        fileSizeThreshold = 1024 * 1024 * 2, // 2MB
-        maxFileSize = 1024 * 1024 * 10, // 10MB
-        maxRequestSize = 1024 * 1024 * 50)   // 50MB
 
 public class BuildingController extends HttpServlet {
-
-    private static String saveDirectory = "imageUpload";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -55,6 +52,7 @@ public class BuildingController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        Facade facade = new Facade();
         Building b = new Building();
         b.setId(-1);
         if (!request.getParameter("buildingId").equals("")) {
@@ -68,8 +66,18 @@ public class BuildingController extends HttpServlet {
         String area = request.getParameter("Area");
         String currentUse = request.getParameter("CurrentUse");
         String previousUse = request.getParameter("PreviousUse");
-        
-       
+
+        //use the variables with the data from the form
+        b.setName(name);
+        b.setAddress(address);
+        b.setConstructionYear(Timestamp.valueOf(constructionYear));
+        b.setArea(area);
+        b.setCurrentUse(currentUse);
+        b.setPreviousUse(previousUse);
+
+        //insert to DB via facade
+        facade.insertBuilding(b);
+
         if (b.getId() < 0) {
             forward(request, response, "allBuildings.jsp?id=" + b.getId());
         } else {
@@ -90,7 +98,6 @@ public class BuildingController extends HttpServlet {
 //        }
 //        return "";
 //    }
-
     private void forward(HttpServletRequest request, HttpServletResponse response, String string) throws ServletException, IOException {
         RequestDispatcher rd = request.getRequestDispatcher("/" + string);
         rd.forward(request, response);

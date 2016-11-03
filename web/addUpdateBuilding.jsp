@@ -39,7 +39,7 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">Byggeår</label>
                             <div class="col-md-9">
-                                <input class="form-control" type="text" placeholder="Byggeår" name="ConstructionYear"/>
+                                <input class="form-control" type="date" placeholder="yyyy-mm-dd" name="ConstructionYear"/>
                             </div>
                         </div>
 
