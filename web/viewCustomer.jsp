@@ -35,7 +35,7 @@
                 <td>Kunde tlf.nummer</td>
             </tr>
             <p>
-                <a href="###">Redigere kunde</a>
+                <a href="addUpdateCustomer.jsp">Tilføj/redigere kunde</a>
             </p>
     </body>
 </table>
