@@ -72,7 +72,7 @@ public class DAL {
         int id = -1;
         String query = "INSERT INTO `Building` (`Name`, Address, " +
                 "ConstructionYear, CurrentUse, Area, PreviousUse, FkOrgId) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?); SELECT LAST_INSERT_ID() AS Id;";
+                "VALUES (?, ?, ?, ?, ?, ?, ?);";
         try (PreparedStatement stmt = conn.prepareStatement(query, Statement
                 .RETURN_GENERATED_KEYS)) {
             stmt.setString(1, b.getName());
@@ -82,11 +82,13 @@ public class DAL {
             stmt.setString(5, b.getArea());
             stmt.setString(6, b.getPreviousUse());
             stmt.setInt(7, b.getOrg().getId());
-            stmt.executeUpdate();
-
-            ResultSet rs = stmt.getGeneratedKeys();
-            if (rs.next())
-                id = rs.getInt("Id");
+            int changed = stmt.executeUpdate();
+            if (changed > 0) {
+                ResultSet rs = stmt.getGeneratedKeys();
+                if (rs.next())
+                    id = rs.getInt("Id");
+                rs.close();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -137,8 +139,7 @@ public class DAL {
 
     public User getUser(int id) {
         String query = "SELECT Id, `Name`, Email, Phone, FkRoleId, FkOrgId " +
-                "FROM" +
-                " `User` WHERE Id=?";
+                "FROM `User` WHERE Id=?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -152,9 +153,8 @@ public class DAL {
 
     public User getUserLogin(String email, String pass) {
         String query = "SELECT Id, `Name`, Email, Phone, FkRoleId, FkOrgId " +
-                "FROM" +
-                " `User` WHERE Email=? AND Password=? GROUP BY FkOrgId ORDER " +
-                "BY `Name`";
+                "FROM  `User` WHERE Email=? AND Password=? GROUP BY FkOrgId " +
+                "ORDER BY `Name`";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, email);
             stmt.setString(2, pass);
@@ -177,8 +177,7 @@ public class DAL {
 
     public List<User> getUsers(Org org, int count) {
         String query = "SELECT Id, `Name`, Email, Phone, FkRoleId, FkOrgId " +
-                "FROM" +
-                " `User`";
+                "FROM `User`";
         if (org != null) {
             query += " WHERE FkOrgId=?";
             if (count > 0)
@@ -204,17 +203,21 @@ public class DAL {
     public int insertUser(User u) {
         int id = -1;
         String query = "INSERT INTO `User` (`Name`, Email, Phone, FkRoleId, " +
-                "FkOrgId) VALUES (?, ?, ?, ?, ?); SELECT LAST_INSERT_ID() AS " +
-                "Id;";
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+                "FkOrgId) VALUES (?, ?, ?, ?, ?);";
+        try (PreparedStatement stmt = conn.prepareStatement(query, Statement
+                .RETURN_GENERATED_KEYS)) {
             stmt.setString(1, u.getName());
             stmt.setString(2, u.getEmail());
             stmt.setString(3, u.getPhone());
             stmt.setInt(4, u.getRole().getId());
             stmt.setInt(5, u.getOrg().getId());
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next())
-                id = rs.getInt("Id");
+            int changed = stmt.executeUpdate();
+            if (changed > 0) {
+                ResultSet rs = stmt.getGeneratedKeys();
+                if (rs.next())
+                    id = rs.getInt("Id");
+                rs.close();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -310,14 +313,19 @@ public class DAL {
     public int insertImage(Image i) {
         int id = -1;
         String query = "INSERT INTO `Image` (`Name`, Path, FkBuildingId) " +
-                "VALUES" +
-                " (?, ?, ?); SELECT LAST_INSERT_ID() AS Id;";
+                "VALUES (?, ?, ?);";
         try (PreparedStatement stmt = conn.prepareStatement(query, Statement
                 .RETURN_GENERATED_KEYS)) {
             stmt.setString(1, i.getName());
             stmt.setString(2, i.getPath());
             stmt.setInt(3, i.getBuilding().getId());
-            id = stmt.executeUpdate(query);
+            int changed = stmt.executeUpdate();
+            if (changed > 0) {
+                ResultSet rs = stmt.getGeneratedKeys();
+                if (rs.next())
+                    id = rs.getInt("Id");
+                rs.close();
+            }
             stmt.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -360,8 +368,7 @@ public class DAL {
 
     public Document getDocument(int id) {
         String query = "SELECT Id, `Name`, Path, FkBuildingId FROM `Document`" +
-                " " +
-                "WHERE Id=?";
+                " WHERE Id=?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -408,14 +415,19 @@ public class DAL {
     public int insertDocument(Document d) {
         int id = -1;
         String query = "INSERT INTO `Document` (`Name`, Path, FkBuildingId) " +
-                "VALUES (?, ?, ?); SELECT LAST_INSERT_ID() AS Id;";
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+                "VALUES (?, ?, ?);";
+        try (PreparedStatement stmt = conn.prepareStatement(query, Statement
+                .RETURN_GENERATED_KEYS)) {
             stmt.setString(1, d.getName());
             stmt.setString(2, d.getPath());
             stmt.setInt(3, d.getBuilding().getId());
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next())
-                id = rs.getInt("Id");
+            int changed = stmt.executeUpdate();
+            if (changed > 0) {
+                ResultSet rs = stmt.getGeneratedKeys();
+                if (rs.next())
+                    id = rs.getInt("Id");
+                rs.close();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -424,8 +436,7 @@ public class DAL {
 
     public boolean updateDocument(Document d) {
         String query = "UPDATE `Document` SET `Name`=?, Path=?, " +
-                "FkBuildingId=? " +
-                "WHERE Id=?";
+                "FkBuildingId=? WHERE Id=?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, d.getName());
             stmt.setString(2, d.getPath());

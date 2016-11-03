@@ -66,6 +66,11 @@ public class Facade {
         return dal.getUser(id);
     }
 
+    public User getUser(User user) {
+        DAL dal = new DAL(Conn.get());
+        return dal.getUser(user.getId());
+    }
+
     /**
      * get user by Email and Password in order to login
      * @param e email
