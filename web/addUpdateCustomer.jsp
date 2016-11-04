@@ -16,24 +16,41 @@
     <body>
         <%@include file="navigation.jsp"  %>
         <div class="container-fluid">
+
             <h4>Tilføj/redigere kunde</h4>
-            <div class="row" class="col-md-6"></div>
-                <form method="POST" action="###" class="form-horizontal">
-                    <div class="form-group"> 
-                        <label class="col-md-3" for="Kunde id">Kunde id:</label>
-                        <div class="col-md-9">   
-                            <input type="ID" class="form-control" id="Kunde id" 
-                                   placeholder="Enter id" name="id">
+            <div class="row">
+                <div class="col-md-6"> 
+                    <form action="Customer" method="POST" class="form-horizontal" enctype="multipart/form-data">
+                        <input type="hidden" value="???" name="????"/>
+
+                        <div class="form-group">
+                            <label class=col-md-3 control-label>Kunde-id:</label>
+
+                            <input type="id" class="form-control" id="kunde-id">           
                         </div>
 
-
-                        <div class="col-md-offset-3">
-                            
-                            <button class="btn btn-primary">OK</button>
+                        <div class="form-group">
+                            <label class=col-md-3 control-label>Navn:</label>
+                            <input type="navn" class="form-control" id="navn">
                         </div>
+
+                        <div class="form-group">
+                            <label class=col-md-3 control-label>Email:</label>
+                            <input type="mail" class="form-control" id="email">
+                        </div>
+
+                        <div class="form-group">
+                            <label class=col-md-3 control-label>Tlf:</label>
+                            <input type="tlf." class="form-control" id="tlf. nummer">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Tilføj</button>
+                </div>
                 </form>
             </div>
-            <script src="Js/jquery-2.2.4.js" type="text/javascript"></script>
-            <script src="Js/bootstrap.js" type="text/javascript"></script>
+        </div>  
+
+        <script src="Js/jquery-2.2.4.js" type="text/javascript"></script>
+        <script src="Js/bootstrap.js" type="text/javascript"></script>
     </body>
 </html>
