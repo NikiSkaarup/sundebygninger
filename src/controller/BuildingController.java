@@ -35,6 +35,8 @@ public class BuildingController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        
+        
     }
 
     @Override
@@ -50,8 +52,8 @@ public class BuildingController extends HttpServlet {
         }
         
         //organisation tages ud af session
-        User user = (User)request.getSession().getAttribute("user");
-        b.setOrg(user.getOrg());
+       // User user = (User)request.getSession().getAttribute("user");
+        //b.setOrg(user.getOrg());
         
         
         //BUILDING DATA from form put into variables
