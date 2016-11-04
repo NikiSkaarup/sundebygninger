@@ -21,7 +21,7 @@
                 <div class="col-md-6"> 
                     <form action="Building" method="POST" class="form-horizontal" enctype="multipart/form-data">
                         <input type="hidden" value="${requestScope.bId}" name="buildingId"/>
-                        
+
                         <div class="form-group">
                             <label class="col-md-3 control-label">Navn på bygning</label>
                             <div class="col-md-9">
@@ -36,12 +36,12 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <%--<div class="form-group">
                             <label class="col-md-3 control-label">Byggeår</label>
                             <div class="col-md-9">
                                 <input class="form-control" type="date" placeholder="yyyy-mm-dd" name="ConstructionYear"/>
                             </div>
-                        </div>
+                        </div>--%>
 
                         <div class="form-group">
                             <label class="col-md-3 control-label">Bygningsareal i m2</label>
@@ -53,7 +53,7 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">Nuværende benyttelse</label>
                             <div class="col-md-9">
-                                <input class="form-control" type="text" placeholder="Nuværende enyttelse" name="CurrentUse"/>
+                                <input class="form-control" type="text" placeholder="Nuværende benyttelse" name="CurrentUse"/>
                                 <label>(Hvad bruges bygningen til?)</label>
                             </div>
                         </div>
@@ -65,9 +65,9 @@
                                 <label>(Hvad har bygningen været brugt til?)</label>
                             </div>
                         </div>
-                        
+
                         <div class="col-md-offset-3">
-                            <button class="btn btn-primary">Send</button>
+                            <button class="btn btn-primary">Tilføj</button>
                         </div>
 
                     </form>

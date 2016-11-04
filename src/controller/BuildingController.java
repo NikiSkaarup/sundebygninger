@@ -28,6 +28,8 @@ import javax.servlet.http.Part;
 import static manipulator.File.extractFileName;
 import static manipulator.File.generateSemiUniqueFileName;
 import model.Building;
+import model.Org;
+import model.User;
 
 /**
  *
@@ -52,18 +54,23 @@ public class BuildingController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        Facade facade = new Facade();
+        Facade facade = Facade.getFacade();
         Building b = new Building();
         b.setId(-1);
         if (request.getParameter("buildingId") != null 
                 && !request.getParameter("buildingId").equals("")) {
             b.setId(Integer.parseInt(request.getParameter("buildingId")));
         }
-
+        
+        //organisation tages ud af session
+        User user = (User)request.getSession().getAttribute("user");
+        b.setOrg(user.getOrg());
+        
+        
         //BUILDING DATA from form put into variables
         String name = request.getParameter("Name");
         String address = request.getParameter("Address");
-        String constructionYear = request.getParameter("ConstructionYear");
+      //  String constructionYear = request.getParameter("ConstructionYear");
         String area = request.getParameter("Area");
         String currentUse = request.getParameter("CurrentUse");
         String previousUse = request.getParameter("PreviousUse");
@@ -71,7 +78,7 @@ public class BuildingController extends HttpServlet {
         //use the variables with the data from the form
         b.setName(name);
         b.setAddress(address);
-        b.setConstructionYear(Timestamp.valueOf(constructionYear));
+       // b.setConstructionYear(Timestamp.valueOf(constructionYear));
         b.setArea(area);
         b.setCurrentUse(currentUse);
         b.setPreviousUse(previousUse);
