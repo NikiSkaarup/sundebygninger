@@ -14,8 +14,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import static manipulator.File.extractFileName;
-import static manipulator.File.generateSemiUniqueFileName;
+import static util.Helper.extractFileName;
+import static util.Helper.generateSemiUniqueFileName;
 
 /**
  * Created by Niki on 2016-10-26.

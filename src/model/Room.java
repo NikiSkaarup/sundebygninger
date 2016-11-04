@@ -1,7 +1,7 @@
 package model;
 
 import java.sql.Timestamp;
-import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Niki on 2016-10-26.
@@ -16,7 +16,8 @@ public class Room {
     private String whathappend;
     private String whatwasfixed;
     private boolean damage;
-    private HashMap<Integer,DamageType> damageTypes;
+    private List<DamageType> damageTypes;
+    private List<Comment> comments;
     private String moistureScan;
     private String moistureTarget;
     private Report report;
@@ -80,12 +81,20 @@ public class Room {
         this.damage = damage;
     }
 
-    public HashMap<Integer, DamageType> getDamageTypes() {
+    public List<DamageType> getDamageTypes() {
         return damageTypes;
     }
 
-    public void setDamageTypes(HashMap<Integer, DamageType> damageTypes) {
+    public void setDamageTypes(List<DamageType> damageTypes) {
         this.damageTypes = damageTypes;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     public String getMoistureScan() {

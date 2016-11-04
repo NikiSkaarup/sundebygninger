@@ -1,7 +1,7 @@
 package model;
 
 import java.sql.Timestamp;
-import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Niki on 2016-10-26.
@@ -18,10 +18,10 @@ public class Building {
     private Timestamp constructionYear;
     private Timestamp submission;
     private Org org;
-    private HashMap<Integer,Request> requests;
-    private HashMap<Integer,Incident> incidents;
-    private HashMap<Integer,Image> images;
-    private HashMap<Integer,Report> reports;
+    private List<Request> requests;
+    private List<Incident> incidents;
+    private List<Image> images;
+    private List<Report> reports;
 
     public Building() {
     }
@@ -98,35 +98,35 @@ public class Building {
         this.org = org;
     }
 
-    public HashMap<Integer, Request> getRequests() {
+    public List<Request> getRequests() {
         return requests;
     }
 
-    public void setRequests(HashMap<Integer, Request> requests) {
+    public void setRequests(List<Request> requests) {
         this.requests = requests;
     }
 
-    public HashMap<Integer, Incident> getIncidents() {
+    public List<Incident> getIncidents() {
         return incidents;
     }
 
-    public void setIncidents(HashMap<Integer, Incident> incidents) {
+    public void setIncidents(List<Incident> incidents) {
         this.incidents = incidents;
     }
 
-    public HashMap<Integer, Image> getImages() {
+    public List<Image> getImages() {
         return images;
     }
 
-    public void setImages(HashMap<Integer, Image> images) {
+    public void setImages(List<Image> images) {
         this.images = images;
     }
 
-    public HashMap<Integer, Report> getReports() {
+    public List<Report> getReports() {
         return reports;
     }
 
-    public void setReports(HashMap<Integer, Report> reports) {
+    public void setReports(List<Report> reports) {
         this.reports = reports;
     }
 }

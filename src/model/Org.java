@@ -1,6 +1,6 @@
 package model;
 
-import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Niki on 2016-10-26.
@@ -11,8 +11,8 @@ public class Org {
     private int id;
     private String name;
     private String phone;
-    private HashMap<Integer,User> users;
-    private HashMap<Integer,Building> buildings;
+    private List<User> users;
+    private List<Building> buildings;
 
     public Org() {
     }
@@ -41,19 +41,19 @@ public class Org {
         this.phone = phone;
     }
 
-    public HashMap<Integer, User> getUsers() {
+    public List< User> getUsers() {
         return users;
     }
 
-    public void setUsers(HashMap<Integer, User> users) {
+    public void setUsers(List< User> users) {
         this.users = users;
     }
 
-    public HashMap<Integer, Building> getBuildings() {
+    public List< Building> getBuildings() {
         return buildings;
     }
 
-    public void setBuildings(HashMap<Integer, Building> buildings) {
+    public void setBuildings(List< Building> buildings) {
         this.buildings = buildings;
     }
 }

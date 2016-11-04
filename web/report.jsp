@@ -24,13 +24,8 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">Bygning</label>
                             <div class="col-md-9">
-                                <label for="building">Vælg bygning</label>
-                                <select class="form-control" name="building">
-                                    <option>Bygning 1</option>
-                                    <option>Bygning 2</option>
-                                    <option>Bygning 3</option>
-                                    <option>Bygning 4</option>
-                                </select>
+                                <label for="building">Bygning</label>
+                                //TODO: fix somthing with buildings
                             </div>
                         </div>
 
@@ -49,87 +44,7 @@
                             </div>
                         </div>
 
-
-
-                        <div class="form-group" id="room-1" data-commentCount="1">
-                            <hr>
-                            <label class="col-md-3 control-label">Lokale 1</label>
-                            <div class="col-md-9">
-                                <input class="form-control" type="text" placeholder="Lokale ID" name="room"/>
-
-                                <div>
-                                    Har der været skade i lokalet? 
-                                    <label><input type="radio" name="damradio">Ja </label>
-                                    <label><input type="radio" name="damradio">Nej </label>
-                                </div>
-
-
-                                <div class="col-md-6">
-                                    Hvornår?   
-                                    <input type="date" class="form-control" name="date">
-                                </div>
-                                <div class="col-md-6">
-                                    Hvor?   
-                                    <input type="text" class="form-control" name="location">                               
-                                </div>
-
-                                <div class="col-md-6">
-                                    Hvad er der sket?   
-                                    <input type="text" class="form-control" name="incident">
-                                </div>
-                                <div class="col-md-6">
-                                    Hvad er repareret?   
-                                    <input type="text" class="form-control" name="repair">                             
-                                </div>
-
-
-
-                                <div>
-                                    Skadetype? 
-                                    <label><input type="checkbox" name="moisture-1" >Fugt </label>
-                                    <label><input type="checkbox" name="rot-1" >Råd og svamp </label>
-                                    <label><input type="checkbox" name="mold-1" >Skimmel </label>
-                                    <label><input type="checkbox" name="fire-1" >Brand </label>
-                                    <label><input type="checkbox" name="other-1" >Andet </label>
-                                </div>
-                                <hr>
-
-                                <select class="form-control" id="roomComentType-1">
-                                    <option>Vægge</option>
-                                    <option>Loft</option>
-                                    <option>Gulv</option>
-                                    <option>Vinduer/døre</option>                                    
-                                    <option>Andet</option>
-                                </select>
-                                <div>
-                                    
-                                    <textarea class="form-control" rows="2" placeholder="Bemærkninger:" name="roomComment-1"></textarea>
-                                    <span>Billede: <input type="file"/></span>
-                                </div>
-                                
-                                <div>
-                                    <a id="add_comment" class="btn btn-default">Tilføj bemærkninger</a>
-                                </div>
-
-                                <hr>
-                                <div>
-                                    Fugtighedsscanning? 
-                                    <label><input type="radio" name="moistradio-1">Ja </label>
-                                    <label><input type="radio" name="moistradio-1">Nej </label>
-                                </div>      
-
-                                <div class="col-md-6">
-                                    Fugtscanning:  
-                                    <input type="date" class="form-control" name="moistureScan-1">
-                                </div>
-                                <div class="col-md-6">
-                                    Målepunkt   
-                                    <input type="text" class="form-control" name="measureSpot-1">                               
-                                </div>
-
-                                <br>
-                            </div>
-                        </div>
+                        <div id="roomContainer"></div>
                         <hr>
                         <a id="add_room" class="btn btn-default col-md-offset-3">Tilføj lokale</a>
                         <hr>
