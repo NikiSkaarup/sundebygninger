@@ -15,6 +15,8 @@ public class Facade {
 
     private static Facade facade;
 
+    private Facade() {}
+
     public static Facade getFacade() {
         if (facade == null) {
             facade = new Facade();
@@ -243,14 +245,57 @@ public class Facade {
         return dal.getReports(b, count);
     }
 
-    public int insertReport(Report d) {
+    public int insertReport(Report r) {
         DAL dal = new DAL(Conn.get());
-        return dal.insertReport(d);
+        return dal.insertReport(r);
     }
 
-    public boolean updateReport(Report d) {
+    public boolean updateReport(Report r) {
         DAL dal = new DAL(Conn.get());
-        return dal.updateReport(d);
+        return dal.updateReport(r);
     }
 
+    public Request getRequest(int id) {
+        DAL dal = new DAL(Conn.get());
+        return dal.getRequest(id);
+    }
+
+    public List<Request> getRequests() {
+        DAL dal = new DAL(Conn.get());
+        return dal.getRequests();
+    }
+
+    public List<Request> getRequests(int buildingId) {
+        DAL dal = new DAL(Conn.get());
+        Building b = new Building();
+        b.setId(buildingId);
+        return dal.getRequests(b);
+    }
+
+    public List<Request> getRequests(int buildingId, int count) {
+        DAL dal = new DAL(Conn.get());
+        Building b = new Building();
+        b.setId(buildingId);
+        return dal.getRequests(b, count);
+    }
+
+    public List<Request> getRequests(Building b) {
+        DAL dal = new DAL(Conn.get());
+        return dal.getRequests(b);
+    }
+
+    public List<Request> getRequests(Building b, int count) {
+        DAL dal = new DAL(Conn.get());
+        return dal.getRequests(b, count);
+    }
+
+    public int insertRequest(Request r) {
+        DAL dal = new DAL(Conn.get());
+        return dal.insertRequest(r);
+    }
+
+    public boolean updateRequest(Request r) {
+        DAL dal = new DAL(Conn.get());
+        return dal.updateRequest(r);
+    }
 }

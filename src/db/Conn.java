@@ -1,7 +1,6 @@
 package db;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.*;
 
 /**
  * Created by Niki on 2016-11-02.
@@ -13,6 +12,7 @@ public class Conn {
     private static String ip = "localhost";
     private static String db = "sundebygninger";
     private static int port = 3306;
+    private static String url = "jdbc:mysql://" + ip + ":" + port + "/" + db;
     private static String user = "test";
     private static String password = "password";
 
@@ -22,7 +22,6 @@ public class Conn {
         if (conn == null) {
             try {
                 Class.forName(driver);
-                String url = "jdbc:mysql://" + ip + ":" + port + "/" + db;
                 conn = DriverManager.getConnection(url, user, password);
             } catch (Exception e) {
                 e.printStackTrace();
