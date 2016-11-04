@@ -615,7 +615,6 @@ public class DAL {
         return null;
     }
 
-
     public List<Request> getRequests() {
         return getRequests(null);
     }
@@ -684,6 +683,32 @@ public class DAL {
         try {
             Request c = new Request();
             c.setId(rs.getInt("Id"));
+            return c;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<ServiceType> getServiceTypes() {
+        String query = "SELECT Id, `Name` FROM `ServiceType`";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            ResultSet rs = stmt.executeQuery();
+            List<ServiceType> list = new ArrayList<>();
+            while (rs.next())
+                list.add(constructServiceType(rs));
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private ServiceType constructServiceType(ResultSet rs) {
+        try {
+            ServiceType c = new ServiceType();
+            c.setId(rs.getInt("Id"));
+            c.setName(rs.getString("Name"));
             return c;
         } catch (SQLException e) {
             e.printStackTrace();

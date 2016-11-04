@@ -298,4 +298,9 @@ public class Facade {
         DAL dal = new DAL(Conn.get());
         return dal.updateRequest(r);
     }
+
+    public List<ServiceType> getServiceTypes() {
+        DAL dal = new DAL(Conn.get());
+        return dal.getServiceTypes();
+    }
 }
