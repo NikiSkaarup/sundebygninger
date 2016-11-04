@@ -5,19 +5,24 @@
  */
 package controller;
 
+import domain.Facade;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Building;
 
 /**
  *
  * @author Menja
  */
-@WebServlet(name = "AllBuildingsController", urlPatterns = {"/AllBuildingsController"})
+@WebServlet(name = "AllBuildingsController", urlPatterns = {"/AllBuildings"})
 public class AllBuildingsController extends HttpServlet {
 
     /**
@@ -37,7 +42,7 @@ public class AllBuildingsController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AllBuildingsController</title>");            
+            out.println("<title>Servlet AllBuildingsController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet AllBuildingsController at " + request.getContextPath() + "</h1>");
@@ -58,7 +63,18 @@ public class AllBuildingsController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //get DB conn
+        Facade facade = Facade.getFacade();
+
+        int id = Integer.parseInt(request.getParameter("id"));
+
+        List<Building> buildingList = facade.getBuildings(id);
+
+        request.setAttribute("buildings", buildingList);
+        
+        RequestDispatcher rd = request.getRequestDispatcher("/allBuildings.jsp");
+        rd.forward(request, response);
+
     }
 
     /**
