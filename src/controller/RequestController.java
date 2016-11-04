@@ -19,9 +19,10 @@ import java.util.List;
  *
  * @author Niki
  */
-@WebServlet(name = "RequestController", urlPatterns = {"/request"})
+@WebServlet(name = "RequestController", urlPatterns = {"/request", "/requests"})
 public class RequestController extends HttpServlet {
-    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
         Facade facade = Facade.getFacade();
 
         Request r = new Request();
@@ -35,17 +36,45 @@ public class RequestController extends HttpServlet {
         ServiceType st = new ServiceType();
         st.setId(-1);
         r.setServiceType(st);
-
-
-
     }
 
-    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+
         Facade facade = Facade.getFacade();
-        int id = Integer.parseInt(req.getParameter("id"));
-        List<Request> list = facade.getRequests(id);
+
+        int b = -1;
+        if (req.getParameter("b") != null)
+            b = Integer.parseInt(req.getParameter("b"));
+
+
+        Request r = new Request();
+        int id = -1;
+        if (req.getParameter("id") != null) {
+            id = Integer.parseInt(req.getParameter("id"));
+            // Select 1 / Update 1
+            r = facade.getRequest(id);
+        }
+        req.setAttribute("r", r);
+
+        if (req.getParameter("a") != null) {
+            // Insert / Update
+            List<ServiceType> sts = facade.getServiceTypes();
+            req.setAttribute("sts", sts);
+            RequestDispatcher rd = req.getRequestDispatcher("/requestForm.jsp");
+            rd.forward(req, res);
+            return;
+        } else if (id > 0) {
+            // Select 1
+            RequestDispatcher rd = req.getRequestDispatcher("/requestView.jsp");
+            rd.forward(req, res);
+            return;
+        }
+
+        // Select *
+        List<Request> list = facade.getRequests(b);
         req.setAttribute("requests", list);
         RequestDispatcher rd = req.getRequestDispatcher("/request.jsp");
-        rd.forward(req,res);
+        rd.forward(req, res);
     }
 }
