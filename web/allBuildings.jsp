@@ -4,6 +4,9 @@
     Author     : Menja
 --%>
 
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:useBean beanName="buildingsBean" id="buildings" scope="request" type="java.util.List"/>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -26,26 +29,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Lyngby</td>
-                            <td>Kanalvej 4, 2800 Lyngby</td>
-                            <td><a href="viewBuilding.jsp">Mere</a></td>
-                        </tr>
-                        <tr>
-                            <td>Lyngby</td>
-                            <td>Kanalvej 4, 2800 Lyngby</td>
-                            <td><a href="viewBuilding.jsp">Mere</a></td>
-                        </tr>
-                        <tr>
-                            <td>Lyngby</td>
-                            <td>Kanalvej 4, 2800 Lyngby</td>
-                            <td><a href="viewBuilding.jsp">Mere</a></td>
-                        </tr>
+                        <c:forEach items="${buildings}" var="b">
+                            <tr>
+                                <td>${b.name}</td>
+                                <td>${b.address}</td>
+                                <td>${b.id}</td>
+                            </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
             </div>
         </div>
-        <script src="Js/jquery-2.2.4.js" type="text/javascript"></script>
-        <script src="Js/bootstrap.js" type="text/javascript"></script>
+        <script src="js/jquery-2.2.4.js" type="text/javascript"></script>
+        <script src="js/bootstrap.js" type="text/javascript"></script>
     </body>
 </html>

@@ -92,7 +92,8 @@ public class LoginController extends HttpServlet {
             String password = request.getParameter("password");
             Boolean svar;
                   
-            Connection conn = data.DB.getConnection();//Virker ikke
+            Connection conn;
+            conn = data.DB.getConnection(); //Virker ikke 
             PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement("SELECT email FROM User WHERE email = ? AND password = ?");
                         
             pstmt.setString(1, email);
