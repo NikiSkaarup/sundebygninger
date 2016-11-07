@@ -3,6 +3,8 @@ package util;
 import domain.Facade;
 import model.User;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -59,4 +61,17 @@ public class Helper {
             }
         }
     }
+
+    public static void forward(HttpServletRequest req, HttpServletResponse
+            res, String url) throws ServletException, IOException {
+        RequestDispatcher rd = req.getRequestDispatcher(url);
+        rd.forward(req, res);
+    }
+
+    public static void forwardGet(HttpServletRequest req, HttpServletResponse
+            res, String url) throws ServletException, IOException {
+        RequestDispatcher rd = req.getRequestDispatcher(url);
+        rd.forward(new RequestWrap(req), res);
+    }
+
 }
