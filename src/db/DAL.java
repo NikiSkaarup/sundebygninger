@@ -27,7 +27,8 @@ public class DAL {
 
     public Building getBuilding(int id) {
         String query = "SELECT Id, `Name`, Address, ConstructionYear, " +
-                "CurrentUse, Area, PreviousUse FROM `Building` WHERE Id=?";
+                "FkOrgId, CurrentUse, Area, PreviousUse FROM `Building` WHERE" +
+                " Id=?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -650,8 +651,7 @@ public class DAL {
     public int insertRequest(Request r) {
         int id = -1;
         String query = "INSERT INTO `Request` (FkBuildingId, Description, " +
-                "FkServiceTypeId) VALUES (?, ?, ?); " +
-                "SELECT LAST_INSERT_ID() AS Id;";
+                "FkServiceTypeId) VALUES (?, ?, ?)";
         try (PreparedStatement stmt = conn.prepareStatement(query,
                 Statement.RETURN_GENERATED_KEYS)) {
             stmt.setInt(1, r.getBuilding().getId());
