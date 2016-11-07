@@ -16,7 +16,7 @@
     <body>
         <%@include file="navigation.jsp"  %>
         <h3>Liste over alle kunder</h3>
-        <form>
+        <form form action="Customer" method="POST" class="form-horizontal" enctype="multipart/form-data">
             <table class="table table-hower">
                 <thead>
                     <tr>
