@@ -91,7 +91,7 @@ public class LoginController extends HttpServlet {
 
         if (u != null) {
             request.getSession().setAttribute("user", u);
-            response.sendRedirect("/home.jsp");
+            response.sendRedirect("home");
         } else {
             request.setAttribute("error", "Unknown user, please try again");
             request.getRequestDispatcher("/login.jsp").forward(request, response);
