@@ -36,24 +36,22 @@ public class BuildingController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
         //DB connection
         Facade facade = Facade.getFacade();
 
         //organisation Id 
         if (request.getParameter("id") != null) {
-
             //get the id from jsp/url
             int id = Integer.parseInt(request.getParameter("id"));
-
+            
             Building b = facade.getBuilding(id);
-
+            
             //Save the variable
-            request.setAttribute("building", b);
+            request.setAttribute("b", b);
 
             //forward from servlet to JSP
-            RequestDispatcher rd = request.getRequestDispatcher("/viewBuilding.jsp");
-            rd.forward(request, response);
+            Helper.forward(request, response, "/viewBuilding.jsp");
         } else {
             //forward to view all buildings?
             Helper.forwardGet(request, response, "buildings");
@@ -67,6 +65,7 @@ public class BuildingController extends HttpServlet {
 
         Facade facade = Facade.getFacade();
         Building b = new Building();
+        
         b.setId(-1);
         if (request.getParameter("bid") != null
                 && !request.getParameter("bid").equals("")) {
@@ -106,7 +105,7 @@ public class BuildingController extends HttpServlet {
         if (id > 0) {
             Helper.forwardGet(request, response, "buildings?oid=" + b.getOrg().getId());
         } else {
-            Helper.forwardGet(request, response, "building?oid=" + b.getOrg().getId());
+            Helper.forwardGet(request, response, "addUpdateBuilding.jsp?oid=" + b.getOrg().getId());
         }
     }
 

@@ -76,7 +76,6 @@ public class AllBuildingsController extends HttpServlet {
         //forward from servlet to JSP
         RequestDispatcher rd = request.getRequestDispatcher("/allBuildings.jsp");
         rd.forward(request, response);
-
     }
 
     /**

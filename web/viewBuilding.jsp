@@ -4,7 +4,7 @@
     Author     : Menja
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:useBean beanName="buildingBean" id="building" scope="request" type="model.Building"/>
+<jsp:useBean id="b" scope="request" class="model.Building"/>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -20,17 +20,17 @@
             <div class="row">
                 <h1>Building</h1>
 
-                <p>Organisation: ${building.org}</p>
-                <p>Navn på bygning: ${building.name}</p>
-                <p>Adresse: ${building.address}</p>
-                <p>Byggeår: ${building.constructionYear}</p>
-                <p>Nuværende benyttelse: ${building.currentUse}</p>
-                <p>Areal: ${building.area}</p>
-                <p>Tidlige benyttelse: ${building.previousUse}</p>
+                <p>Organisation: ${b.org}</p>
+                <p>Navn på bygning: ${b.name}</p>
+                <p>Adresse: ${b.address}</p>
+                <p>Byggeår: ${b.constructionYear}</p>
+                <p>Nuværende benyttelse: ${b.currentUse}</p>
+                <p>Areal: ${b.area}</p>
+                <p>Tidlige benyttelse: ${b.previousUse}</p>
 
-                <a href="image?b=${building.id}">Tilføj billeder</a>
-                <a href="document?b=${building.id}">Tilføj dokumenter/rapporter</a>
-                <a href="addUpdateBuilding.jsp?id=">Rediger bygning</a>
+                <a href="image?b=${b.id}">Tilføj billeder</a>
+                <a href="document?b=${b.id}">Tilføj dokumenter/rapporter</a>
+                <a href="building?id=${b.id}">Rediger bygning</a>
             </div>
         </div>
         <script src="js/jquery-2.2.4.js" type="text/javascript"></script>
