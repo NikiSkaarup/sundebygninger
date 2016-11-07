@@ -3,7 +3,8 @@
     Created on : 02-11-2016, 13:45:34
     Author     : Menja
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:useBean beanName="buildingBean" id="building" scope="request" type="model.Building"/>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,19 +14,25 @@
         <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <h1>Building</h1>
-        <p>Organisation: Lyngby</p>
-        <p>Navn på bygning: Vaskeriet</p>
-        <p>Adresse: Kanalvej 4</p>
-        <p>Byggeår: 1956</p>
-        <p>Nuværende benyttelse: Studie bygning</p>
-        <p>Areal: 200 m2</p>
-        <p>Tidlige benyttelse: Vaskeri</p>
-        
-        <a href="#">Tilføj billeder</a>
-        <a href="#">Tilføj dokumenter/rapporter</a>
-        <a href="addUpdateBuilding.jsp?id=">Rediger bygning</a>
+        <%@include file="navigation.jsp" %>
 
+        <div class="container-fluid">
+            <div class="row">
+                <h1>Building</h1>
+
+                <p>Organisation: ${building.org}</p>
+                <p>Navn på bygning: ${building.name}</p>
+                <p>Adresse: ${building.address}</p>
+                <p>Byggeår: ${building.constructionYear}</p>
+                <p>Nuværende benyttelse: ${building.currentUse}</p>
+                <p>Areal: ${building.area}</p>
+                <p>Tidlige benyttelse: ${building.previousUse}</p>
+
+                <a href="image?b=${building.id}">Tilføj billeder</a>
+                <a href="document?b=${building.id}">Tilføj dokumenter/rapporter</a>
+                <a href="addUpdateBuilding.jsp?id=">Rediger bygning</a>
+            </div>
+        </div>
         <script src="js/jquery-2.2.4.js" type="text/javascript"></script>
         <script src="js/bootstrap.js" type="text/javascript"></script>
     </body>

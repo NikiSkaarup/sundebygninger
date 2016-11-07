@@ -22,7 +22,7 @@ import model.User;
  *
  * @author Menja
  */
-@WebServlet(name = "BuildingController", urlPatterns = {"/Building"})
+@WebServlet(name = "BuildingController", urlPatterns = {"/building"})
 
 public class BuildingController extends HttpServlet {
 
@@ -35,8 +35,18 @@ public class BuildingController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        //DB connection
+         Facade facade = Facade.getFacade();
+         
+         //get the id from jsp/url
+         int id = Integer.parseInt(request.getParameter("id"));
+         
+         Building b = facade.getBuilding(id);
         
-        
+         request.setAttribute("building", b);
+         
+         
+         
     }
 
     @Override

@@ -6,7 +6,7 @@
 
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:useBean beanName="buildingsBean" id="buildings" scope="request" type="java.util.List"/>
+<jsp:useBean beanName="buildingsBean" id="buildings" scope="request" type="java.util.List<model.Building>"/>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -33,7 +33,7 @@
                             <tr>
                                 <td>${b.name}</td>
                                 <td>${b.address}</td>
-                                <td>${b.id}</td>
+                                <td><a href="building?id=${b.id}">Mere</a></td>
                             </tr>
                         </c:forEach>
                     </tbody>
