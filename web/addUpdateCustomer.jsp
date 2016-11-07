@@ -45,12 +45,13 @@
                         </div>
 
                         <button type="submit" class="btn btn-primary">Tilføj</button>
+                    </form>
                 </div>
-                </form>
             </div>
-        </div>  
+        </div> 
+    </form
 
-        <script src="js/jquery-2.2.4.js" type="text/javascript"></script>
-        <script src="js/bootstrap.js" type="text/javascript"></script>
-    </body>
+    <script src="js/jquery-2.2.4.js" type="text/javascript"></script>
+    <script src="js/bootstrap.js" type="text/javascript"></script>
+</body>
 </html>

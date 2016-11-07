@@ -5,13 +5,9 @@
  */
 package controller;
 
+import domain.Facade;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,6 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.User;
 import java.sql.*;
+import db.Conn;
+import db.DAL;
+import model.*;
 
 /**
  *
@@ -29,7 +28,6 @@ import java.sql.*;
 public class LoginController extends HttpServlet {
 
     //private Object Validate;
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -85,36 +83,20 @@ public class LoginController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        try {
-            response.setContentType("text/html;charset=UTF-8");
-            PrintWriter out = response.getWriter();
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
-            Boolean svar;
-                  
-            Connection conn = data.DB.getConnection(); //Virker ikke 
-            PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement("SELECT email FROM User WHERE email = ? AND password = ?");
-                        
-            pstmt.setString(1, email);
-            pstmt.setString(2, password);
-            ResultSet rs = pstmt.executeQuery();
-            svar = rs.next();
-            conn.close();
-            
-            
-            //Hvis email og password passer sammen 
+        Facade facade = Facade.getFacade();
         
-            if (svar == true) {
-                request.getSession().setAttribute("user", email);
-                response.sendRedirect("home");
-            } else {
-                request.setAttribute("error", "Unknown user, please try again");
-                request.getRequestDispatcher("/login.jsp").forward(request, response);
-            }
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        User u = facade.getUserLogin(email, password);
 
-        } catch (SQLException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        if (u != null) {
+            request.getSession().setAttribute("user", u);
+            response.sendRedirect("home");
+        } else {
+            request.setAttribute("error", "Unknown user, please try again");
+            request.getRequestDispatcher("/login.jsp").forward(request, response);
         }
 
     }
+
 }
