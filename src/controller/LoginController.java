@@ -13,12 +13,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import model.User;
-import java.sql.*;
-import db.Conn;
-import db.DAL;
-import model.*;
+import static util.Helper.forwardGet;
 
 /**
  *
@@ -91,9 +87,9 @@ public class LoginController extends HttpServlet {
         if (u != null) {
             request.getSession().setAttribute("user", u);
             response.sendRedirect("home");
-        } else {
+        } else {            
             request.setAttribute("error", "Unknown user, please try again");
-            request.getRequestDispatcher("/login.jsp").forward(request, response);
+            forwardGet(request, response, "/login.jsp");
         }
 
     }
