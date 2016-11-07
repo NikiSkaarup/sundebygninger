@@ -19,8 +19,9 @@
             <h1>${requestScope.action} Tilføj eller rediger bygning</h1>
             <div class="row">
                 <div class="col-md-6"> 
-                    <form action="Building" method="POST" class="form-horizontal" enctype="multipart/form-data">
-                        <input type="hidden" value="${requestScope.bId}" name="buildingId"/>
+                    <form action="building" method="POST" class="form-horizontal" enctype="multipart/form-data">
+                        <input type="hidden" value="${requestScope.bId}" name="bId"/>
+                        <input type="hidden" value="${requestScope.oId}" name="oId"/>
 
                         <div class="form-group">
                             <label class="col-md-3 control-label">Navn på bygning</label>
