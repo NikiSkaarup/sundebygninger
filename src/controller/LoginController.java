@@ -27,7 +27,6 @@ import model.*;
 @WebServlet(name = "LoginController", urlPatterns = {"/LoginController"})
 public class LoginController extends HttpServlet {
 
-    //private Object Validate;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.

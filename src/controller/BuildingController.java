@@ -8,6 +8,7 @@ package controller;
 import domain.Facade;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.Set;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.Building;
 import model.Org;
 import model.User;
+import util.Helper;
 
 /**
  *
@@ -35,33 +37,28 @@ public class BuildingController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-         //DB connection
-         Facade facade = Facade.getFacade();
-         
-         //organisation Id 
-         if(request.getParameter("oid") != null) {
-             int oid = Integer.parseInt(request.getParameter("oid"));
-             
-             request.setAttribute("oid", oid);
-             
-             RequestDispatcher rd = request.getRequestDispatcher("allBuildings.jsp");
-             rd.forward(request, response);
-             
-         } else {
-         
-         //get the id from jsp/url
-         int id = Integer.parseInt(request.getParameter("id"));
-         
-         Building b = facade.getBuilding(id);
-        
-         //Save the variable
-         request.setAttribute("building", b);
-         
-         //forward from servlet to JSP
-         RequestDispatcher rd = request.getRequestDispatcher("/viewBuilding.jsp");
-         rd.forward(request, response);
-         }
-         
+        //DB connection
+        Facade facade = Facade.getFacade();
+
+        //organisation Id 
+        if (request.getParameter("id") != null) {
+
+            //get the id from jsp/url
+            int id = Integer.parseInt(request.getParameter("id"));
+
+            Building b = facade.getBuilding(id);
+
+            //Save the variable
+            request.setAttribute("building", b);
+
+            //forward from servlet to JSP
+            RequestDispatcher rd = request.getRequestDispatcher("/viewBuilding.jsp");
+            rd.forward(request, response);
+        } else {
+            //forward to view all buildings?
+            Helper.forwardGet(request, response, "buildings");
+        }
+
     }
 
     @Override
@@ -71,20 +68,26 @@ public class BuildingController extends HttpServlet {
         Facade facade = Facade.getFacade();
         Building b = new Building();
         b.setId(-1);
-        if (request.getParameter("buildingId") != null 
-                && !request.getParameter("buildingId").equals("")) {
-            b.setId(Integer.parseInt(request.getParameter("buildingId")));
+        if (request.getParameter("bid") != null
+                && !request.getParameter("bid").equals("")) {
+            b.setId(Integer.parseInt(request.getParameter("bid")));
         }
-        
+        if (request.getParameter("oid") != null
+                && !request.getParameter("oid").equals("")) {
+
+            Org org = new Org();
+            org.setId(Integer.parseInt(request.getParameter("oid")));
+
+            b.setOrg(org);
+        }
+
         //organisation tages ud af session
-       // User user = (User)request.getSession().getAttribute("user");
+        // User user = (User)request.getSession().getAttribute("user");
         //b.setOrg(user.getOrg());
-        
-        
         //BUILDING DATA from form put into variables
         String name = request.getParameter("Name");
         String address = request.getParameter("Address");
-      //  String constructionYear = request.getParameter("ConstructionYear");
+        //  String constructionYear = request.getParameter("ConstructionYear");
         String area = request.getParameter("Area");
         String currentUse = request.getParameter("CurrentUse");
         String previousUse = request.getParameter("PreviousUse");
@@ -92,18 +95,18 @@ public class BuildingController extends HttpServlet {
         //use the variables with the data from the form
         b.setName(name);
         b.setAddress(address);
-       // b.setConstructionYear(Timestamp.valueOf(constructionYear));
+        // b.setConstructionYear(Timestamp.valueOf(constructionYear));
         b.setArea(area);
         b.setCurrentUse(currentUse);
         b.setPreviousUse(previousUse);
 
         //insert to DB via facade
-        facade.insertBuilding(b);
+        int id = facade.insertBuilding(b);
 
-        if (b.getId() > 0) {
-            forward(request, response, "allBuildings.jsp?id=");
+        if (id > 0) {
+            Helper.forwardGet(request, response, "buildings?oid=" + b.getOrg().getId());
         } else {
-            forward(request, response, "addUpdateBuilding.jsp");
+            Helper.forwardGet(request, response, "building?oid=" + b.getOrg().getId());
         }
     }
 

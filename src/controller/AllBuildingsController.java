@@ -22,7 +22,7 @@ import model.Building;
  *
  * @author Menja
  */
-@WebServlet(name = "AllBuildingsController", urlPatterns = {"/AllBuildings"})
+@WebServlet(name = "AllBuildingsController", urlPatterns = {"/buildings"})
 public class AllBuildingsController extends HttpServlet {
 
     /**
@@ -66,7 +66,7 @@ public class AllBuildingsController extends HttpServlet {
         //get DB conn
         Facade facade = Facade.getFacade();
 
-        int id = Integer.parseInt(request.getParameter("id"));
+        int id = Integer.parseInt(request.getParameter("oid"));
         
         List<Building> buildingList = facade.getBuildings(id);
 

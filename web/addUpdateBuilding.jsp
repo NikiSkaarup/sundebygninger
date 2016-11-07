@@ -20,6 +20,7 @@
             <div class="row">
                 <div class="col-md-6"> 
                     <form action="building" method="POST" class="form-horizontal" enctype="multipart/form-data">
+                        <%--Id sendt from organisation--%>
                         <input type="hidden" value="${requestScope.bId}" name="bId"/>
                         <input type="hidden" value="${requestScope.oId}" name="oId"/>
 
