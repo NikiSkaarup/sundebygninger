@@ -16,7 +16,7 @@
     <body>
         <%@include file="navigation.jsp"  %>
         <h3>Liste over alle kunder</h3>
-        <form form action="Customer" method="POST" class="form-horizontal" enctype="multipart/form-data">
+        <form form action="AllCustomers" method="POST" class="form-horizontal" enctype="multipart/form-data">
             <table class="table table-hower">
                 <thead>
                     <tr>
@@ -46,6 +46,7 @@
                     <td><a href="#">Link</a> </td>
                 </tr>
             </table>
+            <button type="submit" class="btn btn-primary">Tilføj en ny kunde</button>
         </form>
         <script src="js/jquery-2.2.4.js" type="text/javascript"></script>
         <script src="js/bootstrap.js" type="text/javascript"></script>

@@ -17,7 +17,9 @@
         <%@include file="navigation.jsp"  %>
         <h4>Oplysninger om den pågældende kunde</h4>
         <table border="1" class="col-md-4">
-            <body>
+            </body>
+            
+                
             <tr>
                 <th>ID</th>
                 <td>Kunde id</td>
@@ -34,9 +36,10 @@
                 <th>Tlf.nummer</th>
                 <td>Kunde tlf.nummer</td>
             </tr>
-            <p>
-                <a href="addUpdateCustomer.jsp">Tilføj/redigere kunde</a>
-            </p>
+            <div>
+                <a href="addUpdateCustomer.jsp">Redigere kunde</a>
+            </div>
+            
     </body>
 </table>
 <script src="js/jquery-2.2.4.js" type="text/javascript"></script>

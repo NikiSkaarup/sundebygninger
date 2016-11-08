@@ -17,34 +17,34 @@
         <%@include file="navigation.jsp"  %>
         <div class="container-fluid">
 
-            <h4>Tilføj/redigere kunde</h4>
+            <h4>Redigere kunde</h4>
             <div class="row">
                 <div class="col-md-6"> 
-                    <form action="Customer" method="POST" class="form-horizontal" enctype="multipart/form-data">
+                    <form action="ViewCustomer" method="POST" class="form-horizontal" enctype="multipart/form-data">
                         <input type="hidden" value="???" name="????"/>
 
                         <div class="form-group">
-                            <label class=col-md-3 control-label>Kunde-id:</label>
+                            <label class=col-md-3 control-label>ID:</label>
 
-                            <input type="id" class="form-control" id="kunde-id">           
+                            <input type="id" class="form-control" placeholder="ID" id="kunde-id">           
                         </div>
 
                         <div class="form-group">
-                            <label class=col-md-3 control-label>Navn:</label>
-                            <input type="navn" class="form-control" id="navn">
+                            <label class=col-md-3 control-label>Fulde navn:</label>
+                            <input type="navn" class="form-control" placeholder="Fulde navn" id="navn">
                         </div>
 
                         <div class="form-group">
                             <label class=col-md-3 control-label>Email:</label>
-                            <input type="mail" class="form-control" id="email">
+                            <input type="mail" class="form-control" placeholder="Email" id="email">
                         </div>
 
                         <div class="form-group">
-                            <label class=col-md-3 control-label>Tlf:</label>
-                            <input type="tlf." class="form-control" id="tlf. nummer">
+                            <label class=col-md-3 control-label>Tlf. nummer:</label>
+                            <input type="tlf." class="form-control" placeholder="Tlf. nummer" id="tlf. nummer">
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Tilføj</button>
+                        <button type="submit" class="btn btn-primary">OK</button>
                     </form>
                 </div>
             </div>
