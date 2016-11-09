@@ -25,7 +25,7 @@
                             <label class="col-md-3 control-label">Bygning</label>
                             <div class="col-md-9">
                                 <label for="building">Bygning</label>
-                                //TODO: fix somthing with buildings
+                                <%--TODO: fix something with buildings--%>
                             </div>
                         </div>
 

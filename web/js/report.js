@@ -22,7 +22,7 @@ function createRoom() {
     console.log("counter: " + counter);
 
     var room = formGroup.clone().attr({id: 'room-' + counter});
-    cc = 1;
+    cc = 0;
     //room.attr({'data-commentCount': 2});//$('#room-'+counter).attr({'data-commentCount':1});
 
     room.append($(document.createElement('hr')));
