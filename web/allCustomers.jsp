@@ -3,7 +3,8 @@
     Created on : 02-11-2016, 12:13:31
     Author     : Tanja
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:useBean id="u" scope="request" type="java.util.List<model.User>"/>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -17,34 +18,23 @@
         <%@include file="navigation.jsp"  %>
         <h3>Liste over alle kunder</h3>
         <form form action="AllCustomers" method="POST" class="form-horizontal" enctype="multipart/form-data">
-            <table class="table table-hower">
+            <table class="active">
                 <thead>
                     <tr>
-                        <th>Nr.</th>
-                        <th>Navn</th>
+                        <th>Name</th>
                         <th>Email</th>
-                        <th>Link til info</th>
+                        <th>Link</th>
                     </tr>  
                 </thead>
-                </div>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>?</td>
-                    <td>?</td>
-                    <td><a href="http://localhost:8084/sundebygninger/viewCustomer.jsp">Link</a> </td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>?</td>
-                    <td>?</td>
-                    <td><a href="#">Link</a> </td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>?</td>
-                    <td>?</td>
-                    <td><a href="#">Link</a> </td>
-                </tr>
+                <tbody>
+                    <c:forEach items="${Users}" var="u">
+                    <tr>
+                        <td>${u.Name}</td>
+                        <td>${u.Email}</td>
+                        <td><a href="user?id=${u.id}">Info</a> </td>
+                    </tr>
+                    </c:forEach>
+                </tbody>
             </table>
             <button type="submit" class="btn btn-primary">Tilføj en ny kunde</button>
         </form>

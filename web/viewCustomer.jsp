@@ -17,7 +17,7 @@
     <body>
         <%@include file="navigation.jsp"  %>
         <h4>Oplysninger om den pågældende kunde</h4>
-        <table border="1" class="col-md-4">
+        <table border="" class="col-md-4">
     </body>
 
 
