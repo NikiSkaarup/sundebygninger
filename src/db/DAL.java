@@ -26,9 +26,10 @@ public class DAL {
     }
 
     public Building getBuilding(int id) {
-        String query = "SELECT Building.Id, Building.`Name`, Address, ConstructionYear, " +
-                "FkOrgId, CurrentUse, Area, PreviousUse, Org.Name FROM `Building` INNER JOIN Org ON FkOrgId = Org.Id   WHERE" +
-                " Building.Id=?";
+        String query = "SELECT Building.Id, Building.`Name`, Address, " +
+                "ConstructionYear, FkOrgId, CurrentUse, Area, PreviousUse, " +
+                "Org.Name FROM `Building` INNER JOIN Org ON FkOrgId = Org.Id " +
+                "  WHERE Building.Id=?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
