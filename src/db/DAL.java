@@ -87,12 +87,10 @@ public class DAL {
             stmt.setString(6, b.getPreviousUse());
             stmt.setInt(7, b.getOrg().getId());
             int changed = stmt.executeUpdate();
-            if (changed > 0) {
-                ResultSet rs = stmt.getGeneratedKeys();
-                if (rs.next())
-                    id = rs.getInt("Id");
-                rs.close();
-            }
+            ResultSet rs = stmt.getGeneratedKeys();
+            if (rs.next())
+                id = rs.getInt("Id");
+            rs.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -220,12 +218,10 @@ public class DAL {
             stmt.setInt(4, u.getRole().getId());
             stmt.setInt(5, u.getOrg().getId());
             int changed = stmt.executeUpdate();
-            if (changed > 0) {
-                ResultSet rs = stmt.getGeneratedKeys();
-                if (rs.next())
-                    id = rs.getInt("Id");
-                rs.close();
-            }
+            ResultSet rs = stmt.getGeneratedKeys();
+            if (rs.next())
+                id = rs.getInt("Id");
+            rs.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -328,12 +324,10 @@ public class DAL {
             stmt.setString(2, i.getPath());
             stmt.setInt(3, i.getBuilding().getId());
             int changed = stmt.executeUpdate();
-            if (changed > 0) {
-                ResultSet rs = stmt.getGeneratedKeys();
-                if (rs.next())
-                    id = rs.getInt("Id");
-                rs.close();
-            }
+            ResultSet rs = stmt.getGeneratedKeys();
+            if (rs.next())
+                id = rs.getInt("Id");
+            rs.close();
             stmt.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -430,12 +424,10 @@ public class DAL {
             stmt.setString(2, d.getPath());
             stmt.setInt(3, d.getBuilding().getId());
             int changed = stmt.executeUpdate();
-            if (changed > 0) {
-                ResultSet rs = stmt.getGeneratedKeys();
-                if (rs.next())
-                    id = rs.getInt("Id");
-                rs.close();
-            }
+            ResultSet rs = stmt.getGeneratedKeys();
+            if (rs.next())
+                id = rs.getInt("Id");
+            rs.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
