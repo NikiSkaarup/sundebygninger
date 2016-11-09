@@ -20,7 +20,7 @@
             <div class="row">
                 <h1>Building</h1>
 
-                <p>Organisation: ${b.org}</p>
+                <p>Organisation: ${b.org.id}</p>
                 <p>Navn på bygning: ${b.name}</p>
                 <p>Adresse: ${b.address}</p>
                 <p>Byggeår: ${b.constructionYear}</p>
