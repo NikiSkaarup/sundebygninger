@@ -42,7 +42,7 @@ public class BuildingController extends HttpServlet {
 
         //organisation Id 
         if (request.getParameter("id") != null) {
-            //get the id from jsp/url
+            //get the id from JSP/URL
             int id = Integer.parseInt(request.getParameter("id"));
             
             Building b = facade.getBuilding(id);
@@ -122,8 +122,5 @@ public class BuildingController extends HttpServlet {
 //        }
 //        return "";
 //    }
-    private void forward(HttpServletRequest request, HttpServletResponse response, String string) throws ServletException, IOException {
-        RequestDispatcher rd = request.getRequestDispatcher("/" + string);
-        rd.forward(request, response);
-    }
+
 }
