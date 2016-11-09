@@ -17,31 +17,33 @@
         <%@include file="navigation.jsp"  %>
         <div class="container-fluid">
 
-            <h4>Redigere kunde</h4>
+            <h4>Tilføj eller redigere kunde</h4>
             <div class="row">
                 <div class="col-md-6"> 
                     <form action="ViewCustomer" method="POST" class="form-horizontal" enctype="multipart/form-data">
-                        <input type="hidden" value="???" name="????"/>
+                        <%--UserId sendt from organisation--%>
+                        <input type="hidden" value="???" name="???"/>
+                        <input type="hidden" value="${requestScope.uId}" name="uId"/>
 
                         <div class="form-group">
                             <label class=col-md-3 control-label>ID:</label>
 
-                            <input type="id" class="form-control" placeholder="ID" id="kunde-id">           
+                            <input type="id" class="form-control" placeholder="ID" name="UserId"/>           
                         </div>
 
                         <div class="form-group">
-                            <label class=col-md-3 control-label>Fulde navn:</label>
-                            <input type="navn" class="form-control" placeholder="Fulde navn" id="navn">
+                            <label class=col-md-3 control-label>Navn:</label>
+                            <input type="navn" class="form-control" placeholder="Fulde navn" name="Name"/>
                         </div>
 
                         <div class="form-group">
                             <label class=col-md-3 control-label>Email:</label>
-                            <input type="mail" class="form-control" placeholder="Email" id="email">
+                            <input type="mail" class="form-control" placeholder="Email" name="Email"/>
                         </div>
 
                         <div class="form-group">
                             <label class=col-md-3 control-label>Tlf. nummer:</label>
-                            <input type="tlf." class="form-control" placeholder="Tlf. nummer" id="tlf. nummer">
+                            <input type="phone" class="form-control" placeholder="Tlf. nummer" name="Phone"/>
                         </div>
 
                         <button type="submit" class="btn btn-primary">OK</button>

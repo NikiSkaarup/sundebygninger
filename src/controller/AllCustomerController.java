@@ -5,6 +5,7 @@
  */
 package controller;
 
+import domain.Facade;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -59,6 +60,10 @@ public class AllCustomerController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        
+        Facade facade = Facade.getFacade();
+        
+        String u = request.getParameter("User");
     }
 
     /**

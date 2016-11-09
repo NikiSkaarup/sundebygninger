@@ -5,13 +5,17 @@
  */
 package controller;
 
+import domain.Facade;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Org;
+import model.User;
 
 /**
  *
@@ -37,7 +41,7 @@ public class CustomerController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CustomerController</title>");            
+            out.println("<title>Servlet CustomerController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet CustomerController at " + request.getContextPath() + "</h1>");
@@ -59,6 +63,15 @@ public class CustomerController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        
+        //Oprette DB connection
+        Facade facade = Facade.getFacade();
+        
+        if(request.getParameter("Name")!= null){
+            String name = request.getParameter("Name");
+            String email = request.getParameter("Email");
+        
+        }
     }
 
     /**
@@ -73,6 +86,36 @@ public class CustomerController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+
+        Facade facade = Facade.getFacade();
+
+        User u = new User();
+        u.setId(-1);
+
+        if (request.getParameter("uId") != null
+                && !request.getParameter("uId").equals("")) {
+
+            u.setId(Integer.parseInt(request.getParameter("uId")));
+        }
+        if (request.getParameter("orgId") != null
+                && !request.getParameter("orgId").equals("")) {
+
+            Org org = new Org();
+            org.setId(Integer.parseInt(request.getParameter("orgid")));
+
+            u.setOrg(org);
+        }
+
+        Integer userid = Integer.parseInt(request.getParameter("UserId"));
+        String name = request.getParameter("Name");
+        String email = request.getParameter("Email");
+        String phone = request.getParameter("Phone");
+        
+        u.setId(userid);
+        u.setName(name);
+        u.setEmail(email);
+        u.setPhone(phone);
+
     }
 
     /**
@@ -80,9 +123,9 @@ public class CustomerController extends HttpServlet {
      *
      * @return a String containing servlet description
      */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
+    private void forward(HttpServletRequest request, HttpServletResponse response, String string) throws ServletException, IOException {
+        RequestDispatcher rd = request.getRequestDispatcher("/" + string);
+        rd.forward(request, response);
+    }
 
 }
