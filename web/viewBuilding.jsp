@@ -20,7 +20,7 @@
             <div class="row">
                 <h1>Building</h1>
 
-                <p>Organisation: ${b.org.id}</p>
+                <p>Organisation: ${b.org.name}</p>
                 <p>Navn på bygning: ${b.name}</p>
                 <p>Adresse: ${b.address}</p>
                 <p>Byggeår: ${b.constructionYear}</p>
@@ -30,7 +30,7 @@
 
                 <a href="image?b=${b.id}">Tilføj billeder</a>
                 <a href="document?b=${b.id}">Tilføj dokumenter/rapporter</a>
-                <a href="building?id=${b.id}">Rediger bygning</a>
+                <a href="building?id=${b.id}&u=1">Rediger bygning</a>
             </div>
         </div>
         <script src="js/jquery-2.2.4.js" type="text/javascript"></script>

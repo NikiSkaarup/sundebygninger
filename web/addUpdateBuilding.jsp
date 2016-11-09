@@ -4,6 +4,7 @@
     Author     : Jamie
 --%>
 
+<jsp:useBean id="b" scope="request" class="model.Building"/>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -27,14 +28,14 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">Navn på bygning</label>
                             <div class="col-md-9">
-                                <input class="form-control" type="text"  placeholder="Navn på bygning" name="Name"/> 
+                                <input class="form-control" type="text" value="${b.name}" placeholder="Navn på bygning" name="Name"/> 
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-md-3 control-label">Adresse</label>
                             <div class="col-md-9">
-                                <input class="form-control" type="text" placeholder="Adresse" name="Address"/>
+                                <input class="form-control" type="text" value="${b.address}" placeholder="Adresse" name="Address"/>
                             </div>
                         </div>
 
@@ -48,14 +49,14 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">Bygningsareal i m2</label>
                             <div class="col-md-9">
-                                <input class="form-control" type="text" placeholder="Bygningsareal i m2" name="Area"/>
+                                <input class="form-control" type="text" value="${b.area}" placeholder="Bygningsareal i m2" name="Area"/>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-md-3 control-label">Nuværende benyttelse</label>
                             <div class="col-md-9">
-                                <input class="form-control" type="text" placeholder="Nuværende benyttelse" name="CurrentUse"/>
+                                <input class="form-control" type="text" value="${b.currentUse}" placeholder="Nuværende benyttelse" name="CurrentUse"/>
                                 <label>(Hvad bruges bygningen til?)</label>
                             </div>
                         </div>
@@ -63,7 +64,7 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">Tidligere benyttelse</label>
                             <div class="col-md-9">
-                                <input class="form-control" type="text" placeholder="tidligere benyttelse" name="PreviousUse"/>
+                                <input class="form-control" type="text" value="${b.previousUse}" placeholder="tidligere benyttelse" name="PreviousUse"/>
                                 <label>(Hvad har bygningen været brugt til?)</label>
                             </div>
                         </div>

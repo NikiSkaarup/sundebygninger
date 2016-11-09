@@ -40,23 +40,26 @@ public class BuildingController extends HttpServlet {
         //DB connection
         Facade facade = Facade.getFacade();
 
+        //FORWARD FROM ADDED BUILDING TO VIEW BUILDING
         //organisation Id 
         if (request.getParameter("id") != null) {
             //get the id from JSP/URL
             int id = Integer.parseInt(request.getParameter("id"));
-            
             Building b = facade.getBuilding(id);
-            
             //Save the variable
             request.setAttribute("b", b);
-
             //forward from servlet to JSP
-            Helper.forward(request, response, "/viewBuilding.jsp");
+            if (request.getParameter("u") != null) {
+                Helper.forward(request, response, "/addUpdateBuilding.jsp");
+            } else {
+                Helper.forward(request, response, "/viewBuilding.jsp");
+            }
         } else {
             //forward to view all buildings?
             Helper.forwardGet(request, response, "buildings");
         }
 
+     
     }
 
     @Override
@@ -65,7 +68,7 @@ public class BuildingController extends HttpServlet {
 
         Facade facade = Facade.getFacade();
         Building b = new Building();
-        
+
         b.setId(-1);
         if (request.getParameter("bid") != null
                 && !request.getParameter("bid").equals("")) {
@@ -122,5 +125,4 @@ public class BuildingController extends HttpServlet {
 //        }
 //        return "";
 //    }
-
 }
