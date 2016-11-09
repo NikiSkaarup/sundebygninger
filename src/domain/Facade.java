@@ -1,7 +1,6 @@
 package domain;
 
-import db.Conn;
-import db.DAL;
+import db.*;
 import model.*;
 
 import java.util.List;
@@ -25,52 +24,52 @@ public class Facade {
     }
 
     public Building getBuilding(int id) {
-        DAL dal = new DAL(Conn.get());
-        return dal.getBuilding(id);
+        BuildingMapper mapper = new BuildingMapper(Conn.get());
+        return mapper.getBuilding(id);
     }
 
     public List<Building> getBuildings(int orgId) {
-        DAL dal = new DAL(Conn.get());
+        BuildingMapper mapper = new BuildingMapper(Conn.get());
         Org org = new Org();
         org.setId(orgId);
-        return dal.getBuildings(org);
+        return mapper.getBuildings(org);
     }
 
     public List<Building> getBuildings(int orgId, int count) {
-        DAL dal = new DAL(Conn.get());
+        BuildingMapper mapper = new BuildingMapper(Conn.get());
         Org org = new Org();
         org.setId(orgId);
-        return dal.getBuildings(org, count);
+        return mapper.getBuildings(org, count);
     }
 
     public List<Building> getBuildings(Org org) {
-        DAL dal = new DAL(Conn.get());
-        return dal.getBuildings(org);
+        BuildingMapper mapper = new BuildingMapper(Conn.get());
+        return mapper.getBuildings(org);
     }
 
     public List<Building> getBuildings(Org org, int count) {
-        DAL dal = new DAL(Conn.get());
-        return dal.getBuildings(org, count);
+        BuildingMapper mapper = new BuildingMapper(Conn.get());
+        return mapper.getBuildings(org, count);
     }
 
     public int insertBuilding(Building b) {
-        DAL dal = new DAL(Conn.get());
-        return dal.insertBuilding(b);
+        BuildingMapper mapper = new BuildingMapper(Conn.get());
+        return mapper.insertBuilding(b);
     }
 
     public boolean updateBuilding(Building b) {
-        DAL dal = new DAL(Conn.get());
-        return dal.updateBuilding(b);
+        BuildingMapper mapper = new BuildingMapper(Conn.get());
+        return mapper.updateBuilding(b);
     }
 
     public User getUser(int id) {
-        DAL dal = new DAL(Conn.get());
-        return dal.getUser(id);
+        UserMapper mapper = new UserMapper(Conn.get());
+        return mapper.getUser(id);
     }
 
     public User getUser(User user) {
-        DAL dal = new DAL(Conn.get());
-        return dal.getUser(user.getId());
+        UserMapper mapper = new UserMapper(Conn.get());
+        return mapper.getUser(user.getId());
     }
 
     /**
@@ -80,227 +79,271 @@ public class Facade {
      * @return user
      */
     public User getUserLogin(String e, String p) {
-        DAL dal = new DAL(Conn.get());
-        return dal.getUserLogin(e, p);
+        UserMapper mapper = new UserMapper(Conn.get());
+        return mapper.getUserLogin(e, p);
     }
 
     public List<User> getUsers() {
-        DAL dal = new DAL(Conn.get());
-        return dal.getUsers();
+        UserMapper mapper = new UserMapper(Conn.get());
+        return mapper.getUsers();
     }
 
     public List<User> getUsers(int orgId) {
-        DAL dal = new DAL(Conn.get());
+        UserMapper mapper = new UserMapper(Conn.get());
         Org org = new Org();
         org.setId(orgId);
-        return dal.getUsers(org);
+        return mapper.getUsers(org);
     }
 
     public List<User> getUsers(int orgId, int count) {
-        DAL dal = new DAL(Conn.get());
+        UserMapper mapper = new UserMapper(Conn.get());
         Org org = new Org();
         org.setId(orgId);
-        return dal.getUsers(org, count);
+        return mapper.getUsers(org, count);
     }
 
     public List<User> getUsers(Org org) {
-        DAL dal = new DAL(Conn.get());
-        return dal.getUsers(org);
+        UserMapper mapper = new UserMapper(Conn.get());
+        return mapper.getUsers(org);
     }
 
     public List<User> getUsers(Org org, int count) {
-        DAL dal = new DAL(Conn.get());
-        return dal.getUsers(org, count);
+        UserMapper mapper = new UserMapper(Conn.get());
+        return mapper.getUsers(org, count);
     }
 
     public int insertUser(User u) {
-        DAL dal = new DAL(Conn.get());
-        return dal.insertUser(u);
+        UserMapper mapper = new UserMapper(Conn.get());
+        return mapper.insertUser(u);
     }
 
     public boolean updateUser(User u) {
-        DAL dal = new DAL(Conn.get());
-        return dal.updateUser(u);
+        UserMapper mapper = new UserMapper(Conn.get());
+        return mapper.updateUser(u);
     }
 
     public Image getImage(int id) {
-        DAL dal = new DAL(Conn.get());
-        return dal.getImage(id);
+        ImageMapper mapper = new ImageMapper(Conn.get());
+        return mapper.getImage(id);
     }
 
     public List<Image> getImages() {
-        DAL dal = new DAL(Conn.get());
-        return dal.getImages();
+        ImageMapper mapper = new ImageMapper(Conn.get());
+        return mapper.getImages();
     }
 
-    public List<Image> getImages(int buildingId) {
-        DAL dal = new DAL(Conn.get());
+    public List<Image> getImages(int bId) {
+        ImageMapper mapper = new ImageMapper(Conn.get());
         Building b = new Building();
-        b.setId(buildingId);
-        return dal.getImages(b);
+        b.setId(bId);
+        return mapper.getImages(b);
     }
 
-    public List<Image> getImages(int buildingId, int count) {
-        DAL dal = new DAL(Conn.get());
+    public List<Image> getImages(int bId, int count) {
+        ImageMapper mapper = new ImageMapper(Conn.get());
         Building b = new Building();
-        b.setId(buildingId);
-        return dal.getImages(b, count);
+        b.setId(bId);
+        return mapper.getImages(b, count);
     }
 
     public List<Image> getImages(Building b) {
-        DAL dal = new DAL(Conn.get());
-        return dal.getImages(b);
+        ImageMapper mapper = new ImageMapper(Conn.get());
+        return mapper.getImages(b);
     }
 
     public List<Image> getImages(Building b, int count) {
-        DAL dal = new DAL(Conn.get());
-        return dal.getImages(b, count);
+        ImageMapper mapper = new ImageMapper(Conn.get());
+        return mapper.getImages(b, count);
     }
 
     public int insertImage(Image i) {
-        DAL dal = new DAL(Conn.get());
-        return dal.insertImage(i);
+        ImageMapper mapper = new ImageMapper(Conn.get());
+        return mapper.insertImage(i);
     }
 
     public boolean updateImage(Image i) {
-        DAL dal = new DAL(Conn.get());
-        return dal.updateImage(i);
+        ImageMapper mapper = new ImageMapper(Conn.get());
+        return mapper.updateImage(i);
     }
 
     public Document getDocument(int id) {
-        DAL dal = new DAL(Conn.get());
-        return dal.getDocument(id);
+        DocumentMapper mapper = new DocumentMapper(Conn.get());
+        return mapper.getDocument(id);
     }
 
     public List<Document> getDocuments() {
-        DAL dal = new DAL(Conn.get());
-        return dal.getDocuments();
+        DocumentMapper mapper = new DocumentMapper(Conn.get());
+        return mapper.getDocuments();
     }
 
-    public List<Document> getDocuments(int buildingId) {
-        DAL dal = new DAL(Conn.get());
+    public List<Document> getDocuments(int bId) {
+        DocumentMapper mapper = new DocumentMapper(Conn.get());
         Building b = new Building();
-        b.setId(buildingId);
-        return dal.getDocuments(b);
+        b.setId(bId);
+        return mapper.getDocuments(b);
     }
 
-    public List<Document> getDocuments(int buildingId, int count) {
-        DAL dal = new DAL(Conn.get());
+    public List<Document> getDocuments(int bId, int count) {
+        DocumentMapper mapper = new DocumentMapper(Conn.get());
         Building b = new Building();
-        b.setId(buildingId);
-        return dal.getDocuments(b, count);
+        b.setId(bId);
+        return mapper.getDocuments(b, count);
     }
 
     public List<Document> getDocuments(Building b) {
-        DAL dal = new DAL(Conn.get());
-        return dal.getDocuments(b);
+        DocumentMapper mapper = new DocumentMapper(Conn.get());
+        return mapper.getDocuments(b);
     }
 
     public List<Document> getDocuments(Building b, int count) {
-        DAL dal = new DAL(Conn.get());
-        return dal.getDocuments(b, count);
+        DocumentMapper mapper = new DocumentMapper(Conn.get());
+        return mapper.getDocuments(b, count);
     }
 
     public int insertDocument(Document d) {
-        DAL dal = new DAL(Conn.get());
-        return dal.insertDocument(d);
+        DocumentMapper mapper = new DocumentMapper(Conn.get());
+        return mapper.insertDocument(d);
     }
 
     public boolean updateDocument(Document d) {
-        DAL dal = new DAL(Conn.get());
-        return dal.updateDocument(d);
+        DocumentMapper mapper = new DocumentMapper(Conn.get());
+        return mapper.updateDocument(d);
+    }
+
+    public File getFile(int id) {
+        FileMapper mapper = new FileMapper(Conn.get());
+        return mapper.getFile(id);
+    }
+
+    public List<File> getFiles() {
+        FileMapper mapper = new FileMapper(Conn.get());
+        return mapper.getFiles();
+    }
+
+    public List<File> getFiles(int bId) {
+        FileMapper mapper = new FileMapper(Conn.get());
+        Building b = new Building();
+        b.setId(bId);
+        return mapper.getFiles(b);
+    }
+
+    public List<File> getFiles(int bId, int count) {
+        FileMapper mapper = new FileMapper(Conn.get());
+        Building b = new Building();
+        b.setId(bId);
+        return mapper.getFiles(b, count);
+    }
+
+    public List<File> getFiles(Building b) {
+        FileMapper mapper = new FileMapper(Conn.get());
+        return mapper.getFiles(b);
+    }
+
+    public List<File> getFiles(Building b, int count) {
+        FileMapper mapper = new FileMapper(Conn.get());
+        return mapper.getFiles(b, count);
+    }
+
+    public int insertFile(File f) {
+        FileMapper mapper = new FileMapper(Conn.get());
+        return mapper.insertFile(f);
+    }
+
+    public boolean updateFile(File f) {
+        FileMapper mapper = new FileMapper(Conn.get());
+        return mapper.updateFile(f);
     }
 
     public Report getReport(int id) {
-        DAL dal = new DAL(Conn.get());
-        return dal.getReport(id);
+        ReportMapper mapper = new ReportMapper(Conn.get());
+        return mapper.getReport(id);
     }
 
     public List<Report> getReports() {
-        DAL dal = new DAL(Conn.get());
-        return dal.getReports();
+        ReportMapper mapper = new ReportMapper(Conn.get());
+        return mapper.getReports();
     }
 
-    public List<Report> getReports(int buildingId) {
-        DAL dal = new DAL(Conn.get());
+    public List<Report> getReports(int bId) {
+        ReportMapper mapper = new ReportMapper(Conn.get());
         Building b = new Building();
-        b.setId(buildingId);
-        return dal.getReports(b);
+        b.setId(bId);
+        return mapper.getReports(b);
     }
 
-    public List<Report> getReports(int buildingId, int count) {
-        DAL dal = new DAL(Conn.get());
+    public List<Report> getReports(int bId, int count) {
+        ReportMapper mapper = new ReportMapper(Conn.get());
         Building b = new Building();
-        b.setId(buildingId);
-        return dal.getReports(b, count);
+        b.setId(bId);
+        return mapper.getReports(b, count);
     }
 
     public List<Report> getReports(Building b) {
-        DAL dal = new DAL(Conn.get());
-        return dal.getReports(b);
+        ReportMapper mapper = new ReportMapper(Conn.get());
+        return mapper.getReports(b);
     }
 
     public List<Report> getReports(Building b, int count) {
-        DAL dal = new DAL(Conn.get());
-        return dal.getReports(b, count);
+        ReportMapper mapper = new ReportMapper(Conn.get());
+        return mapper.getReports(b, count);
     }
 
     public int insertReport(Report r) {
-        DAL dal = new DAL(Conn.get());
-        return dal.insertReport(r);
+        ReportMapper mapper = new ReportMapper(Conn.get());
+        return mapper.insertReport(r);
     }
 
     public boolean updateReport(Report r) {
-        DAL dal = new DAL(Conn.get());
-        return dal.updateReport(r);
+        ReportMapper mapper = new ReportMapper(Conn.get());
+        return mapper.updateReport(r);
     }
 
     public Request getRequest(int id) {
-        DAL dal = new DAL(Conn.get());
-        return dal.getRequest(id);
+        RequestMapper mapper = new RequestMapper(Conn.get());
+        return mapper.getRequest(id);
     }
 
     public List<Request> getRequests() {
-        DAL dal = new DAL(Conn.get());
-        return dal.getRequests();
+        RequestMapper mapper = new RequestMapper(Conn.get());
+        return mapper.getRequests();
     }
 
-    public List<Request> getRequests(int buildingId) {
-        DAL dal = new DAL(Conn.get());
+    public List<Request> getRequests(int bId) {
+        RequestMapper mapper = new RequestMapper(Conn.get());
         Building b = new Building();
-        b.setId(buildingId);
-        return dal.getRequests(b);
+        b.setId(bId);
+        return mapper.getRequests(b);
     }
 
-    public List<Request> getRequests(int buildingId, int count) {
-        DAL dal = new DAL(Conn.get());
+    public List<Request> getRequests(int bId, int count) {
+        RequestMapper mapper = new RequestMapper(Conn.get());
         Building b = new Building();
-        b.setId(buildingId);
-        return dal.getRequests(b, count);
+        b.setId(bId);
+        return mapper.getRequests(b, count);
     }
 
     public List<Request> getRequests(Building b) {
-        DAL dal = new DAL(Conn.get());
-        return dal.getRequests(b);
+        RequestMapper mapper = new RequestMapper(Conn.get());
+        return mapper.getRequests(b);
     }
 
     public List<Request> getRequests(Building b, int count) {
-        DAL dal = new DAL(Conn.get());
-        return dal.getRequests(b, count);
+        RequestMapper mapper = new RequestMapper(Conn.get());
+        return mapper.getRequests(b, count);
     }
 
     public int insertRequest(Request r) {
-        DAL dal = new DAL(Conn.get());
-        return dal.insertRequest(r);
+        RequestMapper mapper = new RequestMapper(Conn.get());
+        return mapper.insertRequest(r);
     }
 
     public boolean updateRequest(Request r) {
-        DAL dal = new DAL(Conn.get());
-        return dal.updateRequest(r);
+        RequestMapper mapper = new RequestMapper(Conn.get());
+        return mapper.updateRequest(r);
     }
 
     public List<ServiceType> getServiceTypes() {
-        DAL dal = new DAL(Conn.get());
-        return dal.getServiceTypes();
+        ServiceTypeMapper mapper = new ServiceTypeMapper(Conn.get());
+        return mapper.getServiceTypes();
     }
 }
