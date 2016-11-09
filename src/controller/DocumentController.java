@@ -1,6 +1,9 @@
 package controller;
 
-import javax.servlet.RequestDispatcher;
+import domain.Facade;
+import model.Building;
+import model.Document;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -10,11 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 import static util.Helper.extractFileName;
+import static util.Helper.forwardGet;
 import static util.Helper.generateSemiUniqueFileName;
 
 /**
@@ -31,18 +32,21 @@ public class DocumentController extends HttpServlet {
 
     private final String SAVE_DIR = "documents";
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse
-            response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse
+            res) throws ServletException, IOException {
+        Facade facade = Facade.getFacade();
 
         int id = -1;
-        if (!request.getParameter("id").equals(""))
-            id = Integer.parseInt(request.getParameter("id"));
+        if (!req.getParameter("id").equals(""))
+            id = Integer.parseInt(req.getParameter("id"));
 
-        int buildingId = -1;
-        if (!request.getParameter("buildingId").equals(""))
-            buildingId = Integer.parseInt(request.getParameter("buildingId"));
+        int bId = -1;
+        if (!req.getParameter("b").equals(""))
+            bId = Integer.parseInt(req.getParameter("b"));
 
-        String appPath = request.getServletContext().getRealPath("");
+        Building b = facade.getBuilding(bId);
+
+        String appPath = req.getServletContext().getRealPath("");
         String savePath = appPath + File.separator + SAVE_DIR;
 
         File fileSaveDir = new File(savePath);
@@ -51,7 +55,7 @@ public class DocumentController extends HttpServlet {
 
         String name = "", fileExt, fileName = "";
 
-        for (Part part : request.getParts()) {
+        for (Part part : req.getParts()) {
             if (!part.getName().equals("file"))
                 continue;
             if (name.equals("")) {
@@ -63,82 +67,51 @@ public class DocumentController extends HttpServlet {
             part.write(savePath + File.separator + fileName);
         }
 
-        try {
-            Connection conn = data.DB.getConnection();
-            PreparedStatement stmt;
-            if (id < 0) {
-                stmt = conn.prepareStatement("INSERT INTO Document " +
-                        "(Name, FkBuildingId, Path) VALUES (?,?,?)");
+        Document d = new Document();
+        d.setName(name);
+        d.setBuilding(b);
+        d.setPath(fileName);
 
-                stmt.setString(1, name);
-                stmt.setInt(2, buildingId);
-                stmt.setString(3, fileName);
-            } else {
-                stmt = conn.prepareStatement("UPDATE Document SET " +
-                        "NAME=?, Path=? WHERE Id=? AND FkBuildingId=?");
-
-                stmt.setString(1, name);
-                stmt.setString(2, fileName);
-                stmt.setInt(3, id);
-                stmt.setInt(4, buildingId);
-            }
-            stmt.executeUpdate();
-            conn.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        boolean viewB = false;
+        if (id > 0 && facade.updateDocument(d)) {
+                viewB = true;
+        } else {
+            int newId = facade.insertDocument(d);
+            if (newId > 0)
+                viewB = true;
         }
-        if (buildingId < 0)
-            response.sendRedirect("/building?id=" + buildingId);
+
+        if (viewB)
+            forwardGet(req, res, "/building?id=" + b.getId());
         else
-            response.sendRedirect("/allBuildings.jsp");
+            forwardGet(req, res, "/buildings?oid=" + b.getOrg().getId());
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse
-            response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse
+            res) throws ServletException, IOException {
+        Facade facade = Facade.getFacade();
 
         int id = -1;
-        if (request.getParameter("edit") == null) {
-            request.setAttribute("action", "add");
+        if (req.getParameter("edit") == null) {
+            req.setAttribute("action", "add");
         } else {
-            request.setAttribute("action", "edit");
-            id = Integer.parseInt(request.getParameter("edit"));
+            req.setAttribute("action", "edit");
+            id = Integer.parseInt(req.getParameter("edit"));
         }
 
-        int buildingId = -1;
-        if (request.getParameter("building") != null)
-            buildingId = Integer.parseInt(request.getParameter("building"));
+        int b = -1;
+        if (req.getParameter("b") != null)
+            b = Integer.parseInt(req.getParameter("b"));
+        req.setAttribute("b", b);
 
-        if (id > 0 && buildingId > 0) {
-            try {
-                Connection conn = data.DB.getConnection();
-                PreparedStatement stmt = conn.prepareStatement("SELECT " +
-                        "Name, Path FROM Document WHERE Id=? AND " +
-                        "FkBuildingId=?");
-                stmt.setInt(1, id);
-                stmt.setInt(2, buildingId);
+        if (id > 0 && b > 0) {
+            Document d = facade.getDocument(id);
+            req.setAttribute("d", d);
+        }
 
-                ResultSet rs = stmt.executeQuery();
-
-                if (rs.getFetchSize() == 1) {
-                    rs.next();
-
-                    request.setAttribute("dId", id);
-                    request.setAttribute("bId", buildingId);
-                    request.setAttribute("name", rs.getString
-                            ("Name"));
-                    request.setAttribute("path", rs.getString
-                            ("Path"));
-                } else {
-                    if (buildingId < 0)
-                        response.sendRedirect("MainMenuIsh");
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else
-            request.setAttribute("bId", buildingId);
-
-        RequestDispatcher rd = request.getRequestDispatcher("document.jsp");
-        rd.forward(request, response);
+        if (b < 0)
+            forwardGet(req, res, "home.jsp");
+        else
+            forwardGet(req, res, "document.jsp");
     }
 }

@@ -6,6 +6,9 @@
   Time: 9:52 AM
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:useBean id="i" scope="request" class="model.Image"/>
+<jsp:useBean id="b" scope="request" class="java.lang.Integer"/>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -22,8 +25,8 @@
         <div class="col-md-6">
             <form action="image" method="post" class="form-horizontal"
                   enctype="multipart/form-data">
-                <input type="hidden" value="${requestScope.bId}" name="buildingId">
-                <input type="hidden" value="${requestScope.iId}" name="id">
+                <input type="hidden" value="${b}" name="b">
+                <input type="hidden" value="${i.id}" name="id">
 
                 <div class="form-group">
                     <label class="col-md-3 control-label">Upload Image</label>
@@ -38,12 +41,9 @@
             </form>
         </div>
         <div class="col-md-6">
-            <% if (request.getAttribute("image") != null) {
-                Image image = (Image) request.getAttribute("image");
-                response.getWriter().print("<img src='" + image.getPath() + "' " +
-                        "alt='" + image.getName() + "'>");
-            }%>
-            <%--<img src="${requestScope.image.path}" alt="${requestScope.image.name}">--%>
+            <c:if test="${i.name != null}">
+                <img src="images/${i.path}" alt="${i.name}">
+            </c:if>
         </div>
     </div>
 </div>

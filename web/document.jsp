@@ -5,6 +5,9 @@
   Time: 1:41 PM
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:useBean id="d" scope="request" class="model.Document"/>
+<jsp:useBean id="b" scope="request" class="java.lang.Integer"/>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -21,8 +24,8 @@
         <div class="col-md-6">
             <form action="document" method="post" class="form-horizontal"
                   enctype="multipart/form-data">
-                <input type="hidden" value="${requestScope.bId}" name="buildingId">
-                <input type="hidden" value="${requestScope.dId}" name="id">
+                <input type="hidden" value="${b}" name="b">
+                <input type="hidden" value="${d.id}" name="id">
 
                 <div class="form-group">
                     <label class="col-md-3 control-label">Upload
@@ -36,6 +39,11 @@
                     <button class="btn btn-primary" type="submit">Send</button>
                 </div>
             </form>
+        </div>
+        <div class="col-md-6">
+            <c:if test="${d.name != null}">
+                <a href="documents/${d.path}" class="btn btn-default">Download ${d.name}</a>
+            </c:if>
         </div>
     </div>
 </div>
