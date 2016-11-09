@@ -5,6 +5,7 @@
 --%>
 
 <jsp:useBean id="b" scope="request" class="model.Building"/>
+<jsp:useBean id="oId" scope="request" type="java.lang.Integer"/>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -20,10 +21,10 @@
             <h1>${requestScope.action} Tilføj eller rediger bygning</h1>
             <div class="row">
                 <div class="col-md-6"> 
-                    <form action="building" method="POST" class="form-horizontal" enctype="multipart/form-data">
+                    <form action="building" method="POST" class="form-horizontal">
                         <%--Id sendt from organisation--%>
                         <input type="hidden" value="${requestScope.bId}" name="bId"/>
-                        <input type="hidden" value="${requestScope.oId}" name="oId"/>
+                        <input type="hidden" value="${oId}" name="oId"/>
 
                         <div class="form-group">
                             <label class="col-md-3 control-label">Navn på bygning</label>
@@ -39,12 +40,12 @@
                             </div>
                         </div>
 
-                        <%--<div class="form-group">
+                        <div class="form-group">
                             <label class="col-md-3 control-label">Byggeår</label>
                             <div class="col-md-9">
-                                <input class="form-control" type="date" placeholder="yyyy-mm-dd" name="ConstructionYear"/>
+                                <input class="form-control" type="text" placeholder="yyyy-mm-dd" name="ConstructionYear"/>
                             </div>
-                        </div>--%>
+                        </div>
 
                         <div class="form-group">
                             <label class="col-md-3 control-label">Bygningsareal i m2</label>
@@ -70,7 +71,7 @@
                         </div>
 
                         <div class="col-md-offset-3">
-                            <button class="btn btn-primary">Tilføj</button>
+                            <button class="btn btn-primary" type="submit">Tilføj</button>
                         </div>
 
                     </form>

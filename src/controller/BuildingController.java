@@ -8,8 +8,6 @@ package controller;
 import domain.Facade;
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.util.Set;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Building;
 import model.Org;
-import model.User;
 import util.Helper;
 
 /**
@@ -40,7 +37,6 @@ public class BuildingController extends HttpServlet {
         //DB connection
         Facade facade = Facade.getFacade();
 
-        //FORWARD FROM ADDED BUILDING TO VIEW BUILDING
         //organisation Id 
         if (request.getParameter("id") != null) {
             //get the id from JSP/URL
@@ -49,17 +45,26 @@ public class BuildingController extends HttpServlet {
             //Save the variable
             request.setAttribute("b", b);
             //forward from servlet to JSP
-            if (request.getParameter("u") != null) {
+            if (request.getParameter("u") != null) {//from update
                 Helper.forward(request, response, "/addUpdateBuilding.jsp");
-            } else {
+            } 
+            else {
                 Helper.forward(request, response, "/viewBuilding.jsp");
             }
-        } else {
+        } 
+        else if (request.getParameter("oid") != null) {
+            //get the hidden "requestScope=oid" from addUpdateBuilding 
+            int oId = Integer.parseInt(request.getParameter("oid"));
+            
+            //saves the organisation Id
+            request.setAttribute("oId", oId);
+            Helper.forwardGet(request, response, "/addUpdateBuilding.jsp");
+        } 
+        else {
             //forward to view all buildings?
             Helper.forwardGet(request, response, "buildings");
         }
 
-     
     }
 
     @Override
@@ -68,20 +73,18 @@ public class BuildingController extends HttpServlet {
 
         Facade facade = Facade.getFacade();
         Building b = new Building();
+        
 
         b.setId(-1);
-        if (request.getParameter("bid") != null
-                && !request.getParameter("bid").equals("")) {
-            b.setId(Integer.parseInt(request.getParameter("bid")));
+        if (request.getParameter("bId") != null && !request.getParameter("bId").equals("")) {
+            b.setId(Integer.parseInt(request.getParameter("bId")));
         }
-        if (request.getParameter("oid") != null
-                && !request.getParameter("oid").equals("")) {
-
+        
             Org org = new Org();
-            org.setId(Integer.parseInt(request.getParameter("oid")));
+            if(request.getParameter("oId") != null && !request.getParameter("oId").equals(""))
+            org.setId(Integer.parseInt(request.getParameter("oId")));
 
             b.setOrg(org);
-        }
 
         //organisation tages ud af session
         // User user = (User)request.getSession().getAttribute("user");
@@ -89,7 +92,7 @@ public class BuildingController extends HttpServlet {
         //BUILDING DATA from form put into variables
         String name = request.getParameter("Name");
         String address = request.getParameter("Address");
-        //  String constructionYear = request.getParameter("ConstructionYear");
+        String constructionYear = request.getParameter("ConstructionYear");
         String area = request.getParameter("Area");
         String currentUse = request.getParameter("CurrentUse");
         String previousUse = request.getParameter("PreviousUse");
@@ -97,7 +100,7 @@ public class BuildingController extends HttpServlet {
         //use the variables with the data from the form
         b.setName(name);
         b.setAddress(address);
-        // b.setConstructionYear(Timestamp.valueOf(constructionYear));
+        b.setConstructionYear(Timestamp.valueOf("1990-01-01 00:00:00"));
         b.setArea(area);
         b.setCurrentUse(currentUse);
         b.setPreviousUse(previousUse);

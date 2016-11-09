@@ -6,7 +6,7 @@
 
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:useBean beanName="buildingsBean" id="buildings" scope="request" type="java.util.List<model.Building>"/>
+<jsp:useBean id="buildings" scope="request" type="java.util.List<model.Building>"/>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
