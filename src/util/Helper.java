@@ -55,8 +55,8 @@ public class Helper {
 
         if (redirect) {
             try {
-                res.sendRedirect("/index.html");
-            } catch (IOException e) {
+                forwardGet(req, res, "/index.html");
+            } catch (ServletException | IOException e) {
                 e.printStackTrace();
             }
         }
