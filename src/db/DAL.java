@@ -26,9 +26,9 @@ public class DAL {
     }
 
     public Building getBuilding(int id) {
-        String query = "SELECT Id, `Name`, Address, ConstructionYear, " +
-                "FkOrgId, CurrentUse, Area, PreviousUse FROM `Building` WHERE" +
-                " Id=?";
+        String query = "SELECT Building.Id, Building.`Name`, Address, ConstructionYear, " +
+                "FkOrgId, CurrentUse, Area, PreviousUse, Org.Name FROM `Building` INNER JOIN Org ON FkOrgId = Org.Id   WHERE" +
+                " Building.Id=?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -121,8 +121,8 @@ public class DAL {
     private Building constructBuilding(ResultSet rs) {
         try {
             Building c = new Building();
-            c.setId(rs.getInt("Id"));
-            c.setName(rs.getString("Name"));
+            c.setId(rs.getInt("Building.Id"));
+            c.setName(rs.getString("Building.Name"));
             c.setAddress(rs.getString("Address"));
             c.setConstructionYear(rs.getTimestamp("ConstructionYear"));
             c.setCurrentUse(rs.getString("CurrentUse"));
@@ -131,6 +131,11 @@ public class DAL {
 
             Org org = new Org();
             org.setId(rs.getInt("FkOrgId"));
+            try {
+                org.setName(rs.getString("Org.Name"));
+            } catch (SQLException ignored) {
+                org.setName("");
+            }
             c.setOrg(org);
 
             return c;
