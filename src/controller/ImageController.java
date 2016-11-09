@@ -37,11 +37,12 @@ public class ImageController extends HttpServlet {
         Facade facade = Facade.getFacade();
 
         int id = -1;
-        if (!req.getParameter("id").equals(""))
+        if (req.getParameter("id") != null
+                && !req.getParameter("id").equals("0"))
             id = Integer.parseInt(req.getParameter("id"));
 
         int bId = -1;
-        if (!req.getParameter("b").equals(""))
+        if (req.getParameter("b") != null && !req.getParameter("b").equals("0"))
             bId = Integer.parseInt(req.getParameter("b"));
 
         Building b = facade.getBuilding(bId);
@@ -79,6 +80,7 @@ public class ImageController extends HttpServlet {
             int newId = facade.insertImage(i);
             if (newId > 0)
                 viewB = true;
+            System.out.println(newId);
         }
 
         if (viewB)

@@ -7,7 +7,7 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="d" scope="request" class="model.Document"/>
-<jsp:useBean id="b" scope="request" class="java.lang.Integer"/>
+<jsp:useBean id="b" scope="request" type="java.lang.Integer" />
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
