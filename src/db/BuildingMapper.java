@@ -84,7 +84,7 @@ public class BuildingMapper {
             int changed = stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
             if (rs.next())
-                id = rs.getInt("Id");
+                id = rs.getInt(1);
             rs.close();
         } catch (SQLException e) {
             e.printStackTrace();
