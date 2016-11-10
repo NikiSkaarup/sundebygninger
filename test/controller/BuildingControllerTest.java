@@ -16,23 +16,23 @@ import static org.junit.Assert.*;
  *
  * @author Menja
  */
-public class BuildingController {
-    
-    public BuildingController() {
+public class BuildingControllerTest {
+
+    public BuildingControllerTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
