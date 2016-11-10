@@ -47,11 +47,21 @@ public class BuildingsTest {
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
     @Test
-    public void hello() {
+    public void changeName() {
         b.setName("TestBuilding");
         facade.updateBuilding(b);
         assertEquals("TestBuilding", b.getName());
         
         assertEquals("TestBuilding", facade.getBuilding(1).getName());
+        
+    }
+    
+    @Test
+    public void changeAddress() {
+        b.setAddress("TestStreet 42");
+        facade.updateBuilding(b);
+        assertEquals("TestStreet 42", b.getAddress());
+        
+        assertEquals("TestStreet 42", facade.getBuilding(1).getAddress());
     }
 }

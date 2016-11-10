@@ -46,7 +46,9 @@ public class BuildingController extends HttpServlet {
             request.setAttribute("b", b);
             //forward from servlet to JSP
             if (request.getParameter("u") != null) {//from update
-                Helper.forward(request, response, "/addUpdateBuilding.jsp");
+                request.setAttribute("org", b.getOrg());
+                request.setAttribute("action", "Update");
+                Helper.forward(request, response, "addUpdateBuilding.jsp");
             } 
             else {
                 Helper.forward(request, response, "/viewBuilding.jsp");
@@ -55,9 +57,11 @@ public class BuildingController extends HttpServlet {
         else if (request.getParameter("oid") != null) {
             //get the hidden "requestScope=oid" from addUpdateBuilding 
             int oId = Integer.parseInt(request.getParameter("oid"));
-            
+            Org org = new Org();
+            org.setId(oId);
             //saves the organisation Id
-            request.setAttribute("oId", oId);
+            request.setAttribute("org", org);
+            request.setAttribute("action", "Tilføj");
             Helper.forwardGet(request, response, "/addUpdateBuilding.jsp");
         } 
         else {
@@ -70,7 +74,6 @@ public class BuildingController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         Facade facade = Facade.getFacade();
         Building b = new Building();
         

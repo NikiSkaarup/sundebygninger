@@ -3,9 +3,9 @@
     Created on : 25-10-2016, 09:31:03
     Author     : Jamie
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="b" scope="request" class="model.Building"/>
-<jsp:useBean id="oId" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="org" scope="request" class="model.Org"/>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -18,13 +18,13 @@
         <%@include file="navigation.jsp"  %>
         <div class="container-fluid">
 
-            <h1>${requestScope.action} Tilføj eller rediger bygning</h1>
+            <h1>${requestScope.action} bygning</h1>
             <div class="row">
                 <div class="col-md-6"> 
                     <form action="building" method="POST" class="form-horizontal">
                         <%--Id sendt from organisation--%>
-                        <input type="hidden" value="${requestScope.bId}" name="bId"/>
-                        <input type="hidden" value="${oId}" name="oId"/>
+                        <input type="hidden" value="${b.id}" name="bId"/>
+                        <input type="hidden" value="${o.id}" name="oId"/>
 
                         <div class="form-group">
                             <label class="col-md-3 control-label">Navn på bygning</label>
@@ -43,7 +43,7 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">Byggeår</label>
                             <div class="col-md-9">
-                                <input class="form-control" type="text" placeholder="yyyy-mm-dd" name="ConstructionYear"/>
+                                <input class="form-control" type="text" value="${b.constructionYear}" placeholder="yyyy-mm-dd" name="ConstructionYear"/>
                             </div>
                         </div>
 
@@ -71,7 +71,7 @@
                         </div>
 
                         <div class="col-md-offset-3">
-                            <button class="btn btn-primary" type="submit">Tilføj</button>
+                            <button class="btn btn-primary" type="submit">${requestScope.action}</button>
                         </div>
 
                     </form>

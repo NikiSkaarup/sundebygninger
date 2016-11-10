@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import java.util.*;
 
 import domain.Facade;
+import javax.servlet.ServletException;
 import model.*;
 
 /**
@@ -19,6 +20,14 @@ public class ReportController extends javax.servlet.http.HttpServlet {
 
     HashMap<Integer, Room> rooms = new HashMap<>();
 
+    /**
+     *
+     * @param req
+     * @param res
+     * @throws ServletException
+     * @throws IOException
+     */
+    @Override
     protected void doPost(javax.servlet.http.HttpServletRequest req,
                           javax.servlet.http.HttpServletResponse res)
             throws javax.servlet.ServletException, IOException {
@@ -44,6 +53,14 @@ public class ReportController extends javax.servlet.http.HttpServlet {
         comments.add(outerWalls);
     }
 
+    /**
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    @Override
     protected void doGet(javax.servlet.http.HttpServletRequest request, javax
             .servlet.http.HttpServletResponse response) throws javax.servlet
             .ServletException, IOException {

@@ -1,13 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package controller;
 
 import domain.Facade;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -61,10 +58,16 @@ public class AllCustomerController extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         
+        //connect to DB
         Facade facade = Facade.getFacade();
         
-        String u = request.getParameter("User");
-    }
+        //få fat på parameter "user"
+        String u = request.getParameter("user");
+        
+        //fra DB sæt navn og email fra DB 
+        request.setAttribute("Name",u);
+        request.setAttribute("Email",u);
+      }
 
     /**
      * Handles the HTTP <code>POST</code> method.
