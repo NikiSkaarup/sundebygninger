@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Building;
+import exceptions.PolygonException;
+import static util.Helper.forwardGet;
 
 /**
  *
@@ -63,19 +65,25 @@ public class AllBuildingsController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //get DB conn
-        Facade facade = Facade.getFacade();
+        try {
+            //get DB conn
+            Facade facade = Facade.getFacade();
 
-        int id = Integer.parseInt(request.getParameter("oid"));
-        
-        List<Building> buildingList = facade.getBuildings(id);
+            int id = Integer.parseInt(request.getParameter("oid"));
 
-        //save the variable
-        request.setAttribute("buildings", buildingList);
-        
-        //forward from servlet to JSP
-        RequestDispatcher rd = request.getRequestDispatcher("/allBuildings.jsp");
-        rd.forward(request, response);
+            List<Building> buildingList = facade.getBuildings(id);
+
+            //save the variable
+            request.setAttribute("buildings", buildingList);
+
+            //forward from servlet to JSP
+            RequestDispatcher rd = request.getRequestDispatcher("/allBuildings.jsp");
+            rd.forward(request, response);
+        }
+        catch(Exception e){
+             request.setAttribute("error", e.getMessage());
+            forwardGet(request, response, "/error.jsp");
+        }
     }
 
     /**

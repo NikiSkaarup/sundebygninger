@@ -25,41 +25,41 @@ public class Facade {
         return facade;
     }
 
-    public Building getBuilding(int id) {
+    public Building getBuilding(int id) throws PolygonException {
         BuildingMapper mapper = new BuildingMapper(Conn.get());
         return mapper.getBuilding(id);
     }
 
-    public List<Building> getBuildings(int orgId) {
+    public List<Building> getBuildings(int orgId) throws PolygonException {
         BuildingMapper mapper = new BuildingMapper(Conn.get());
         Org org = new Org();
         org.setId(orgId);
         return mapper.getBuildings(org);
     }
 
-    public List<Building> getBuildings(int orgId, int count) {
+    public List<Building> getBuildings(int orgId, int count) throws PolygonException{
         BuildingMapper mapper = new BuildingMapper(Conn.get());
         Org org = new Org();
         org.setId(orgId);
         return mapper.getBuildings(org, count);
     }
 
-    public List<Building> getBuildings(Org org) {
+    public List<Building> getBuildings(Org org)throws PolygonException {
         BuildingMapper mapper = new BuildingMapper(Conn.get());
         return mapper.getBuildings(org);
     }
 
-    public List<Building> getBuildings(Org org, int count) {
+    public List<Building> getBuildings(Org org, int count) throws PolygonException{
         BuildingMapper mapper = new BuildingMapper(Conn.get());
         return mapper.getBuildings(org, count);
     }
 
-    public int insertBuilding(Building b) {
+    public int insertBuilding(Building b) throws PolygonException {
         BuildingMapper mapper = new BuildingMapper(Conn.get());
         return mapper.insertBuilding(b);
     }
 
-    public boolean updateBuilding(Building b) {
+    public boolean updateBuilding(Building b) throws PolygonException{
         BuildingMapper mapper = new BuildingMapper(Conn.get());
         return mapper.updateBuilding(b);
     }

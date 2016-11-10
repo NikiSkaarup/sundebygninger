@@ -2,7 +2,7 @@ package db;
 
 import model.Building;
 import model.Org;
-
+import exceptions.PolygonException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ public class BuildingMapper {
         BuildingMapper.conn = conn;
     }
 
-    public Building getBuilding(int id) {
+    public Building getBuilding(int id) throws PolygonException{
         String query = "SELECT Building.Id, Building.`Name`, Address, " +
                 "ConstructionYear, FkOrgId, CurrentUse, Area, PreviousUse, " +
                 "Org.Name FROM `Building` INNER JOIN Org ON FkOrgId = Org.Id " +
@@ -36,11 +36,11 @@ public class BuildingMapper {
         return null;
     }
 
-    public List<Building> getBuildings(Org org) {
+    public List<Building> getBuildings(Org org) throws PolygonException{
         return getBuildings(org, -1);
     }
 
-    public List<Building> getBuildings(Org org, int count) {
+    public List<Building> getBuildings(Org org, int count) throws PolygonException{
         String query = "SELECT Id, `Name`, Address, ConstructionYear, " +
                 "CurrentUse, Area, PreviousUse, FkOrgId FROM `Building`";
         if (org != null)
@@ -67,7 +67,7 @@ public class BuildingMapper {
         return null;
     }
 
-    public int insertBuilding(Building b) {
+    public int insertBuilding(Building b) throws PolygonException {
         int id = -1;
         String query = "INSERT INTO `Building` (`Name`, Address, " +
                 "ConstructionYear, CurrentUse, Area, PreviousUse, FkOrgId) " +
@@ -93,7 +93,7 @@ public class BuildingMapper {
         return id;
     }
 
-    public boolean updateBuilding(Building b) {
+    public boolean updateBuilding(Building b) throws PolygonException{
         String query = "UPDATE `Building` SET `Name`=?, Address=?, " +
                 "ConstructionYear=?, CurrentUse=?, Area=?, PreviousUse=?, " +
                 "FkOrgId=? WHERE Id=?";
@@ -113,7 +113,7 @@ public class BuildingMapper {
         return false;
     }
 
-    private Building constructBuilding(ResultSet rs) {
+    private Building constructBuilding(ResultSet rs) throws PolygonException{
         try {
             Building c = new Building();
             c.setId(rs.getInt("Building.Id"));
