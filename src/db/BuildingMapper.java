@@ -81,11 +81,12 @@ public class BuildingMapper {
             stmt.setString(5, b.getArea());
             stmt.setString(6, b.getPreviousUse());
             stmt.setInt(7, b.getOrg().getId());
-            int changed = stmt.executeUpdate();
+            stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
             if (rs.next())
                 id = rs.getInt(1);
             rs.close();
+            stmt.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

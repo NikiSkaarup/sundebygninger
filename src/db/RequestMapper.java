@@ -77,10 +77,10 @@ public class RequestMapper {
             stmt.setInt(1, r.getBuilding().getId());
             stmt.setString(2, r.getDescription());
             stmt.setInt(3, r.getServiceType().getId());
-            int changed = stmt.executeUpdate();
+            stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
             if (rs.next())
-                id = rs.getInt("Id");
+                id = rs.getInt(1);
             rs.close();
             stmt.close();
         } catch (SQLException e) {

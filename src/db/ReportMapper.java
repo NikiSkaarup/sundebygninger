@@ -76,9 +76,12 @@ public class ReportMapper {
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, r.getBuilding().getId());
             stmt.setInt(2, r.getUser().getId());
-            ResultSet rs = stmt.executeQuery();
+            stmt.executeUpdate();
+            ResultSet rs = stmt.getGeneratedKeys();
             if (rs.next())
-                id = rs.getInt("Id");
+                id = rs.getInt(1);
+            rs.close();
+            stmt.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

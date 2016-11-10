@@ -75,11 +75,12 @@ public class DocumentMapper {
             stmt.setString(1, d.getName());
             stmt.setString(2, d.getPath());
             stmt.setInt(3, d.getBuilding().getId());
-            int changed = stmt.executeUpdate();
+            stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
             if (rs.next())
-                id = rs.getInt("Id");
+                id = rs.getInt(1);
             rs.close();
+            stmt.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

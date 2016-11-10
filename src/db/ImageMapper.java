@@ -75,10 +75,10 @@ public class ImageMapper {
             stmt.setString(1, i.getName());
             stmt.setString(2, i.getPath());
             stmt.setInt(3, i.getBuilding().getId());
-            int changed = stmt.executeUpdate();
+            stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
             if (rs.next())
-                id = rs.getInt("Id");
+                id = rs.getInt(1);
             rs.close();
             stmt.close();
         } catch (SQLException e) {
