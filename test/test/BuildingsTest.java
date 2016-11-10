@@ -6,7 +6,12 @@
 package test;
 
 import domain.Facade;
+import java.util.ArrayList;
+import java.util.List;
 import model.Building;
+import model.Comment;
+import model.Report;
+import model.User;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
@@ -51,17 +56,40 @@ public class BuildingsTest {
         b.setName("TestBuilding");
         facade.updateBuilding(b);
         assertEquals("TestBuilding", b.getName());
-        
+
         assertEquals("TestBuilding", facade.getBuilding(1).getName());
-        
+
     }
-    
+
     @Test
     public void changeAddress() {
         b.setAddress("TestStreet 42");
         facade.updateBuilding(b);
         assertEquals("TestStreet 42", b.getAddress());
-        
+
         assertEquals("TestStreet 42", facade.getBuilding(1).getAddress());
+    }
+
+    @Test
+    public void addComment() {
+        List<Report> reportList = new ArrayList();
+        Report r = new Report();
+        r.setBuilding(b);
+        User user = new User();
+        r.setUser(user);
+        Comment c = new Comment();
+        c.setComment("Test comment");
+        List<Comment> lc;
+        lc = new ArrayList();
+        lc.add(c);
+        r.setComments(lc);
+        reportList.add(r);
+        b.setReports(reportList);
+        assertEquals("Test comment", b.getReports().get(b.getReports().size() - 1).getComments().get(b.getReports().get(b.getReports().size() - 1).getComments().size() - 1).getComment());
+
+        int insertReport = facade.insertReport(r);
+        facade.updateBuilding(b);
+        assertEquals("Test comment", facade.getBuilding(1).getReports().get(b.getReports().size() - 1).getComments().get(b.getReports().get(b.getReports().size() - 1).getComments().size() - 1).getComment());
+
     }
 }
