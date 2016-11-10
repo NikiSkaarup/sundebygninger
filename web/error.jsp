@@ -11,7 +11,8 @@
 <html>
 <head>
     <title>Error - Sundebygninger</title>
-    <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
+    <link href="<c:url value="/css/bootstrap.css"/>"
+          rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <%@ include file="navigation.jsp" %>
@@ -22,8 +23,9 @@
     <p>${error}</p>
 </div>
 
-<script src="js/bootstrap.js" type="text/javascript"></script>
-<script src="js/jquery-2.2.4.js" type="text/javascript"></script>
+<script src="<c:url value="/js/bootstrap.js"/>" type="text/javascript"></script>
+<script src="<c:url value="/js/jquery-2.2.4.js"/>"
+        type="text/javascript"></script>
 
 </body>
 </html>
