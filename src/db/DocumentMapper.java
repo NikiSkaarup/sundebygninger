@@ -58,11 +58,14 @@ public class DocumentMapper {
                 if (count > 0)
                     stmt.setInt(2, count);
             }
-            ResultSet rs = stmt.executeQuery();
-            List<Document> list = new ArrayList<>();
-            while (rs.next())
-                list.add(constructDocument(rs));
-            return list;
+            try (ResultSet rs = stmt.executeQuery()) {
+                List<Document> list = new ArrayList<>();
+                while (rs.next())
+                    list.add(constructDocument(rs));
+                return list;
+            } catch (PolygonException e) {
+                throw new PolygonException("getDocuments: " + e.getMessage());
+            }
         } catch (SQLException e) {
             throw new PolygonException("getDocuments error: " + e.getMessage());
         }

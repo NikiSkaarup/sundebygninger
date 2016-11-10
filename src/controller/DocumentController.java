@@ -24,7 +24,8 @@ import static util.Helper.generateSemiUniqueFileName;
  *
  * @author Niki
  */
-@WebServlet(name = "DocumentController", urlPatterns = {"/document"})
+@WebServlet(name = "DocumentController", urlPatterns = {"/document",
+        "/document/insert", "/document/update"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024 * 2, // 2MB
         maxFileSize = 1024 * 1024 * 10,      // 10MB
@@ -32,41 +33,58 @@ import static util.Helper.generateSemiUniqueFileName;
 public class DocumentController extends HttpServlet {
 
     private final String SAVE_DIR = "documents";
+    private Facade facade = Facade.getFacade();
 
     protected void doPost(HttpServletRequest req, HttpServletResponse
             res) throws ServletException, IOException {
-        Facade facade = Facade.getFacade();
+        switch (req.getServletPath()) {
+            case "/document/insert":
+                doPostInsert(req, res);
+                break;
+            case "/document/update":
+                doPostUpdate(req, res);
+                break;
+            default:
+                forwardGet(req, res, "/home.jsp");
+                break;
+        }
+    }
 
+    private void doPostInsert(HttpServletRequest req, HttpServletResponse
+            res) throws ServletException, IOException {
+        try {
+            Document d = doPostBoth(req, res);
+            if (facade.insertDocument(d) > 0)
+                forwardGet(req, res, "/building?id=" + d.getBuilding().getId());
+            else
+                forwardGet(req, res, req.getServletPath());
+        } catch (Exception e) {
+            req.setAttribute("error", e.getMessage());
+            forwardGet(req, res, "/error.jsp");
+        }
+    }
+
+    private void doPostUpdate(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+        try {
+            Document d = doPostBoth(req, res);
+            if (facade.updateDocument(d))
+                forwardGet(req, res, "/building?id=" + d.getBuilding().getId());
+            else
+                forwardGet(req, res, req.getServletPath());
+        } catch (Exception e) {
+            req.setAttribute("error", e.getMessage());
+            forwardGet(req, res, "/error.jsp");
+        }
+    }
+
+    private Document doPostBoth(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
         Document d = new Document();
-        int id;
-        try {
-            id = Integer.parseInt(req.getParameter("id"));
-        } catch (Exception e) {
-            req.setAttribute("error", e.getMessage());
-            forwardGet(req, res, "/error.jsp");
-            return;
-        }
-        d.setId(id);
+        d.setId(Integer.parseInt(req.getParameter("id")));
 
-        int bId;
-        try {
-            bId = Integer.parseInt(req.getParameter("b"));
-        } catch (Exception e) {
-            req.setAttribute("error", e.getMessage());
-            forwardGet(req, res, "/error.jsp");
-            return;
-        }
-
-        Building b;
-        try {
-            b = facade.getBuilding(bId);
-            if (b == null)
-                throw new PolygonException("Failed to get building from db");
-        } catch (PolygonException e) {
-            req.setAttribute("error", e.getMessage());
-            forwardGet(req, res, "/error.jsp");
-            return;
-        }
+        Building b = new Building();
+        b.setId(Integer.parseInt(req.getParameter("b")));
         d.setBuilding(b);
 
         String appPath = req.getServletContext().getRealPath("");
@@ -92,56 +110,64 @@ public class DocumentController extends HttpServlet {
 
         d.setName(name);
         d.setPath(fileName);
-
-        boolean viewB;
-        try {
-            if (d.getId() > 0)
-                viewB = facade.updateDocument(d);
-            else
-                viewB = facade.insertDocument(d) > 0;
-        } catch (PolygonException e) {
-            req.setAttribute("error", e.getMessage());
-            forwardGet(req, res, "/error.jsp");
-            return;
-        }
-
-        if (viewB)
-            forwardGet(req, res, "/building?id=" + b.getId());
-        else
-            forwardGet(req, res, "/buildings?oid=" + b.getOrg().getId());
+        return d;
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse
             res) throws ServletException, IOException {
-        Facade facade = Facade.getFacade();
-
-        int id = -1;
-        if (req.getParameter("edit") == null) {
-            req.setAttribute("action", "add");
-        } else {
-            req.setAttribute("action", "edit");
-            id = Integer.parseInt(req.getParameter("edit"));
+        switch (req.getServletPath()) {
+            case "/document/insert":
+                doGetInsert(req, res);
+                break;
+            case "/document/update":
+                doGetUpdate(req, res);
+                break;
+            default:
+                doGetView(req, res);
+                break;
         }
+    }
 
-        int b = -1;
-        if (req.getParameter("b") != null)
-            b = Integer.parseInt(req.getParameter("b"));
-        req.setAttribute("b", b);
-
-        if (id > 0 && b > 0) {
-            try {
-                Document d = facade.getDocument(id);
-                req.setAttribute("d", d);
-            } catch (PolygonException e) {
-                req.setAttribute("error", e.getMessage());
-                forwardGet(req, res, "/error.jsp");
-                return;
-            }
+    private void doGetView(HttpServletRequest req, HttpServletResponse
+            res) throws ServletException, IOException {
+        try {
+            int id = Integer.parseInt(req.getParameter("id"));
+            Document d = facade.getDocument(id);
+            req.setAttribute("d", d);
+            forwardGet(req, res, "/document.jsp");
+        } catch (Exception e) {
+            req.setAttribute("error", e.getMessage());
+            forwardGet(req, res, "/error.jsp");
         }
+    }
 
-        if (b < 0)
-            forwardGet(req, res, "home.jsp");
-        else
-            forwardGet(req, res, "document.jsp");
+    private void doGetInsert(HttpServletRequest req, HttpServletResponse
+            res) throws ServletException, IOException {
+        try {
+            int b = Integer.parseInt(req.getParameter("b"));
+            req.setAttribute("b", b);
+            req.setAttribute("action", "Insert");
+            req.setAttribute("url", req.getServletPath());
+            forwardGet(req, res, "/document.jsp");
+        } catch (Exception e) {
+            req.setAttribute("error", e.getMessage());
+            forwardGet(req, res, "/error.jsp");
+        }
+    }
+
+    private void doGetUpdate(HttpServletRequest req, HttpServletResponse
+            res) throws ServletException, IOException {
+        try {
+            int id = Integer.parseInt(req.getParameter("id"));
+            Document d = facade.getDocument(id);
+            req.setAttribute("b", d.getBuilding().getId());
+            req.setAttribute("d", d);
+            req.setAttribute("url", req.getServletPath());
+            req.setAttribute("action", "Update");
+            forwardGet(req, res, "/document.jsp");
+        } catch (Exception e) {
+            req.setAttribute("error", e.getMessage());
+            forwardGet(req, res, "/error.jsp");
+        }
     }
 }
