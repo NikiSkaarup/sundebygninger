@@ -74,7 +74,6 @@ public class BuildingController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         Facade facade = Facade.getFacade();
         Building b = new Building();
         
