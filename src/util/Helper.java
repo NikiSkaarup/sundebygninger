@@ -74,4 +74,26 @@ public class Helper {
         rd.forward(new RequestWrap(req), res);
     }
 
+    public static boolean verifyString(String s) {
+        if (s == null)
+            return false;
+        else if (s.trim().equals(""))
+            return false;
+
+        return true;
+    }
+
+    public static boolean verifyInteger(String s) {
+        if (s == null)
+            return false;
+        else if (s.trim().equals(""))
+            return false;
+        else if (s.trim().equals("0"))
+            return false;
+        else if (s.trim().equals("-1"))
+            return false;
+
+        return true;
+    }
+
 }
