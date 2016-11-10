@@ -81,8 +81,11 @@ public class DocumentMapper {
                 if (rs.next())
                     return rs.getInt(1);
                 else
-                    throw new PolygonException("insertDocument failed to " +
-                            "insert document or get generated Id");
+                    throw new PolygonException("insertDocument failed to get " +
+                            "generated Id");
+            } catch (Exception e) {
+                throw new PolygonException("insertDocument failed to " +
+                        "insert document: " + e);
             }
         } catch (SQLException e) {
             throw new PolygonException("insertDocument error: " + e

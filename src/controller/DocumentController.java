@@ -37,16 +37,37 @@ public class DocumentController extends HttpServlet {
             res) throws ServletException, IOException {
         Facade facade = Facade.getFacade();
 
-        int id = -1;
-        if (req.getParameter("id") != null
-                && !req.getParameter("id").equals("0"))
+        Document d = new Document();
+        int id;
+        try {
             id = Integer.parseInt(req.getParameter("id"));
+        } catch (Exception e) {
+            req.setAttribute("error", e.getMessage());
+            forwardGet(req, res, "/error.jsp");
+            return;
+        }
+        d.setId(id);
 
-        int bId = -1;
-        if (req.getParameter("b") != null && !req.getParameter("b").equals("0"))
+        int bId;
+        try {
             bId = Integer.parseInt(req.getParameter("b"));
+        } catch (Exception e) {
+            req.setAttribute("error", e.getMessage());
+            forwardGet(req, res, "/error.jsp");
+            return;
+        }
 
-        Building b = facade.getBuilding(bId);
+        Building b;
+        try {
+            b = facade.getBuilding(bId);
+            if (b == null)
+                throw new PolygonException("Failed to get building from db");
+        } catch (PolygonException e) {
+            req.setAttribute("error", e.getMessage());
+            forwardGet(req, res, "/error.jsp");
+            return;
+        }
+        d.setBuilding(b);
 
         String appPath = req.getServletContext().getRealPath("");
         String savePath = appPath + File.separator + SAVE_DIR;
@@ -69,29 +90,19 @@ public class DocumentController extends HttpServlet {
             part.write(savePath + File.separator + fileName);
         }
 
-        Document d = new Document();
         d.setName(name);
-        d.setBuilding(b);
         d.setPath(fileName);
 
-        boolean viewB = false;
+        boolean viewB;
         try {
-            if (id > 0 && facade.updateDocument(d)) {
-                    viewB = true;
-            } else {
-                int newId = 0;
-                try {
-                    newId = facade.insertDocument(d);
-                } catch (PolygonException e) {
-                    req.setAttribute("error", e.getMessage());
-                    forwardGet(req, res, "/error.jsp");
-                }
-                if (newId > 0)
-                    viewB = true;
-            }
+            if (d.getId() > 0)
+                viewB = facade.updateDocument(d);
+            else
+                viewB = facade.insertDocument(d) > 0;
         } catch (PolygonException e) {
             req.setAttribute("error", e.getMessage());
             forwardGet(req, res, "/error.jsp");
+            return;
         }
 
         if (viewB)
@@ -124,6 +135,7 @@ public class DocumentController extends HttpServlet {
             } catch (PolygonException e) {
                 req.setAttribute("error", e.getMessage());
                 forwardGet(req, res, "/error.jsp");
+                return;
             }
         }
 
