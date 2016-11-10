@@ -1,5 +1,6 @@
 package db;
 
+import exceptions.PolygonException;
 import model.Building;
 import model.Document;
 
@@ -20,7 +21,7 @@ public class DocumentMapper {
         DocumentMapper.conn = conn;
     }
 
-    public Document getDocument(int id) {
+    public Document getDocument(int id) throws PolygonException {
         String query = "SELECT Id, `Name`, Path, FkBuildingId FROM `Document`" +
                 " WHERE Id=?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -28,21 +29,23 @@ public class DocumentMapper {
             ResultSet rs = stmt.executeQuery();
             if (rs.next())
                 return constructDocument(rs);
+            else
+                throw new PolygonException("No result found with id: " + id);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PolygonException("getDocument error: " + e.getMessage());
         }
-        return null;
     }
 
-    public List<Document> getDocuments() {
+    public List<Document> getDocuments() throws PolygonException {
         return getDocuments(null);
     }
 
-    public List<Document> getDocuments(Building b) {
+    public List<Document> getDocuments(Building b) throws PolygonException {
         return getDocuments(b, -1);
     }
 
-    public List<Document> getDocuments(Building b, int count) {
+    public List<Document> getDocuments(Building b, int count) throws
+            PolygonException {
         String query = "SELECT Id, `Name`, Path, FkBuildingId FROM `Document`";
         if (b != null) {
             query += " WHERE FkBuildingId=?";
@@ -61,13 +64,11 @@ public class DocumentMapper {
                 list.add(constructDocument(rs));
             return list;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PolygonException("getDocuments error: " + e.getMessage());
         }
-        return null;
     }
 
-    public int insertDocument(Document d) {
-        int id = -1;
+    public int insertDocument(Document d) throws PolygonException {
         String query = "INSERT INTO `Document` (`Name`, Path, FkBuildingId) " +
                 "VALUES (?, ?, ?);";
         try (PreparedStatement stmt = conn.prepareStatement(query, Statement
@@ -76,18 +77,20 @@ public class DocumentMapper {
             stmt.setString(2, d.getPath());
             stmt.setInt(3, d.getBuilding().getId());
             stmt.executeUpdate();
-            ResultSet rs = stmt.getGeneratedKeys();
-            if (rs.next())
-                id = rs.getInt(1);
-            rs.close();
-            stmt.close();
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next())
+                    return rs.getInt(1);
+                else
+                    throw new PolygonException("insertDocument failed to " +
+                            "insert document or get generated Id");
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PolygonException("insertDocument error: " + e
+                    .getMessage());
         }
-        return id;
     }
 
-    public boolean updateDocument(Document d) {
+    public boolean updateDocument(Document d) throws PolygonException {
         String query = "UPDATE `Document` SET `Name`=?, Path=?, " +
                 "FkBuildingId=? WHERE Id=?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -97,12 +100,12 @@ public class DocumentMapper {
             stmt.setInt(4, d.getId());
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PolygonException("updateDocument error: " + e
+                    .getMessage());
         }
-        return false;
     }
 
-    private Document constructDocument(ResultSet rs) {
+    private Document constructDocument(ResultSet rs) throws PolygonException {
         try {
             Document c = new Document();
             c.setId(rs.getInt("Id"));
@@ -115,8 +118,8 @@ public class DocumentMapper {
 
             return c;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PolygonException("constructDocument error: " + e
+                    .getMessage());
         }
-        return null;
     }
 }

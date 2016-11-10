@@ -1,6 +1,7 @@
 package domain;
 
 import db.*;
+import exceptions.PolygonException;
 import model.*;
 
 import java.util.List;
@@ -14,7 +15,8 @@ public class Facade {
 
     private static Facade facade;
 
-    private Facade() {}
+    private Facade() {
+    }
 
     public static Facade getFacade() {
         if (facade == null) {
@@ -74,6 +76,7 @@ public class Facade {
 
     /**
      * get user by Email and Password in order to login
+     *
      * @param e email
      * @param p password
      * @return user
@@ -166,46 +169,48 @@ public class Facade {
         return mapper.updateImage(i);
     }
 
-    public Document getDocument(int id) {
+    public Document getDocument(int id) throws PolygonException {
         DocumentMapper mapper = new DocumentMapper(Conn.get());
         return mapper.getDocument(id);
     }
 
-    public List<Document> getDocuments() {
+    public List<Document> getDocuments() throws PolygonException {
         DocumentMapper mapper = new DocumentMapper(Conn.get());
         return mapper.getDocuments();
     }
 
-    public List<Document> getDocuments(int bId) {
+    public List<Document> getDocuments(int bId) throws PolygonException {
         DocumentMapper mapper = new DocumentMapper(Conn.get());
         Building b = new Building();
         b.setId(bId);
         return mapper.getDocuments(b);
     }
 
-    public List<Document> getDocuments(int bId, int count) {
+    public List<Document> getDocuments(int bId, int count) throws
+            PolygonException {
         DocumentMapper mapper = new DocumentMapper(Conn.get());
         Building b = new Building();
         b.setId(bId);
         return mapper.getDocuments(b, count);
     }
 
-    public List<Document> getDocuments(Building b) {
+    public List<Document> getDocuments(Building b) throws PolygonException {
         DocumentMapper mapper = new DocumentMapper(Conn.get());
         return mapper.getDocuments(b);
     }
 
-    public List<Document> getDocuments(Building b, int count) {
+    public List<Document> getDocuments(Building b, int count) throws
+            PolygonException {
         DocumentMapper mapper = new DocumentMapper(Conn.get());
         return mapper.getDocuments(b, count);
     }
 
-    public int insertDocument(Document d) {
+    public int insertDocument(Document d) throws PolygonException{
         DocumentMapper mapper = new DocumentMapper(Conn.get());
         return mapper.insertDocument(d);
     }
 
-    public boolean updateDocument(Document d) {
+    public boolean updateDocument(Document d) throws PolygonException{
         DocumentMapper mapper = new DocumentMapper(Conn.get());
         return mapper.updateDocument(d);
     }

@@ -1,6 +1,7 @@
 package controller;
 
 import domain.Facade;
+import exceptions.PolygonException;
 import model.Building;
 import model.Document;
 
@@ -74,12 +75,23 @@ public class DocumentController extends HttpServlet {
         d.setPath(fileName);
 
         boolean viewB = false;
-        if (id > 0 && facade.updateDocument(d)) {
-                viewB = true;
-        } else {
-            int newId = facade.insertDocument(d);
-            if (newId > 0)
-                viewB = true;
+        try {
+            if (id > 0 && facade.updateDocument(d)) {
+                    viewB = true;
+            } else {
+                int newId = 0;
+                try {
+                    newId = facade.insertDocument(d);
+                } catch (PolygonException e) {
+                    req.setAttribute("error", e.getMessage());
+                    forwardGet(req, res, "/error.jsp");
+                }
+                if (newId > 0)
+                    viewB = true;
+            }
+        } catch (PolygonException e) {
+            req.setAttribute("error", e.getMessage());
+            forwardGet(req, res, "/error.jsp");
         }
 
         if (viewB)
@@ -106,8 +118,13 @@ public class DocumentController extends HttpServlet {
         req.setAttribute("b", b);
 
         if (id > 0 && b > 0) {
-            Document d = facade.getDocument(id);
-            req.setAttribute("d", d);
+            try {
+                Document d = facade.getDocument(id);
+                req.setAttribute("d", d);
+            } catch (PolygonException e) {
+                req.setAttribute("error", e.getMessage());
+                forwardGet(req, res, "/error.jsp");
+            }
         }
 
         if (b < 0)

@@ -45,4 +45,14 @@ public class Document {
     public void setBuilding(Building building) {
         this.building = building;
     }
+
+    @Override
+    public String toString() {
+        return "Document{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", path='" + path + '\'' +
+                ", building=" + building +
+                '}';
+    }
 }
