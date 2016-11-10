@@ -4,6 +4,8 @@ package controller;
 import domain.Facade;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import model.User;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -61,13 +63,16 @@ public class AllCustomerController extends HttpServlet {
         //connect to DB
         Facade facade = Facade.getFacade();
         
-        //få fat på parameter "user"
-        String u = request.getParameter("user");
+        List<User> userList = facade.getUsers();
         
-        //fra DB sæt navn og email fra DB 
-        request.setAttribute("Name",u);
-        request.setAttribute("Email",u);
-      }
+        
+        //save the variable
+        request.setAttribute("Users", userList);
+        
+        //forward from servlet to JSP
+        RequestDispatcher rd = request.getRequestDispatcher("/allCustomers.jsp");
+        rd.forward(request, response);
+     }
 
     /**
      * Handles the HTTP <code>POST</code> method.

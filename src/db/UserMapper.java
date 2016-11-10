@@ -3,6 +3,7 @@ package db;
 import model.Org;
 import model.Role;
 import model.User;
+import exceptions.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class UserMapper {
         UserMapper.conn = conn;
     }
 
-    public User getUser(int id) {
+    public User getUser(int id)throws PolygonException {
         String query = "SELECT Id, `Name`, Email, Phone, FkRoleId, FkOrgId " +
                 "FROM `User` WHERE Id=?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -35,7 +36,7 @@ public class UserMapper {
         return null;
     }
 
-    public User getUserLogin(String email, String pass) {
+    public User getUserLogin(String email, String pass) throws PolygonException {
         String query = "SELECT Id, `Name`, Email, Phone, FkRoleId, FkOrgId " +
                 "FROM  `User` WHERE Email=? AND `Password`=?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -83,7 +84,7 @@ public class UserMapper {
         return null;
     }
 
-    public int insertUser(User u) {
+    public int insertUser(User u)throws PolygonException {
         int id = -1;
         String query = "INSERT INTO `User` (`Name`, Email, Phone, FkRoleId, " +
                 "FkOrgId) VALUES (?, ?, ?, ?, ?);";
@@ -94,19 +95,18 @@ public class UserMapper {
             stmt.setString(3, u.getPhone());
             stmt.setInt(4, u.getRole().getId());
             stmt.setInt(5, u.getOrg().getId());
-            stmt.executeUpdate();
+            int changed = stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
             if (rs.next())
-                id = rs.getInt(1);
+                id = rs.getInt("Id");
             rs.close();
-            stmt.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return id;
     }
 
-    public boolean updateUser(User u) {
+    public boolean updateUser(User u)throws PolygonException {
         String query = "UPDATE `User` SET `Name`=?, Email=?, Phone=?, " +
                 "FkRoleId=?, FkOrgId=? WHERE Id=?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -123,7 +123,7 @@ public class UserMapper {
         return false;
     }
 
-    private User constructUser(ResultSet rs) {
+    private User constructUser(ResultSet rs)throws PolygonException {
         try {
             User c = new User();
             c.setId(rs.getInt("Id"));

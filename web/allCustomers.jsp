@@ -4,7 +4,7 @@
     Author     : Tanja
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:useBean id="u" scope="request" type="java.util.List<model.User>"/>
+<jsp:useBean id="Users" scope="request" type="java.util.List<model.User>"/>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
