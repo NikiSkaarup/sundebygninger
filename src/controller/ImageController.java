@@ -23,7 +23,8 @@ import static util.Helper.generateSemiUniqueFileName;
  *
  * @author Niki
  */
-@WebServlet(name = "ImageController", urlPatterns = {"/image"})
+@WebServlet(name = "ImageController", urlPatterns = {"/image",
+        "/image/insert" ,"/image/update"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024 * 2, // 2MB
         maxFileSize = 1024 * 1024 * 10,      // 10MB
@@ -31,21 +32,59 @@ import static util.Helper.generateSemiUniqueFileName;
 public class ImageController extends HttpServlet {
 
     private final String SAVE_DIR = "images";
+    private Facade facade = Facade.getFacade();
 
     protected void doPost(HttpServletRequest req, HttpServletResponse
             res) throws ServletException, IOException {
-        Facade facade = Facade.getFacade();
+        switch (req.getServletPath()) {
+            case "/image/insert":
+                doPostInsert(req, res);
+                break;
+            case "/image/update":
+                doPostUpdate(req, res);
+                break;
+            default:
+                forwardGet(req, res, "/home.jsp");
+                break;
+        }
+    }
 
-        int id = -1;
-        if (req.getParameter("id") != null
-                && !req.getParameter("id").equals("0"))
-            id = Integer.parseInt(req.getParameter("id"));
+    private void doPostInsert(HttpServletRequest req, HttpServletResponse
+            res) throws ServletException, IOException {
+        try {
+            Image d = doPostBoth(req);
+            if (facade.insertImage(d) > 0)
+                forwardGet(req, res, "/building?id=" + d.getBuilding().getId());
+            else
+                forwardGet(req, res, req.getServletPath());
+        } catch (Exception e) {
+            req.setAttribute("error", e.getMessage());
+            forwardGet(req, res, "/error.jsp");
+        }
+    }
 
-        int bId = -1;
-        if (req.getParameter("b") != null && !req.getParameter("b").equals("0"))
-            bId = Integer.parseInt(req.getParameter("b"));
+    private void doPostUpdate(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+        try {
+            Image d = doPostBoth(req);
+            if (facade.updateImage(d))
+                forwardGet(req, res, "/building?id=" + d.getBuilding().getId());
+            else
+                forwardGet(req, res, req.getServletPath());
+        } catch (Exception e) {
+            req.setAttribute("error", e.getMessage());
+            forwardGet(req, res, "/error.jsp");
+        }
+    }
 
-        Building b = facade.getBuilding(bId);
+    private Image doPostBoth(HttpServletRequest req)
+            throws ServletException, IOException {
+        Image d = new Image();
+        d.setId(Integer.parseInt(req.getParameter("id")));
+
+        Building b = new Building();
+        b.setId(Integer.parseInt(req.getParameter("b")));
+        d.setBuilding(b);
 
         String appPath = req.getServletContext().getRealPath("");
         String savePath = appPath + File.separator + SAVE_DIR;
@@ -68,55 +107,66 @@ public class ImageController extends HttpServlet {
             part.write(savePath + File.separator + fileName);
         }
 
-        Image i = new Image();
-        i.setName(name);
-        i.setBuilding(b);
-        i.setPath(fileName);
-
-        boolean viewB = false;
-        if (id > 0 && facade.updateImage(i)) {
-            viewB = true;
-        } else {
-            int newId = facade.insertImage(i);
-            if (newId > 0)
-                viewB = true;
-            System.out.println(newId);
-        }
-
-        if (viewB)
-            forwardGet(req, res, "/building?id=" + b.getId());
-        else
-            forwardGet(req, res, "/buildings?oid=" + b.getOrg().getId());
+        d.setName(name);
+        d.setPath(fileName);
+        return d;
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse
             res) throws ServletException, IOException {
-        Facade facade = Facade.getFacade();
-
-        int id = -1;
-        if (req.getParameter("id") != null)
-            id = Integer.parseInt(req.getParameter("id"));
-
-        if (req.getParameter("edit") == null) {
-            req.setAttribute("action", "add");
-        } else {
-            req.setAttribute("action", "edit");
-            id = Integer.parseInt(req.getParameter("edit"));
+        switch (req.getServletPath()) {
+            case "/image/insert":
+                doGetInsert(req, res);
+                break;
+            case "/image/update":
+                doGetUpdate(req, res);
+                break;
+            default:
+                doGetView(req, res);
+                break;
         }
+    }
 
-        int b = -1;
-        if (req.getParameter("b") != null)
-            b = Integer.parseInt(req.getParameter("b"));
-        req.setAttribute("b", b);
-
-        if (id > 0 && b > 0) {
-            Image i = facade.getImage(id);
-            req.setAttribute("i", i);
+    private void doGetView(HttpServletRequest req, HttpServletResponse
+            res) throws ServletException, IOException {
+        try {
+            int id = Integer.parseInt(req.getParameter("id"));
+            Image d = facade.getImage(id);
+            req.setAttribute("d", d);
+            forwardGet(req, res, "/image.jsp");
+        } catch (Exception e) {
+            req.setAttribute("error", e.getMessage());
+            forwardGet(req, res, "/error.jsp");
         }
+    }
 
-        if (b < 0)
-            forwardGet(req, res, "home.jsp");
-        else
-            forwardGet(req, res, "image.jsp");
+    private void doGetInsert(HttpServletRequest req, HttpServletResponse
+            res) throws ServletException, IOException {
+        try {
+            int b = Integer.parseInt(req.getParameter("b"));
+            req.setAttribute("b", b);
+            req.setAttribute("action", "Insert");
+            req.setAttribute("url", req.getServletPath());
+            forwardGet(req, res, "/image.jsp");
+        } catch (Exception e) {
+            req.setAttribute("error", e.getMessage());
+            forwardGet(req, res, "/error.jsp");
+        }
+    }
+
+    private void doGetUpdate(HttpServletRequest req, HttpServletResponse
+            res) throws ServletException, IOException {
+        try {
+            int id = Integer.parseInt(req.getParameter("id"));
+            Image d = facade.getImage(id);
+            req.setAttribute("b", d.getBuilding().getId());
+            req.setAttribute("d", d);
+            req.setAttribute("url", req.getServletPath());
+            req.setAttribute("action", "Update");
+            forwardGet(req, res, "/image.jsp");
+        } catch (Exception e) {
+            req.setAttribute("error", e.getMessage());
+            forwardGet(req, res, "/error.jsp");
+        }
     }
 }
