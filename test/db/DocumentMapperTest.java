@@ -1,9 +1,12 @@
 package db;
 
+import domain.Facade;
 import org.junit.Before;
 import org.junit.Test;
+import util.TestHelper;
 
-import static org.junit.Assert.*;
+import java.sql.Connection;
+import java.sql.Statement;
 
 /**
  * Created by Niki on 2016-11-10.
@@ -11,9 +14,23 @@ import static org.junit.Assert.*;
  * @author Niki
  */
 public class DocumentMapperTest {
+
+    private Connection conn = null;
+    private Facade facade;
+
     @Before
     public void setUp() throws Exception {
-
+        try {
+            conn = Conn.get("localhost", "junitTestDB", "junitTest", "junitTest");
+            try (Statement stmt = conn.createStatement()) {
+                stmt.execute(TestHelper.getCloneDBScript());
+            }
+            facade = Facade.getFacadeWithConn(conn);
+        } catch (Exception ex) {
+            conn = null;
+            System.out.println("Could not open connection to database: " + ex
+                    .getMessage());
+        }
     }
 
     @Test

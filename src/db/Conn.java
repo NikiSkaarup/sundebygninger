@@ -12,7 +12,6 @@ public class Conn {
     private static String ip = "localhost";
     private static String db = "sundebygninger";
     private static int port = 3306;
-    private static String url = "jdbc:mysql://" + ip + ":" + port + "/" + db;
     private static String user = "test";
     private static String password = "password";
 
@@ -22,6 +21,21 @@ public class Conn {
         if (conn == null) {
             try {
                 Class.forName(driver);
+                String url = "jdbc:mysql://" + ip + ":" + port + "/" + db;
+                conn = DriverManager.getConnection(url , user, password);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return conn;
+    }
+
+    public static Connection get(String ip, String db,
+                                 String user, String password) {
+        if (conn == null) {
+            try {
+                Class.forName(driver);
+                String url = "jdbc:mysql://" + ip + ":" + port + "/" + db;
                 conn = DriverManager.getConnection(url, user, password);
             } catch (Exception e) {
                 e.printStackTrace();
