@@ -52,9 +52,9 @@ public class ImageController extends HttpServlet {
     private void doPostInsert(HttpServletRequest req, HttpServletResponse
             res) throws ServletException, IOException {
         try {
-            Image d = doPostBoth(req);
-            if (facade.insertImage(d) > 0)
-                forwardGet(req, res, "/building?id=" + d.getBuilding().getId());
+            Image i = doPostBoth(req);
+            if (facade.insertImage(i) > 0)
+                forwardGet(req, res, "/building?id=" + i.getBuilding().getId());
             else
                 forwardGet(req, res, req.getServletPath());
         } catch (Exception e) {
@@ -79,12 +79,12 @@ public class ImageController extends HttpServlet {
 
     private Image doPostBoth(HttpServletRequest req)
             throws ServletException, IOException {
-        Image d = new Image();
-        d.setId(Integer.parseInt(req.getParameter("id")));
+        Image i = new Image();
+        i.setId(Integer.parseInt(req.getParameter("id")));
 
         Building b = new Building();
         b.setId(Integer.parseInt(req.getParameter("b")));
-        d.setBuilding(b);
+        i.setBuilding(b);
 
         String appPath = req.getServletContext().getRealPath("");
         String savePath = appPath + File.separator + SAVE_DIR;
@@ -107,9 +107,9 @@ public class ImageController extends HttpServlet {
             part.write(savePath + File.separator + fileName);
         }
 
-        d.setName(name);
-        d.setPath(fileName);
-        return d;
+        i.setName(name);
+        i.setPath(fileName);
+        return i;
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse
@@ -131,8 +131,8 @@ public class ImageController extends HttpServlet {
             res) throws ServletException, IOException {
         try {
             int id = Integer.parseInt(req.getParameter("id"));
-            Image d = facade.getImage(id);
-            req.setAttribute("d", d);
+            Image i = facade.getImage(id);
+            req.setAttribute("i", i);
             forwardGet(req, res, "/image.jsp");
         } catch (Exception e) {
             req.setAttribute("error", e.getMessage());
@@ -158,9 +158,9 @@ public class ImageController extends HttpServlet {
             res) throws ServletException, IOException {
         try {
             int id = Integer.parseInt(req.getParameter("id"));
-            Image d = facade.getImage(id);
-            req.setAttribute("b", d.getBuilding().getId());
-            req.setAttribute("d", d);
+            Image i = facade.getImage(id);
+            req.setAttribute("b", i.getBuilding().getId());
+            req.setAttribute("i", i);
             req.setAttribute("url", req.getServletPath());
             req.setAttribute("action", "Update");
             forwardGet(req, res, "/image.jsp");

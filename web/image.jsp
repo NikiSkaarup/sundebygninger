@@ -47,13 +47,14 @@
         <c:if test="${i.name != null}">
             <div class="col-md-6">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <a href="/images/${i.path}" download="${i.name}"
                            class="btn btn-default">Download ${i.name}</a>
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-md-8">
                         <a href="/images/${i.path}" download="${i.name}">
-                            <img src="/images/${i.path}" alt="${i.name}"/></a>
+                            <img src="/images/${i.path}" alt="${i.name}"
+                                 class="img-responsive"/></a>
                     </div>
                 </div>
             </div>
