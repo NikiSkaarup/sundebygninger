@@ -86,10 +86,6 @@ public class Building {
         return submission;
     }
 
-    public void setSubmission(Timestamp submission) {
-        this.submission = submission;
-    }
-
     public Org getOrg() {
         return org;
     }
