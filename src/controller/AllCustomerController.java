@@ -73,7 +73,7 @@ public class AllCustomerController extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("/allCustomers.jsp");
             rd.forward(request, response);
         } catch (PolygonException p) {
-            p.printStackTrace();
+            
         }
 
     }

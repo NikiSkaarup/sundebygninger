@@ -63,15 +63,16 @@ public class CustomerController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
+
         //Oprette DB connection
         Facade facade = Facade.getFacade();
-        
-        if(request.getParameter("Name")!= null){
+
+        if (request.getParameter("Name") != null) {
             String name = request.getParameter("Name");
             String email = request.getParameter("Email");
-        
+
         }
+
     }
 
     /**
@@ -110,7 +111,7 @@ public class CustomerController extends HttpServlet {
         String name = request.getParameter("Name");
         String email = request.getParameter("Email");
         String phone = request.getParameter("Phone");
-        
+
         u.setId(userid);
         u.setName(name);
         u.setEmail(email);

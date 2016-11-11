@@ -97,7 +97,7 @@ public class LoginController extends HttpServlet {
                 forwardGet(request, response, "/login.jsp");
             }
         } catch (PolygonException p) {
-            p.printStackTrace();
+            
         }
 
     }
