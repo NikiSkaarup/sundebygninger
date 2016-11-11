@@ -6,12 +6,10 @@
 package test;
 
 import domain.Facade;
-import java.util.ArrayList;
-import java.util.List;
+import exceptions.PolygonException;
+import java.sql.Timestamp;
 import model.Building;
-import model.Comment;
-import model.Report;
-import model.User;
+import model.Org;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
@@ -41,7 +39,7 @@ public class BuildingsTest {
     }
 
     @Before
-    public void setUp() {
+    public void setUp() throws PolygonException {
         b = facade.getBuilding(1);
     }
 
@@ -52,7 +50,7 @@ public class BuildingsTest {
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
     @Test
-    public void changeName() {
+    public void setName() throws PolygonException {
         b.setName("TestBuilding");
         facade.updateBuilding(b);
         assertEquals("TestBuilding", b.getName());
@@ -62,7 +60,7 @@ public class BuildingsTest {
     }
 
     @Test
-    public void changeAddress() {
+    public void setAddress() throws PolygonException {
         b.setAddress("TestStreet 42");
         facade.updateBuilding(b);
         assertEquals("TestStreet 42", b.getAddress());
@@ -71,25 +69,74 @@ public class BuildingsTest {
     }
 
     @Test
-    public void addComment() {
-        List<Report> reportList = new ArrayList();
-        Report r = new Report();
-        r.setBuilding(b);
-        User user = new User();
-        r.setUser(user);
-        Comment c = new Comment();
-        c.setComment("Test comment");
-        List<Comment> lc;
-        lc = new ArrayList();
-        lc.add(c);
-        r.setComments(lc);
-        reportList.add(r);
-        b.setReports(reportList);
-        assertEquals("Test comment", b.getReports().get(b.getReports().size() - 1).getComments().get(b.getReports().get(b.getReports().size() - 1).getComments().size() - 1).getComment());
-
-        int insertReport = facade.insertReport(r);
+    public void setCurrentUse() throws PolygonException {
+        b.setCurrentUse("TestUse");
         facade.updateBuilding(b);
-        assertEquals("Test comment", facade.getBuilding(1).getReports().get(b.getReports().size() - 1).getComments().get(b.getReports().get(b.getReports().size() - 1).getComments().size() - 1).getComment());
+        assertEquals("TestUse", b.getCurrentUse());
 
+        assertEquals("TestUse", facade.getBuilding(1).getCurrentUse());
     }
+
+    @Test
+    public void setPreviousUse() throws PolygonException {
+        b.setPreviousUse("TestPUse");
+        facade.updateBuilding(b);
+        assertEquals("TestPUse", b.getPreviousUse());
+
+        assertEquals("TestPUse", facade.getBuilding(1).getPreviousUse());
+    }
+
+    @Test
+    public void setArea() throws PolygonException {
+        b.setArea("666");
+        facade.updateBuilding(b);
+        assertEquals("666", b.getArea());
+
+        assertEquals("666", facade.getBuilding(1).getArea());
+    }
+
+    @Test
+    public void setConstructionYear() throws PolygonException {
+        String text = "2011-11-11 11:11:11";
+        Timestamp ts = Timestamp.valueOf(text);
+        b.setConstructionYear(ts);
+        facade.updateBuilding(b);
+        assertEquals(ts, b.getConstructionYear());
+
+        assertEquals(ts, facade.getBuilding(1).getConstructionYear());
+    }
+      
+    @Test
+    public void setOrg() throws PolygonException {
+        Org o = new Org();
+        o.setName("TestOrg");
+        b.setOrg(o);
+        facade.updateBuilding(b);
+        assertEquals("TestOrg", b.getOrg().getName());
+
+        assertEquals("TestOrg", facade.getBuilding(1).getOrg().getName());
+    }
+
+//    @Test
+//    public void addComment() throws PolygonException {
+//        List<Report> reportList = new ArrayList();
+//        Report r = new Report();
+//        r.setBuilding(b);
+//        User user = new User();
+//        r.setUser(user);
+//        Comment c = new Comment();
+//        c.setComment("Test comment");
+//        List<Comment> lc;
+//        lc = new ArrayList();
+//        lc.add(c);
+//        r.setComments(lc);
+//        reportList.add(r);
+//        b.setReports(reportList);
+//        assertEquals("Test comment", b.getReports().get(b.getReports().size() - 1).getComments().get(b.getReports().get(b.getReports().size() - 1).getComments().size() - 1).getComment());
+//
+//        facade.insertReport(r);
+//        facade.updateBuilding(b);
+//        assertEquals("Test comment", facade.getReport(0).getComments().get(0));
+
+//    }
 }
