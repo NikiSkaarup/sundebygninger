@@ -1,7 +1,6 @@
 package controller;
 
 import domain.Facade;
-import exceptions.PolygonException;
 import model.Building;
 import model.Document;
 
@@ -53,7 +52,7 @@ public class DocumentController extends HttpServlet {
     private void doPostInsert(HttpServletRequest req, HttpServletResponse
             res) throws ServletException, IOException {
         try {
-            Document d = doPostBoth(req, res);
+            Document d = doPostBoth(req);
             if (facade.insertDocument(d) > 0)
                 forwardGet(req, res, "/building?id=" + d.getBuilding().getId());
             else
@@ -67,7 +66,7 @@ public class DocumentController extends HttpServlet {
     private void doPostUpdate(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
         try {
-            Document d = doPostBoth(req, res);
+            Document d = doPostBoth(req);
             if (facade.updateDocument(d))
                 forwardGet(req, res, "/building?id=" + d.getBuilding().getId());
             else
@@ -78,7 +77,7 @@ public class DocumentController extends HttpServlet {
         }
     }
 
-    private Document doPostBoth(HttpServletRequest req, HttpServletResponse res)
+    private Document doPostBoth(HttpServletRequest req)
             throws ServletException, IOException {
         Document d = new Document();
         d.setId(Integer.parseInt(req.getParameter("id")));
