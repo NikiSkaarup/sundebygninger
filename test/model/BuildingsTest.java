@@ -5,8 +5,11 @@
  */
 package model;
 
+import db.Conn;
 import domain.Facade;
 import exceptions.PolygonException;
+import java.sql.Connection;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import model.Building;
 import model.Org;
@@ -16,6 +19,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import util.TestHelper;
 
 /**
  *
@@ -23,6 +27,7 @@ import org.junit.Test;
  */
 public class BuildingsTest {
 
+    private Connection conn = null;
     Building b = new Building();
     Facade facade = Facade.getFacade();
 
@@ -40,6 +45,17 @@ public class BuildingsTest {
 
     @Before
     public void setUp() throws PolygonException {
+        try {
+            conn = Conn.get("localhost", "junitTestDB", "junitTest", "junitTest");
+            try (Statement stmt = conn.createStatement()) {
+                stmt.execute(TestHelper.getCloneDBScript());
+            }
+            facade = Facade.getFacadeWithConn(conn);
+        } catch (Exception ex) {
+            conn = null;
+            System.out.println("Could not open connection to database: " + ex
+                    .getMessage());
+        }
         b = facade.getBuilding(1);
     }
 
@@ -105,7 +121,7 @@ public class BuildingsTest {
 
         assertEquals(ts, facade.getBuilding(1).getConstructionYear());
     }
-      
+
     @Test   // Org-support not implemented yet
     public void setOrg() throws PolygonException {
         Org o = new Org();
@@ -136,6 +152,5 @@ public class BuildingsTest {
 //        facade.insertReport(r);
 //        facade.updateBuilding(b);
 //        assertEquals("Test comment", facade.getReport(0).getComments().get(0));
-
 //    }
 }
