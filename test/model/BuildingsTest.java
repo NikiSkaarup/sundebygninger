@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package test;
+package model;
 
 import domain.Facade;
 import exceptions.PolygonException;
@@ -106,10 +106,9 @@ public class BuildingsTest {
         assertEquals(ts, facade.getBuilding(1).getConstructionYear());
     }
       
-    @Test
+    @Test   // Org-support not implemented yet
     public void setOrg() throws PolygonException {
         Org o = new Org();
-        o.setName("TestOrg");
         b.setOrg(o);
         facade.updateBuilding(b);
         assertEquals("TestOrg", b.getOrg().getName());
