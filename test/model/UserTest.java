@@ -7,6 +7,7 @@ package model;
 
 import domain.Facade;
 import exceptions.PolygonException;
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -55,6 +56,7 @@ public class UserTest {
     }
     @Test
     public void getUsers() throws PolygonException {
+        u.getOrg();
     
     
     }
