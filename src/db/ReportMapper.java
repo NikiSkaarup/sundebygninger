@@ -2,10 +2,7 @@ package db;
 
 import model.*;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,22 +67,21 @@ public class ReportMapper {
     }
 
     public int insertReport(Report r) {
-        int id = -1;
         String query = "INSERT INTO `Report` (`FkBuildingId`, `FkUserId`) " +
-                "VALUES (?, ?); SELECT LAST_INSERT_ID() AS Id;";
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+                "VALUES (?, ?)";
+        try (PreparedStatement stmt = conn.prepareStatement(query, Statement
+                .RETURN_GENERATED_KEYS)) {
             stmt.setInt(1, r.getBuilding().getId());
             stmt.setInt(2, r.getUser().getId());
             stmt.executeUpdate();
-            ResultSet rs = stmt.getGeneratedKeys();
-            if (rs.next())
-                id = rs.getInt(1);
-            rs.close();
-            stmt.close();
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next())
+                    return rs.getInt(1);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return id;
+        return -1;
     }
 
     public boolean updateReport(Report r) {
