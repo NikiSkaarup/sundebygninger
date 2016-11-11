@@ -6,6 +6,8 @@ import exceptions.PolygonException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by Niki on 2016-11-09.
@@ -20,60 +22,67 @@ public class BuildingMapper {
         BuildingMapper.conn = conn;
     }
 
-    public Building getBuilding(int id) throws PolygonException{
-        String query = "SELECT Building.Id, Building.`Name`, Address, " +
-                "ConstructionYear, FkOrgId, CurrentUse, Area, PreviousUse, " +
-                "Org.Name FROM `Building` INNER JOIN Org ON FkOrgId = Org.Id " +
-                "  WHERE Building.Id=?";
+    public Building getBuilding(int id) throws PolygonException {
+        String query = "SELECT Building.Id, Building.`Name`, Address, "
+                + "ConstructionYear, FkOrgId, CurrentUse, Area, PreviousUse, "
+                + "Org.Name FROM `Building` INNER JOIN Org ON FkOrgId = Org.Id "
+                + "  WHERE Building.Id=?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
-            if (rs.next())
+            if (rs.next()) {
                 return constructBuilding(rs);
+            } else {
+                throw new PolygonException("The element is not found with id: " + id);
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PolygonException("getBuilding error: " + e.getMessage());
         }
-        return null;
     }
 
-    public List<Building> getBuildings(Org org) throws PolygonException{
+    public List<Building> getBuildings(Org org) throws PolygonException {
         return getBuildings(org, -1);
     }
 
-    public List<Building> getBuildings(Org org, int count) throws PolygonException{
-        String query = "SELECT Id, `Name`, Address, ConstructionYear, " +
-                "CurrentUse, Area, PreviousUse, FkOrgId FROM `Building`";
-        if (org != null)
+    public List<Building> getBuildings(Org org, int count) throws PolygonException {
+        String query = "SELECT Id, `Name`, Address, ConstructionYear, "
+                + "CurrentUse, Area, PreviousUse, FkOrgId FROM `Building`";
+        if (org != null) {
             query += " WHERE FkOrgId=?";
+        }
         query += " ORDER BY Submission DESC";
-        if (org != null && count > 0)
+        if (org != null && count > 0) {
             query += " LIMIT ?";
+        }
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
             List<Building> list = new ArrayList<>();
             if (org != null) {
                 stmt.setInt(1, org.getId());
-                if (count > 0)
+                if (count > 0) {
                     stmt.setInt(2, count);
+                }
             }
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next())
-                list.add(constructBuilding(rs));
-            rs.close();
-            stmt.close();
-            return list;
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    list.add(constructBuilding(rs));
+                }
+                rs.close();
+                stmt.close();
+                return list;
+            } catch (PolygonException e) {
+                throw new PolygonException("getBuildings: " + e.getMessage());
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PolygonException("getBuildings error: " + e.getMessage());
         }
-        return null;
     }
 
     public int insertBuilding(Building b) throws PolygonException {
         int id = -1;
-        String query = "INSERT INTO `Building` (`Name`, Address, " +
-                "ConstructionYear, CurrentUse, Area, PreviousUse, FkOrgId) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?);";
-        try (PreparedStatement stmt = conn.prepareStatement(query, Statement
-                .RETURN_GENERATED_KEYS)) {
+        String query = "INSERT INTO `Building` (`Name`, Address, "
+                + "ConstructionYear, CurrentUse, Area, PreviousUse, FkOrgId) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?);";
+        try (PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, b.getName());
             stmt.setString(2, b.getAddress());
             stmt.setTimestamp(3, b.getConstructionYear());
@@ -82,21 +91,26 @@ public class BuildingMapper {
             stmt.setString(6, b.getPreviousUse());
             stmt.setInt(7, b.getOrg().getId());
             stmt.executeUpdate();
-            ResultSet rs = stmt.getGeneratedKeys();
-            if (rs.next())
-                id = rs.getInt(1);
-            rs.close();
-            stmt.close();
+
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    id = rs.getInt(1);
+                } else {
+                    throw new PolygonException("failed to get insertBuilding generated id");
+                }
+            } catch (Exception e) {
+                throw new PolygonException("insertBuilding failed to insert building: " + e);
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PolygonException("insertBuilding error: " + e.getMessage());
         }
         return id;
     }
 
-    public boolean updateBuilding(Building b) throws PolygonException{
-        String query = "UPDATE `Building` SET `Name`=?, Address=?, " +
-                "ConstructionYear=?, CurrentUse=?, Area=?, PreviousUse=?, " +
-                "FkOrgId=? WHERE Id=?";
+    public boolean updateBuilding(Building b) throws PolygonException {
+        String query = "UPDATE `Building` SET `Name`=?, Address=?, "
+                + "ConstructionYear=?, CurrentUse=?, Area=?, PreviousUse=?, "
+                + "FkOrgId=? WHERE Id=?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, b.getName());
             stmt.setString(2, b.getAddress());
@@ -108,12 +122,11 @@ public class BuildingMapper {
             stmt.setInt(8, b.getId());
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PolygonException("updateBuilding error: " + e.getMessage());
         }
-        return false;
     }
 
-    private Building constructBuilding(ResultSet rs) throws PolygonException{
+    private Building constructBuilding(ResultSet rs) throws PolygonException {
         try {
             Building c = new Building();
             c.setId(rs.getInt("Building.Id"));
@@ -124,6 +137,7 @@ public class BuildingMapper {
             c.setArea(rs.getString("Area"));
             c.setPreviousUse(rs.getString("PreviousUse"));
 
+            //reference to 1 building
             Org org = new Org();
             org.setId(rs.getInt("FkOrgId"));
             try {
@@ -132,11 +146,9 @@ public class BuildingMapper {
                 org.setName("");
             }
             c.setOrg(org);
-
             return c;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PolygonException("updateBuilding error: " + e.getMessage());
         }
-        return null;
     }
 }
