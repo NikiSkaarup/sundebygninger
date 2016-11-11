@@ -3,12 +3,11 @@ package db;
 import model.Org;
 import model.Role;
 import model.User;
-import exceptions.*;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
+import exceptions.PolygonException;
 /**
  * Created by Niki on 2016-11-09.
  *
@@ -51,15 +50,15 @@ public class UserMapper {
         return null;
     }
 
-    public List<User> getUsers() {
+    public List<User> getUsers() throws PolygonException {
         return getUsers(null);
     }
 
-    public List<User> getUsers(Org org) {
+    public List<User> getUsers(Org org) throws PolygonException {
         return getUsers(org, -1);
     }
 
-    public List<User> getUsers(Org org, int count) {
+    public List<User> getUsers(Org org, int count) throws PolygonException {
         String query = "SELECT Id, `Name`, Email, Phone, FkRoleId, FkOrgId " +
                 "FROM `User`";
         if (org != null) {
