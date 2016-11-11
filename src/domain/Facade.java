@@ -78,12 +78,12 @@ public class Facade {
         return mapper.updateBuilding(b);
     }
 
-    public User getUser(int id) {
+    public User getUser(int id) throws PolygonException {
         UserMapper mapper = new UserMapper(conn);
         return mapper.getUser(id);
     }
 
-    public User getUser(User user) {
+    public User getUser(User user) throws PolygonException {
         UserMapper mapper = new UserMapper(conn);
         return mapper.getUser(user.getId());
     }
@@ -95,51 +95,51 @@ public class Facade {
      * @param p password
      * @return user
      */
-    public User getUserLogin(String e, String p) {
+    public User getUserLogin(String e, String p) throws PolygonException {
         UserMapper mapper = new UserMapper(conn);
         return mapper.getUserLogin(e, p);
     }
 
-    public List<User> getUsers() {
+    public List<User> getUsers() throws PolygonException {
         UserMapper mapper = new UserMapper(conn);
         return mapper.getUsers();
     }
 
-    public List<User> getUsers(int orgId) {
+    public List<User> getUsers(int orgId) throws PolygonException {
         UserMapper mapper = new UserMapper(conn);
         Org org = new Org();
         org.setId(orgId);
         return mapper.getUsers(org);
     }
 
-    public List<User> getUsers(int orgId, int count) {
+    public List<User> getUsers(int orgId, int count) throws PolygonException {
         UserMapper mapper = new UserMapper(conn);
         Org org = new Org();
         org.setId(orgId);
         return mapper.getUsers(org, count);
     }
 
-    public List<User> getUsers(Org org) {
+    public List<User> getUsers(Org org) throws PolygonException {
         UserMapper mapper = new UserMapper(conn);
         return mapper.getUsers(org);
     }
 
-    public List<User> getUsers(Org org, int count) {
+    public List<User> getUsers(Org org, int count) throws PolygonException {
         UserMapper mapper = new UserMapper(conn);
         return mapper.getUsers(org, count);
     }
 
-    public int insertUser(User u) {
+    public int insertUser(User u) throws PolygonException {
         UserMapper mapper = new UserMapper(conn);
         return mapper.insertUser(u);
     }
 
-    public boolean updateUser(User u) {
+    public boolean updateUser(User u) throws PolygonException {
         UserMapper mapper = new UserMapper(conn);
         return mapper.updateUser(u);
     }
 
-    public Image getImage(int id) {
+    public Image getImage(int id) throws PolygonException {
         ImageMapper mapper = new ImageMapper(conn);
         return mapper.getImage(id);
     }
