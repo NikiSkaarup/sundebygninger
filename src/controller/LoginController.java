@@ -96,8 +96,9 @@ public class LoginController extends HttpServlet {
                 request.setAttribute("error", "Unknown user, please try again");
                 forwardGet(request, response, "/login.jsp");
             }
-        } catch (PolygonException p) {
-            
+        } 
+        catch (PolygonException p) {
+            p.printStackTrace();
         }
 
     }
