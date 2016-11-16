@@ -3,20 +3,19 @@
     Created on : 02-11-2016, 12:13:31
     Author     : Tanja
 --%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:useBean id="Users" scope="request" type="java.util.List<model.User>"/>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<jsp:useBean id="users" scope="request" type="java.util.List<model.User>"/>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
-
-        <title>List for all customers</title>
+        <title>JSP Page</title>
     </head>
     <body>
         <%@include file="navigation.jsp"%>
-        <h3>Liste over alle kunder</h3>
+        <h3>${requestScope.action}Liste over alle kunder</h3>
         <table class="table table-bordered table-hover table-striped">
             <thead>
                 <tr class="active">
@@ -26,10 +25,10 @@
                 </tr>  
             </thead>
             <tbody>
-                <c:forEach items="${Users}" var="u">
+                <c:forEach items="${users}" var="u">
                     <tr>
-                        <td>${u.Name}</td>
-                        <td>${u.Email}</td>
+                        <td>${u.name}</td>
+                        <td>${u.email}</td>
                         <td><a href="user?id=${u.id}">Info</a></td>
                     </tr>
                 </c:forEach>

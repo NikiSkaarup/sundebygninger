@@ -12,6 +12,10 @@ public class FileType {
     public FileType() {
     }
 
+    public FileType(int id) {
+        this.id = id;
+    }
+
     public FileType(int id, String name) {
         this.id = id;
         this.name = name;
@@ -19,10 +23,6 @@ public class FileType {
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {

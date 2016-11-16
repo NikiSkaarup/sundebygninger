@@ -33,6 +33,13 @@ public class FileController extends HttpServlet {
     private int maxFileSize = 10485760; // 10 MB
     private Facade facade = Facade.getFacade();
 
+    /***
+     *
+     * @param req
+     * @param res
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void doPost(HttpServletRequest req, HttpServletResponse
             res) throws ServletException, IOException {
         switch (req.getServletPath()) {
@@ -48,6 +55,13 @@ public class FileController extends HttpServlet {
         }
     }
 
+    /***
+     *
+     * @param req
+     * @param res
+     * @throws ServletException
+     * @throws IOException
+     */
     private void doPostInsert(HttpServletRequest req, HttpServletResponse
             res) throws ServletException, IOException {
         try {
@@ -62,12 +76,20 @@ public class FileController extends HttpServlet {
         }
     }
 
+    /***
+     *
+     *
+     * @param req
+     * @param res
+     * @throws ServletException
+     * @throws IOException
+     */
     private void doPostUpdate(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
         try {
-            File d = doPostBoth(req);
-            if (facade.updateFile(d))
-                forwardGet(req, res, "/building?id=" + d.getBuilding().getId());
+            File f = doPostBoth(req);
+            if (facade.updateFile(f))
+                forwardGet(req, res, "/building?id=" + f.getBuilding().getId());
             else
                 forwardGet(req, res, req.getServletPath());
         } catch (Exception e) {
@@ -76,10 +98,16 @@ public class FileController extends HttpServlet {
         }
     }
 
+    /***
+     *
+     * @param req
+     * @return
+     * @throws ServletException
+     * @throws IOException
+     */
     private File doPostBoth(HttpServletRequest req)
             throws ServletException, IOException {
-        File f = new File();
-        f.setId(Integer.parseInt(req.getParameter("id")));
+        File f = new File(Integer.parseInt(req.getParameter("id")));
 
         Building b = new Building();
         b.setId(Integer.parseInt(req.getParameter("b")));
@@ -95,6 +123,13 @@ public class FileController extends HttpServlet {
         return f;
     }
 
+    /***
+     *
+     * @param req
+     * @param res
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void doGet(HttpServletRequest req, HttpServletResponse
             res) throws ServletException, IOException {
         switch (req.getServletPath()) {
@@ -110,6 +145,13 @@ public class FileController extends HttpServlet {
         }
     }
 
+    /***
+     *
+     * @param req
+     * @param res
+     * @throws ServletException
+     * @throws IOException
+     */
     private void doGetView(HttpServletRequest req, HttpServletResponse
             res) throws ServletException, IOException {
         try {
@@ -123,6 +165,13 @@ public class FileController extends HttpServlet {
         }
     }
 
+    /***
+     *
+     * @param req
+     * @param res
+     * @throws ServletException
+     * @throws IOException
+     */
     private void doGetInsert(HttpServletRequest req, HttpServletResponse
             res) throws ServletException, IOException {
         try {
@@ -137,6 +186,13 @@ public class FileController extends HttpServlet {
         }
     }
 
+    /***
+     *
+     * @param req
+     * @param res
+     * @throws ServletException
+     * @throws IOException
+     */
     private void doGetUpdate(HttpServletRequest req, HttpServletResponse
             res) throws ServletException, IOException {
         try {
