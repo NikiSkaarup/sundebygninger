@@ -1,5 +1,6 @@
 package db;
 
+import exceptions.PolygonException;
 import model.Building;
 import model.File;
 import model.FileType;
@@ -18,35 +19,71 @@ public class FileMapper {
 
     private static Connection conn;
 
+    /***
+     * Constructor requires a Database Connection
+     * @param conn Database Connection
+     */
     public FileMapper(Connection conn) {
         FileMapper.conn = conn;
     }
 
-    public File getFile(int id) {
+    /***
+     *
+     * @param id
+     * @return
+     * @throws PolygonException
+     */
+    public File getFile(int id) throws PolygonException {
         String query = "SELECT Id, `Name`, `Data`, FkBuildingId, FkFileTypeId" +
                 " FROM `File` WHERE Id=?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, id);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next())
-                return constructFile(rs);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next())
+                    return constructFile(rs);
+                else {
+                    throw new PolygonException("No result found with id: " +
+                            id);
+                }
+            } catch (PolygonException e) {
+                throw new PolygonException("getFile ResultSet: " +
+                        e.getMessage());
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PolygonException("getFile error: " + e.getMessage());
         }
-        return null;
     }
 
-    public List<File> getFiles() {
-        return getFiles(null);
+    /***
+     *
+     * @return
+     * @throws PolygonException
+     */
+    public List<File> getFiles() throws PolygonException {
+        return getFiles((Building) null);
     }
 
-    public List<File> getFiles(Building b) {
+    /***
+     *
+     * @param b
+     * @return
+     * @throws PolygonException
+     */
+    public List<File> getFiles(Building b) throws PolygonException {
         return getFiles(b, -1);
     }
 
-    public List<File> getFiles(Building b, int count) {
-        String query = "SELECT Id, `Name`, `Data`, FkBuildingId, FkFileTypeId" +
-                " FROM `File`";
+    /***
+     *
+     * @param b
+     * @param count
+     * @return
+     * @throws PolygonException
+     */
+    public List<File> getFiles(Building b, int count) throws PolygonException {
+        String query = "SELECT `File`.Id, `File`.`Name`, `Data`, " +
+                "FkBuildingId, FkFileTypeId FROM `File` INNER JOIN FileType " +
+                "ON `File`.FkFileTypeId = FileType.Id";
         if (b != null) {
             query += " WHERE FkBuildingId=?";
             if (count > 0)
@@ -58,20 +95,41 @@ public class FileMapper {
                 if (count > 0)
                     stmt.setInt(2, count);
             }
-            ResultSet rs = stmt.executeQuery();
-            List<File> list = new ArrayList<>();
-            while (rs.next())
-                list.add(constructFile(rs));
-            return list;
+            try (ResultSet rs = stmt.executeQuery()) {
+                List<File> list = new ArrayList<>();
+                while (rs.next())
+                    list.add(constructFile(rs));
+                return list;
+            } catch (PolygonException e) {
+                throw new PolygonException("getDocuments: " + e.getMessage());
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public List<File> getFiles(FileType t, int count) {
-        String query = "SELECT Id, `Name`, `Data`, FkBuildingId, FkFileTypeId" +
-                " FROM `File`";
+    /***
+     *
+     * @param t
+     * @return
+     * @throws PolygonException
+     */
+    public List<File> getFiles(FileType t) throws PolygonException {
+        return getFiles(t, -1);
+    }
+
+    /***
+     *
+     * @param t
+     * @param count
+     * @return
+     * @throws PolygonException
+     */
+    public List<File> getFiles(FileType t, int count) throws PolygonException {
+        String query = "SELECT `File`.Id, `File`.`Name`, `Data`, " +
+                "FkBuildingId, FkFileTypeId FROM `File` INNER JOIN FileType " +
+                "ON `File`.FkFileTypeId = FileType.Id";
         if (t != null) {
             query += " WHERE FkFileTypeId=?";
             if (count > 0)
@@ -83,19 +141,37 @@ public class FileMapper {
                 if (count > 0)
                     stmt.setInt(2, count);
             }
-            ResultSet rs = stmt.executeQuery();
-            List<File> list = new ArrayList<>();
-            while (rs.next())
-                list.add(constructFile(rs));
-            return list;
+            try (ResultSet rs = stmt.executeQuery()) {
+                List<File> list = new ArrayList<>();
+                while (rs.next())
+                    list.add(constructFile(rs));
+                return list;
+            } catch (PolygonException e) {
+                throw new PolygonException("getFiles: " + e.getMessage());
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public int insertFile(File f) {
-        int id = -1;
+    /***
+     *
+     * @param query
+     * @param count
+     * @return
+     */
+    private List<File> getFiles(String query, int count) {
+        return null;
+    }
+
+    /***
+     *
+     * @param f
+     * @return
+     * @throws PolygonException
+     */
+    public int insertFile(File f) throws PolygonException {
         String query = "INSERT INTO `File` (`Name`, `Data`, FkBuildingId, " +
                 "FkFileTypeId) VALUES (?, ?, ?, ?);";
         try (PreparedStatement stmt = conn.prepareStatement(query, Statement
@@ -105,18 +181,29 @@ public class FileMapper {
             stmt.setInt(3, f.getBuilding().getId());
             stmt.setInt(4, f.getType().getId());
             stmt.executeUpdate();
-            ResultSet rs = stmt.getGeneratedKeys();
-            if (rs.next())
-                id = rs.getInt(1);
-            rs.close();
-            stmt.close();
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next())
+                    return rs.getInt(1);
+                else
+                    throw new PolygonException("insertFile failed to get " +
+                            "generated Id");
+            } catch (Exception e) {
+                throw new PolygonException("insertFile failed to " +
+                        "insert file: " + e);
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PolygonException("insertFile error: " + e
+                    .getMessage());
         }
-        return id;
     }
 
-    public boolean updateFile(File f) {
+    /***
+     *
+     * @param f
+     * @return
+     * @throws PolygonException
+     */
+    public boolean updateFile(File f) throws PolygonException {
         String query = "UPDATE `File` SET `Name`=?, `Data`=?, " +
                 "FkBuildingId=?, FkFileTypeId=? WHERE Id=?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -126,16 +213,21 @@ public class FileMapper {
             stmt.setInt(4, f.getType().getId());
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PolygonException("updateFile error: " + e
+                    .getMessage());
         }
-        return false;
     }
 
-    private File constructFile(ResultSet rs) {
+    /***
+     *
+     * @param rs
+     * @return
+     * @throws PolygonException
+     */
+    private File constructFile(ResultSet rs) throws PolygonException {
         try {
-            File f = new File();
-            f.setId(rs.getInt("Id"));
-            f.setName(rs.getString("Name"));
+            File f = new File(rs.getInt("File.Id"));
+            f.setName(rs.getString("File.Name"));
 
             Blob blob = rs.getBlob("Data");
             f.setData(blob.getBytes(0, (int) blob.length()));
@@ -144,14 +236,14 @@ public class FileMapper {
             b.setId(rs.getInt("FkBuildingId"));
             f.setBuilding(b);
 
-            FileType ft = new FileType();
-            ft.setId(rs.getInt("FkFileTypeId"));
+            FileType ft = new FileType(rs.getInt("FkFileTypeId"));
+            ft.setName(rs.getString("FileType.Name"));
             f.setType(ft);
 
             return f;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PolygonException("constructFile error: " + e
+                    .getMessage());
         }
-        return null;
     }
 }

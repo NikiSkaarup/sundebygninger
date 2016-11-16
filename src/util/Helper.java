@@ -1,6 +1,7 @@
 package util;
 
 import domain.Facade;
+import exceptions.PolygonException;
 import model.User;
 
 import javax.servlet.RequestDispatcher;
@@ -32,6 +33,24 @@ public class Helper {
         long millis = System.currentTimeMillis();
         String datetime = (millis / 200) + "";
         return datetime + "_" + millis;
+    }
+
+    public static User getUser(HttpServletRequest req) throws PolygonException {
+        try {
+            return (User) req.getSession().getAttribute("User");
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static boolean userLoggedIn(User user) {
+        Facade facade = Facade.getFacade();
+        try {
+            User user2 = facade.getUser(user);
+            return user2 != null && user.getName().equals(user2.getName());
+        } catch (PolygonException e) {
+            return false;
+        }
     }
 
     public static void userLoggedIn(HttpServletRequest req, HttpServletResponse
