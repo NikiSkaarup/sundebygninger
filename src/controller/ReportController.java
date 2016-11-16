@@ -7,6 +7,9 @@ import java.sql.Timestamp;
 import java.util.*;
 
 import domain.Facade;
+import exceptions.PolygonException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import model.*;
 
@@ -38,8 +41,12 @@ public class ReportController extends javax.servlet.http.HttpServlet {
         Building b = null;
         if (req.getParameter("building") != null
                 && !req.getParameter("building").equals("")) {
-            int i = Integer.parseInt(req.getParameter("building"));
-            b = facade.getBuilding(i);
+            try {
+                int i = Integer.parseInt(req.getParameter("building"));
+                b = facade.getBuilding(i);
+            } catch (PolygonException ex) {
+                Logger.getLogger(ReportController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         switcher(req);

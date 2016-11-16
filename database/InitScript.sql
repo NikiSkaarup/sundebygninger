@@ -12,10 +12,15 @@ values('Customer'), ('Employee'),('Admin');
 
 insert into User(Name, Password, Phone, Email, FkRoleId,FkOrgId)
 values('Henning Flemmingsen','Henny42!','37573717','hefle@hvikom.dk',1,1),
-('Fritz Frandsen','Fr4pst4r!','62636564','frfr@hansenapts.dk',1,2);
+('Fritz Frandsen','Fr4pst4r!','62636564','frfr@hansenapts.dk',1,2),
+('Service Servicesen','password','88888888','service@employee.dk',2,null),
+('Admin Adminsen','password','88888888','admin@employee.dk',3,null);
 
 insert into DamageType(Name)
 values('Fugt'),('Råd og svamp'),('Skimmel'),('Brand'),('Andet');
 
 insert into ServiceType(Name)
 values('Sundhedstjek'),('Skadetjek'),('Reperation'),('Grafitti fjernelse'),('Andet');
+
+insert into FileType(Name)
+values('Dokument'),('Billede');

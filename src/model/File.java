@@ -1,5 +1,11 @@
 package model;
 
+import jdk.internal.util.xml.impl.Input;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 /**
  * Created by Niki on 2016-11-09.
  *
@@ -8,7 +14,7 @@ package model;
 public class File {
     private int id;
     private String name;
-    private String path;
+    private byte[] data;
     private Building building;
 
     public File() {
@@ -30,12 +36,27 @@ public class File {
         this.name = name;
     }
 
-    public String getPath() {
-        return path;
+    public byte[] getData() {
+        return data;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setData(byte[] data) {
+        this.data = data;
+    }
+
+    public void setData(InputStream is, int size) throws IOException {
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        int nRead;
+        byte[] data = new byte[size];
+        while ((nRead = is.read(data, 0, data.length)) != -1)
+            buffer.write(data, 0, nRead);
+        try {
+            buffer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        this.data = buffer.toByteArray();
     }
 
     public Building getBuilding() {
@@ -45,4 +66,5 @@ public class File {
     public void setBuilding(Building building) {
         this.building = building;
     }
+
 }
