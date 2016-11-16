@@ -6,12 +6,14 @@
 package model;
 
 import domain.Facade;
+import exceptions.PolygonException;
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  *
@@ -34,7 +36,8 @@ public class UserTest {
     }
     
     @Before
-    public void setUp() {
+    public void setUp() throws PolygonException {
+        u = facade.getUserLogin("hefle@hvikom.dk", "Henny42!");
     }
     
     @After
@@ -44,6 +47,18 @@ public class UserTest {
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
     //
-    // @Test
-    // public void hello() {}
+    @Test
+    public void getEmail() throws PolygonException {
+        u.setEmail("TestUser");
+        facade.updateUser(u);
+        assertEquals("TestUser",u.getEmail()); 
+        assertEquals("TestUser", facade.getUserLogin("hefle@hvikom.dk","Henny42!").getEmail());
+    }
+    @Test
+    public void getUsers() throws PolygonException {
+        u.getOrg();
+    
+    
+    }
+    
 }
