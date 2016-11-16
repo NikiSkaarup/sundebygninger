@@ -21,7 +21,7 @@
             <h4>${requestScope.action}Redigere kunde</h4>
             <div class="row">
                 <div class="col-md-6"> 
-                    <form action="CustomerController" method="POST" class="form-horizontal">
+                    <form action="customer" method="POST" class="form-horizontal">
                         <%--UserId sendt from organisation--%>
                         <input type="hidden" value="${u.id}" name="uId"/>
                         <input type="hidden" value="${o.Id}" name="oId"/>

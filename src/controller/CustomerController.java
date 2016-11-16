@@ -21,7 +21,7 @@ import model.User;
  *
  * @author Tanja
  */
-@WebServlet(name = "CustomerController", urlPatterns = {"/CustomerController"})
+@WebServlet(name = "CustomerController", urlPatterns = {"/customer"})
 public class CustomerController extends HttpServlet {
 
     /**

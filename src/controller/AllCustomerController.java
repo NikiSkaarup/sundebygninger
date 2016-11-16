@@ -67,7 +67,7 @@ public class AllCustomerController extends HttpServlet {
             List<User> userList = facade.getUsers();
 
             //save the variable
-            request.setAttribute("Users", userList);
+            request.setAttribute("users", userList);
 
             //forward from servlet to JSP
             RequestDispatcher rd = request.getRequestDispatcher("/allCustomers.jsp");
