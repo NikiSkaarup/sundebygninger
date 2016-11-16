@@ -12,9 +12,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <link href="<c:url value="/css/bootstrap.css"/>"
+              rel="stylesheet" type="text/css"/>
     </head>
-    
+
     <body>
         <%@include file="navigation.jsp"  %>
         <div class="container-fluid">
@@ -22,7 +23,7 @@
             <h1>${requestScope.action} bygning</h1>
             <div class="row">
                 <div class="col-md-6"> 
-                    <form action="building" method="POST" class="form-horizontal">
+                    <form action="${requestScope.url}" method="POST" class="form-horizontal">
                         <%--Id sendt from organisation--%>
                         <input type="hidden" value="${b.id}" name="bId"/>
                         <input type="hidden" value="${o.id}" name="oId"/>
@@ -79,7 +80,8 @@
                 </div>
             </div>
         </div>
-        <script src="js/jquery-2.2.4.js" type="text/javascript"></script>
-        <script src="js/bootstrap.js" type="text/javascript"></script>
+        <script src="<c:url value="/js/bootstrap.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/js/jquery-2.2.4.js"/>"
+        type="text/javascript"></script>
     </body>
 </html>

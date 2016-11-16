@@ -22,17 +22,17 @@ import static util.Helper.forwardGet;
  *
  * @author Menja
  */
-@WebServlet(name = "BuildingController", urlPatterns = {"/building"})
+@WebServlet(name = "BuildingController", urlPatterns = {"/building", "/building/insert", "/building/update"})
 
 public class BuildingController extends HttpServlet {
+
+    //DB connection
+    private Facade facade = Facade.getFacade();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            //processRequest(request, response);
-            //DB connection
-            Facade facade = Facade.getFacade();
 
             //organisation Id 
             if (request.getParameter("id") != null) {
@@ -71,48 +71,30 @@ public class BuildingController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        switch (request.getServletPath()) {
+            case "/building/insert":
+                doPostInsert(request, response);
+                break;
+            case "/building/update":
+                doPostUpdate(request, response);
+                break;
+            default:
+                forwardGet(request, response, "/home.jsp");
+                break;
+        }
+    }
+
+    private void doPostInsert(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            Facade facade = Facade.getFacade();
-            Building b = new Building();
-
-            b.setId(-1);
-            if (request.getParameter("bId") != null && !request.getParameter("bId").equals("")) {
-                b.setId(Integer.parseInt(request.getParameter("bId")));
-            }
-
-            Org org = new Org();
-            if (request.getParameter("oId") != null && !request.getParameter("oId").equals("")) {
-                org.setId(Integer.parseInt(request.getParameter("oId")));
-            }
-
-            b.setOrg(org);
-
-            //organisation tages ud af session
-            // User user = (User)request.getSession().getAttribute("user");
-            //b.setOrg(user.getOrg());
-            //BUILDING DATA from form put into variables
-            String name = request.getParameter("Name");
-            String address = request.getParameter("Address");
-            String constructionYear = request.getParameter("ConstructionYear");
-            String area = request.getParameter("Area");
-            String currentUse = request.getParameter("CurrentUse");
-            String previousUse = request.getParameter("PreviousUse");
-
-            //use the variables with the data from the form
-            b.setName(name);
-            b.setAddress(address);
-            b.setConstructionYear(Timestamp.valueOf("1990-01-01 00:00:00"));
-            b.setArea(area);
-            b.setCurrentUse(currentUse);
-            b.setPreviousUse(previousUse);
-
+            Building b = doPostBoth(request);
             //insert to DB via facade
             int id = facade.insertBuilding(b);
 
+            //hvis id er større end nul, så er der oprettet en bygning, og man får refereret id'et fra Databasen
             if (id > 0) {
-                Helper.forwardGet(request, response, "buildings?oid=" + b.getOrg().getId());
+                Helper.forwardGet(request, response, "/buildings?oid=" + b.getOrg().getId());
             } else {
-                Helper.forwardGet(request, response, "addUpdateBuilding.jsp?oid=" + b.getOrg().getId());
+                Helper.forwardGet(request, response, "/building/insert?oid=" + b.getOrg().getId());
             }
         } catch (Exception e) {
             request.setAttribute("error", e.getMessage());
@@ -120,6 +102,68 @@ public class BuildingController extends HttpServlet {
         }
     }
 
+    private void doPostUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            Building b = doPostBoth(request);
+            //insert to DB via facade
+            int id = facade.insertBuilding(b);
+
+            if (id > 0) {
+                Helper.forwardGet(request, response, "/buildings?oid=" + b.getOrg().getId());
+            } else {
+                Helper.forwardGet(request, response, "//building/insert?oid=?oid=" + b.getOrg().getId());
+            }
+        } catch (Exception e) {
+            request.setAttribute("error", e.getMessage());
+            forwardGet(request, response, "/error.jsp");
+        }
+    }
+
+    /**
+     * *
+     *
+     * @param request
+     * @return This method only need to handle request and has to be used in add
+     * and update doPostInsert and doPostUpdate.
+     */
+    private Building doPostBoth(HttpServletRequest request) {
+        Building b = new Building();
+
+        //dette id bruges ved edit
+        b.setId(-1);
+        if (request.getParameter("bId") != null && !request.getParameter("bId").equals("")) {
+            b.setId(Integer.parseInt(request.getParameter("bId")));
+        }
+
+        //dette id bruges ved add
+        Org org = new Org();
+        if (request.getParameter("oId") != null && !request.getParameter("oId").equals("")) {
+            org.setId(Integer.parseInt(request.getParameter("oId")));
+        }
+
+        b.setOrg(org);
+
+        //organisation tages ud af session
+        // User user = (User)request.getSession().getAttribute("user");
+        //b.setOrg(user.getOrg());
+        //BUILDING DATA from form put into variables
+        String name = request.getParameter("Name");
+        String address = request.getParameter("Address");
+        String constructionYear = request.getParameter("ConstructionYear");
+        String area = request.getParameter("Area");
+        String currentUse = request.getParameter("CurrentUse");
+        String previousUse = request.getParameter("PreviousUse");
+
+        //use the variables with the data from the form
+        b.setName(name);
+        b.setAddress(address);
+        b.setConstructionYear(Timestamp.valueOf("1990-01-01 00:00:00"));
+        b.setArea(area);
+        b.setCurrentUse(currentUse);
+        b.setPreviousUse(previousUse);
+
+        return b;
+    }
 //    /**
 //     * Extracts file name from HTTP header content-disposition
 //     */
