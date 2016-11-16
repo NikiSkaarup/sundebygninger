@@ -14,6 +14,7 @@
         <title>JSP Page</title>
         <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
     </head>
+    
     <body>
         <%@include file="navigation.jsp"  %>
         <div class="container-fluid">
