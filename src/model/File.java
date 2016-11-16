@@ -1,7 +1,5 @@
 package model;
 
-import jdk.internal.util.xml.impl.Input;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,6 +14,7 @@ public class File {
     private String name;
     private byte[] data;
     private Building building;
+    private FileType type;
 
     public File() {
     }
@@ -67,4 +66,11 @@ public class File {
         this.building = building;
     }
 
+    public FileType getType() {
+        return type;
+    }
+
+    public void setType(FileType type) {
+        this.type = type;
+    }
 }

@@ -253,14 +253,14 @@ public class Facade {
         return mapper.getFiles(b, count);
     }
 
-    public List<File> getFiles(Building b) {
-        FileMapper mapper = new FileMapper(conn);
-        return mapper.getFiles(b);
-    }
-
     public List<File> getFiles(Building b, int count) {
         FileMapper mapper = new FileMapper(conn);
         return mapper.getFiles(b, count);
+    }
+
+    public List<File> getFiles(FileType ft, int count) {
+        FileMapper mapper = new FileMapper(conn);
+        return mapper.getFiles(ft, count);
     }
 
     public int insertFile(File f) {
