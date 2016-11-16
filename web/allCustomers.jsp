@@ -15,29 +15,28 @@
         <title>List for all customers</title>
     </head>
     <body>
-        <%@include file="navigation.jsp"  %>
+        <%@include file="navigation.jsp"%>
         <h3>Liste over alle kunder</h3>
-        <form form action="AllCustomers" method="POST" class="form-horizontal" enctype="multipart/form-data">
-            <table class="active">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Link</th>
-                    </tr>  
-                </thead>
-                <tbody>
-                    <c:forEach items="${Users}" var="u">
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr class="active">
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Link</th>
+                </tr>  
+            </thead>
+            <tbody>
+                <c:forEach items="${Users}" var="u">
                     <tr>
                         <td>${u.Name}</td>
                         <td>${u.Email}</td>
-                        <td><a href="user?id=${u.id}">Info</a> </td>
+                        <td><a href="user?id=${u.id}">Info</a></td>
                     </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-            <button type="submit" class="btn btn-primary">Tilføj en ny kunde</button>
-        </form>
+                </c:forEach>
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-primary">Tilføj en ny kunde</button>
+
         <script src="js/jquery-2.2.4.js" type="text/javascript"></script>
         <script src="js/bootstrap.js" type="text/javascript"></script>
     </body>
