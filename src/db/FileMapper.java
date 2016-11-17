@@ -101,7 +101,7 @@ public class FileMapper {
                     list.add(constructFile(rs));
                 return list;
             } catch (PolygonException e) {
-                throw new PolygonException("getDocuments: " + e.getMessage());
+                throw new PolygonException("getFiles: " + e.getMessage());
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -150,9 +150,8 @@ public class FileMapper {
                 throw new PolygonException("getFiles: " + e.getMessage());
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PolygonException("getFiles: " + e.getMessage());
         }
-        return null;
     }
 
     /***

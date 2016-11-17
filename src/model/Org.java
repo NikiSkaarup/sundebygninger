@@ -17,6 +17,10 @@ public class Org {
     public Org() {
     }
 
+    public Org(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }
