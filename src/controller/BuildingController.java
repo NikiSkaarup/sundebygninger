@@ -72,8 +72,6 @@ public class BuildingController extends HttpServlet {
             request.setAttribute("action", "Tilføj");
             Helper.forwardGet(request, response, "/addUpdateBuilding.jsp");
 
-            //forward to all buildings?
-            Helper.forwardGet(request, response, "buildings");
         } catch (Exception e) {
             request.setAttribute("error", e.getMessage());
             forwardGet(request, response, "/error.jsp");
@@ -82,21 +80,20 @@ public class BuildingController extends HttpServlet {
 
     private void doGetUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //organisation Id 
-        if (request.getParameter("id") != null) {
-            try {
-                //get the id from JSP/URL
-                int id = Integer.parseInt(request.getParameter("id"));
-                Building b = facade.getBuilding(id);
-                //Save the variable
-                request.setAttribute("b", b);
-                request.setAttribute("org", b.getOrg());
-                request.setAttribute("action", "Update");
-                Helper.forward(request, response, "addUpdateBuilding.jsp");
-            } catch (Exception e) {
-                request.setAttribute("error", e.getMessage());
-                forwardGet(request, response, "/error.jsp");
-            }
+        try {
+            //get the id from JSP/URL
+            int id = Integer.parseInt(request.getParameter("id"));
+            Building b = facade.getBuilding(id);
+            //Save the variable
+            request.setAttribute("b", b);
+            request.setAttribute("org", b.getOrg());
+            request.setAttribute("action", "Update");
+            Helper.forward(request, response, "/addUpdateBuilding.jsp");
+        } catch (Exception e) {
+            request.setAttribute("error", e.getMessage());
+            forwardGet(request, response, "/error.jsp");
         }
+
     }
 
     @Override

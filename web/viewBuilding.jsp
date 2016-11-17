@@ -28,9 +28,9 @@
                 <p>Areal: ${b.area}</p>
                 <p>Tidlige benyttelse: ${b.previousUse}</p>
 
-                <a href="image?b=${b.id}">Tilføj billeder</a>
-                <a href="document?b=${b.id}">Tilføj dokumenter/rapporter</a>
-                <a href="building?id=${b.id}&u=1">Rediger bygning</a>
+                <a href="/image/insert?b=${b.id}">Tilføj billeder</a>
+                <a href="/document/insert?b=${b.id}">Tilføj dokumenter/rapporter</a>
+                <a href="/building/update?id=${b.id}">Rediger bygning</a>
             </div>
         </div>
         <script src="js/jquery-2.2.4.js" type="text/javascript"></script>
