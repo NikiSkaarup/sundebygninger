@@ -66,7 +66,14 @@ public class CustomerController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+        
+        switch(request.getServletPath()){
+           case"/customer/insert":
+               doGetInsert(request, response);
+            case"/customer/update":
+                doGetUpdate(request, response);
+        }
 
         if (request.getParameter("Name") != null) {
             String name = request.getParameter("Name");
@@ -127,4 +134,4 @@ public class CustomerController extends HttpServlet {
         rd.forward(request, response);
     }
 
-}
+   
