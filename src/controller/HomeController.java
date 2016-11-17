@@ -54,8 +54,7 @@ public class HomeController extends HttpServlet {
                     doGetAdmin(req, res, user);
                     break;
                 default:
-                    doGetCustomer(req, res, user);
-                    break;
+                    throw new PolygonException("doGet: user have no role");
             }
         } catch (NullPointerException | PolygonException e) {
             req.setAttribute("error", "doGet: " + e.getMessage());
