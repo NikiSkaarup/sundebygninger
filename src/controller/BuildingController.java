@@ -6,8 +6,11 @@
 package controller;
 
 import domain.Facade;
+import exceptions.PolygonException;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,47 +33,74 @@ public class BuildingController extends HttpServlet {
     private Facade facade = Facade.getFacade();
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        switch (request.getServletPath()) {
+            case "/building/insert":
+                doGetInsert(request, response);
+                break;
+            case "/building/update":
+                doGetUpdate(request, response);
+                break;
+            default:
+                doGetView(request, response);
+                break;
+        }
 
-            //organisation Id 
-            if (request.getParameter("id") != null) {
-                //get the id from JSP/URL
-                int id = Integer.parseInt(request.getParameter("id"));
-                Building b = facade.getBuilding(id);
-                //Save the variable
-                request.setAttribute("b", b);
-                //forward from servlet to JSP
-                if (request.getParameter("u") != null) {//from update
-                    request.setAttribute("org", b.getOrg());
-                    request.setAttribute("action", "Update");
-                    Helper.forward(request, response, "addUpdateBuilding.jsp");
-                } else {
-                    Helper.forward(request, response, "/viewBuilding.jsp");
-                }
-            } else if (request.getParameter("oid") != null) {
-                //get the hidden "requestScope=oid" from addUpdateBuilding 
-                int oId = Integer.parseInt(request.getParameter("oid"));
-                Org org = new Org();
-                org.setId(oId);
-                //saves the organisation Id
-                request.setAttribute("org", org);
-                request.setAttribute("action", "Tilføj");
-                Helper.forwardGet(request, response, "/addUpdateBuilding.jsp");
-            } else {
-                //forward to view all buildings?
-                Helper.forwardGet(request, response, "buildings");
-            }
+    }
+
+    private void doGetView(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            int id = Integer.parseInt(request.getParameter("id"));
+            Building b = facade.getBuilding(id);
+            //Save the variable
+            request.setAttribute("b", b);
+            Helper.forwardGet(request, response, "/viewBuilding.jsp");
         } catch (Exception e) {
             request.setAttribute("error", e.getMessage());
             forwardGet(request, response, "/error.jsp");
         }
     }
 
+    private void doGetInsert(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            //get the hidden "requestScope=oid" from addUpdateBuilding 
+            int oId = Integer.parseInt(request.getParameter("oid"));
+            Org org = new Org();
+            org.setId(oId);
+            //saves the organisation Id
+            request.setAttribute("org", org);
+            request.setAttribute("action", "Tilføj");
+            Helper.forwardGet(request, response, "/addUpdateBuilding.jsp");
+
+            //forward to all buildings?
+            Helper.forwardGet(request, response, "buildings");
+        } catch (Exception e) {
+            request.setAttribute("error", e.getMessage());
+            forwardGet(request, response, "/error.jsp");
+        }
+    }
+
+    private void doGetUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //organisation Id 
+        if (request.getParameter("id") != null) {
+            try {
+                //get the id from JSP/URL
+                int id = Integer.parseInt(request.getParameter("id"));
+                Building b = facade.getBuilding(id);
+                //Save the variable
+                request.setAttribute("b", b);
+                request.setAttribute("org", b.getOrg());
+                request.setAttribute("action", "Update");
+                Helper.forward(request, response, "addUpdateBuilding.jsp");
+            } catch (Exception e) {
+                request.setAttribute("error", e.getMessage());
+                forwardGet(request, response, "/error.jsp");
+            }
+        }
+    }
+
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         switch (request.getServletPath()) {
             case "/building/insert":
                 doPostInsert(request, response);
