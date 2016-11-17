@@ -37,9 +37,10 @@ public class Helper {
 
     public static User getUser(HttpServletRequest req) throws PolygonException {
         try {
-            return (User) req.getSession().getAttribute("User");
+            return (User) req.getSession().getAttribute("user");
         } catch (Exception e) {
-            return null;
+            throw new PolygonException("getUser: failed to get user: " + e
+                    .getMessage());
         }
     }
 
@@ -53,34 +54,6 @@ public class Helper {
         }
     }
 
-    public static void userLoggedIn(HttpServletRequest req, HttpServletResponse
-            res) {
-        boolean redirect = true;
-        HttpSession s = req.getSession();
-        if (s != null && s.getAttribute("User") != null) {
-            try {
-                User user = (User) s.getAttribute("User");
-                Facade facade = Facade.getFacade();
-                User user2 = facade.getUser(user);
-                if (user2 != null && user.getName().equals(user2.getName())) {
-                    redirect = false;
-                } else {
-                    s.removeAttribute("User");
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        if (redirect) {
-            try {
-                forwardGet(req, res, "/index.html");
-            } catch (ServletException | IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     public static void forward(HttpServletRequest req, HttpServletResponse
             res, String url) throws ServletException, IOException {
         RequestDispatcher rd = req.getRequestDispatcher(url);
@@ -91,28 +64,6 @@ public class Helper {
             res, String url) throws ServletException, IOException {
         RequestDispatcher rd = req.getRequestDispatcher(url);
         rd.forward(new RequestWrap(req), res);
-    }
-
-    public static boolean verifyString(String s) {
-        if (s == null)
-            return false;
-        else if (s.trim().equals(""))
-            return false;
-
-        return true;
-    }
-
-    public static boolean verifyInteger(String s) {
-        if (s == null)
-            return false;
-        else if (s.trim().equals(""))
-            return false;
-        else if (s.trim().equals("0"))
-            return false;
-        else if (s.trim().equals("-1"))
-            return false;
-
-        return true;
     }
 
 }
