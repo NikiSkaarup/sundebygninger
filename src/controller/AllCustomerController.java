@@ -11,13 +11,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.User;
 import exceptions.PolygonException;
+import static util.Helper.forwardGet;
 
 /**
  *
  * @author Tanja
  */
-@WebServlet(name = "AllCustomerController", urlPatterns = {"/users", "/customer"})
+@WebServlet(name = "AllCustomerController", urlPatterns = {"/users"})
 public class AllCustomerController extends HttpServlet {
 
     /**
@@ -59,34 +61,38 @@ public class AllCustomerController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-
-        //connect to DB
-        Facade facade = Facade.getFacade();
-
         try {
+
+            //connect to DB
+            Facade facade = Facade.getFacade();
+            int id = Integer.parseInt(request.getParameter("oId"));
+
             List<User> userList = facade.getUsers();
 
-            //save the variable
             request.setAttribute("users", userList);
 
-            //forward from servlet to JSP
+            
             RequestDispatcher rd = request.getRequestDispatcher("/allCustomers.jsp");
             rd.forward(request, response);
-        } catch (PolygonException p) {
             
+        } catch (PolygonException p) {
+            request.setAttribute("error", p.getMessage());
+            forwardGet(request, response, "/error.jsp");
+
         }
 
     }
+
     @Override
-        protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
- /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-}
+        /**
+         * Returns a short description of the servlet.
+         *
+         * @return a String containing servlet description
+         */
+    }
 }
 
 /**
@@ -97,5 +103,3 @@ public class AllCustomerController extends HttpServlet {
  * @throws ServletException if a servlet-specific error occurs
  * @throws IOException if an I/O error occurs
  */
-
-

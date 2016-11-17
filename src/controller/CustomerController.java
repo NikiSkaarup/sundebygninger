@@ -14,6 +14,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import util.Helper;
+import static util.Helper.forwardGet;
 import model.Org;
 import model.User;
 
@@ -21,8 +23,10 @@ import model.User;
  *
  * @author Tanja
  */
-@WebServlet(name = "CustomerController", urlPatterns = {"/customer"})
+@WebServlet(name = "CustomerController", urlPatterns = {"/customers","/users"})
 public class CustomerController extends HttpServlet {
+    
+    private Facade facade = Facade.getFacade();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -63,8 +67,6 @@ public class CustomerController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
-        Facade facade = Facade.getFacade();
 
         if (request.getParameter("Name") != null) {
             String name = request.getParameter("Name");
