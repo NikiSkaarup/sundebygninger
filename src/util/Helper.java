@@ -48,8 +48,8 @@ public class Helper {
         Facade facade = Facade.getFacade();
         try {
             User user2 = facade.getUser(user);
-            return user2 != null && user.getName().equals(user2.getName());
-        } catch (PolygonException e) {
+            return user.getName().equals(user2.getName());
+        } catch (Exception e) {
             return false;
         }
     }
