@@ -23,7 +23,7 @@ import model.User;
  *
  * @author Tanja
  */
-@WebServlet(name = "CustomerController", urlPatterns = {"/customers","/users"})
+@WebServlet(name = "CustomerController", urlPatterns = {"/customer","/user"})
 public class CustomerController extends HttpServlet {
     
     private Facade facade = Facade.getFacade();

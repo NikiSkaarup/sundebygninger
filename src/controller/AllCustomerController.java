@@ -19,7 +19,7 @@ import static util.Helper.forwardGet;
  *
  * @author Tanja
  */
-@WebServlet(name = "AllCustomerController", urlPatterns = {"/users"})
+@WebServlet(name = "AllCustomerController", urlPatterns = {"/customers","/users"})
 public class AllCustomerController extends HttpServlet {
 
     /**
