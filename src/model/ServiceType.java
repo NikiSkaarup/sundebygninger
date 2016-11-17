@@ -12,6 +12,10 @@ public class ServiceType {
     public ServiceType() {
     }
 
+    public ServiceType(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

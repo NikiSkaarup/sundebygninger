@@ -1,5 +1,6 @@
 package db;
 
+import exceptions.PolygonException;
 import model.ServiceType;
 
 import java.sql.Connection;
@@ -22,29 +23,32 @@ public class ServiceTypeMapper {
         ServiceTypeMapper.conn = conn;
     }
 
-    public List<ServiceType> getServiceTypes() {
+    public List<ServiceType> getServiceTypes() throws PolygonException {
         String query = "SELECT Id, `Name` FROM `ServiceType`";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
-            ResultSet rs = stmt.executeQuery();
-            List<ServiceType> list = new ArrayList<>();
-            while (rs.next())
-                list.add(constructServiceType(rs));
-            return list;
+            try (ResultSet rs = stmt.executeQuery()) {
+                List<ServiceType> list = new ArrayList<>();
+                while (rs.next())
+                    list.add(constructServiceType(rs));
+                return list;
+            } catch (PolygonException e) {
+                throw new PolygonException("getServiceTypes: " + e.getMessage());
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PolygonException("getServiceTypes error: " + e.getMessage());
         }
-        return null;
     }
 
-    private ServiceType constructServiceType(ResultSet rs) {
+    private ServiceType constructServiceType(ResultSet rs) throws
+            PolygonException {
         try {
             ServiceType c = new ServiceType();
             c.setId(rs.getInt("Id"));
             c.setName(rs.getString("Name"));
             return c;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PolygonException("constructServiceType error: " + e
+                    .getMessage());
         }
-        return null;
     }
 }

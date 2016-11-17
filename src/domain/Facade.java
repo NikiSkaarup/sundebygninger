@@ -347,51 +347,53 @@ public class Facade {
         return mapper.updateReport(r);
     }
 
-    public Request getRequest(int id) {
+    public Request getRequest(int id) throws PolygonException {
         RequestMapper mapper = new RequestMapper(conn);
         return mapper.getRequest(id);
     }
 
-    public List<Request> getRequests() {
+    public List<Request> getRequests() throws PolygonException {
         RequestMapper mapper = new RequestMapper(conn);
         return mapper.getRequests();
     }
 
-    public List<Request> getRequests(int bId) {
+    public List<Request> getRequests(int bId) throws PolygonException {
         RequestMapper mapper = new RequestMapper(conn);
         Building b = new Building();
         b.setId(bId);
         return mapper.getRequests(b);
     }
 
-    public List<Request> getRequests(int bId, int count) {
+    public List<Request> getRequests(int bId, int count) throws
+            PolygonException {
         RequestMapper mapper = new RequestMapper(conn);
         Building b = new Building();
         b.setId(bId);
         return mapper.getRequests(b, count);
     }
 
-    public List<Request> getRequests(Building b) {
+    public List<Request> getRequests(Building b) throws PolygonException {
         RequestMapper mapper = new RequestMapper(conn);
         return mapper.getRequests(b);
     }
 
-    public List<Request> getRequests(Building b, int count) {
+    public List<Request> getRequests(Building b, int count) throws
+            PolygonException {
         RequestMapper mapper = new RequestMapper(conn);
         return mapper.getRequests(b, count);
     }
 
-    public int insertRequest(Request r) {
+    public int insertRequest(Request r) throws PolygonException {
         RequestMapper mapper = new RequestMapper(conn);
         return mapper.insertRequest(r);
     }
 
-    public boolean updateRequest(Request r) {
+    public boolean updateRequest(Request r) throws PolygonException {
         RequestMapper mapper = new RequestMapper(conn);
         return mapper.updateRequest(r);
     }
 
-    public List<ServiceType> getServiceTypes() {
+    public List<ServiceType> getServiceTypes() throws PolygonException {
         ServiceTypeMapper mapper = new ServiceTypeMapper(conn);
         return mapper.getServiceTypes();
     }

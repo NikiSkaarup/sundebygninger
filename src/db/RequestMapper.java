@@ -1,7 +1,7 @@
 package db;
 
-import model.Building;
-import model.Request;
+import exceptions.PolygonException;
+import model.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -20,32 +20,41 @@ public class RequestMapper {
         this.conn = conn;
     }
 
-    public Request getRequest(int id) {
-        String query = "SELECT Id, FkBuildingId, Submission, FkReportId, " +
-                "Description, FkServiceTypeId, FkUserId FROM `Request` WHERE " +
-                "Id=?";
+    public Request getRequest(int id) throws PolygonException {
+        String query = "SELECT Request.Id, FkBuildingId, Submission, " +
+                "FkReportId, Description, FkServiceTypeId, FkUserId, " +
+                "ServiceType.Name, `User`.Name, `User`.Email, `User`.Phone " +
+                "FROM Request INNER JOIN ServiceType ON Request" +
+                ".FkServiceTypeId = ServiceType.Id LEFT JOIN `User` ON " +
+                "Request.FkUserId = `User`.Id WHERE Request.Id=?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next())
                 return constructRequest(rs);
+            else
+                throw new PolygonException("No result found with id: " + id);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PolygonException("getRequest error: " + e.getMessage());
         }
-        return null;
     }
 
-    public List<Request> getRequests() {
+    public List<Request> getRequests() throws PolygonException {
         return getRequests(null);
     }
 
-    public List<Request> getRequests(Building b) {
+    public List<Request> getRequests(Building b) throws PolygonException {
         return getRequests(b, -1);
     }
 
-    public List<Request> getRequests(Building b, int count) {
-        String query = "SELECT Id, FkBuildingId, Submission, FkReportId, " +
-                "Description, FkServiceTypeId, FkUserId FROM `Request`";
+    public List<Request> getRequests(Building b, int count) throws
+            PolygonException {
+        String query = "SELECT Request.Id, FkBuildingId, Submission, " +
+                "FkReportId, Description, FkServiceTypeId, FkUserId, " +
+                "ServiceType.Name, `User`.Name, `User`.Email, `User`.Phone " +
+                "FROM Request INNER JOIN ServiceType ON Request" +
+                ".FkServiceTypeId = ServiceType.Id LEFT JOIN `User` ON " +
+                "Request.FkUserId = `User`.Id";
         if (b != null) {
             query += " WHERE FkBuildingId=?";
             if (count > 0)
@@ -57,19 +66,20 @@ public class RequestMapper {
                 if (count > 0)
                     stmt.setInt(2, count);
             }
-            ResultSet rs = stmt.executeQuery();
-            List<Request> list = new ArrayList<>();
-            while (rs.next())
-                list.add(constructRequest(rs));
-            return list;
+            try (ResultSet rs = stmt.executeQuery()) {
+                List<Request> list = new ArrayList<>();
+                while (rs.next())
+                    list.add(constructRequest(rs));
+                return list;
+            } catch (PolygonException e) {
+                throw new PolygonException("getRequests: " + e.getMessage());
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PolygonException("getRequests error: " + e.getMessage());
         }
-        return null;
     }
 
-    public int insertRequest(Request r) {
-        int id = -1;
+    public int insertRequest(Request r) throws PolygonException {
         String query = "INSERT INTO `Request` (FkBuildingId, Description, " +
                 "FkServiceTypeId) VALUES (?, ?, ?)";
         try (PreparedStatement stmt = conn.prepareStatement(query,
@@ -78,18 +88,23 @@ public class RequestMapper {
             stmt.setString(2, r.getDescription());
             stmt.setInt(3, r.getServiceType().getId());
             stmt.executeUpdate();
-            ResultSet rs = stmt.getGeneratedKeys();
-            if (rs.next())
-                id = rs.getInt(1);
-            rs.close();
-            stmt.close();
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next())
+                    return rs.getInt(1);
+                else
+                    throw new PolygonException("insertRequest failed to get " +
+                            "generated Id");
+            } catch (Exception e) {
+                throw new PolygonException("insertRequest failed to " +
+                        "insert document: " + e);
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PolygonException("insertRequest error: " + e
+                    .getMessage());
         }
-        return id;
     }
 
-    public boolean updateRequest(Request r) {
+    public boolean updateRequest(Request r) throws PolygonException {
         String query = "UPDATE `Report` SET `FkBuildingId`=?, FkUserId=?, " +
                 "FkBuildingId=? WHERE Id=?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -98,19 +113,51 @@ public class RequestMapper {
             stmt.setInt(3, r.getId());
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PolygonException("updateRequest error: " + e
+                    .getMessage());
         }
-        return false;
     }
 
-    private Request constructRequest(ResultSet rs) {
+    private Request constructRequest(ResultSet rs) throws PolygonException {
         try {
+
             Request c = new Request();
-            c.setId(rs.getInt("Id"));
+            c.setId(rs.getInt("Request.Id"));
+            c.setDescription(rs.getString("Description"));
+            c.setSubmission(rs.getTimestamp("Submission"));
+
+            Building b = new Building();
+            b.setId(rs.getInt("FkBuildingId"));
+            c.setBuilding(b);
+
+            Report r = new Report();
+            try {
+                r.setId(rs.getInt("FkReportId"));
+            } catch (SQLException | NullPointerException e) {
+                r.setId(-1);
+            }
+            c.setReport(r);
+
+            ServiceType st = new ServiceType(rs.getInt("FkServiceTypeId"));
+            st.setName(rs.getString("ServiceType.Name"));
+            c.setServiceType(st);
+
+            User user = new User();
+            user.setId(rs.getInt("FkUserId"));
+            try {
+                user.setName(rs.getString("User.Name"));
+                user.setEmail(rs.getString("User.Email"));
+                user.setEmail(rs.getString("User.Phone"));
+            } catch (SQLException ignored) {
+                // This is ignored because it doesn't have to exist.
+            }
+            c.setServiceType(st);
+
+
             return c;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PolygonException("constructRequest error: " + e
+                    .getMessage());
         }
-        return null;
     }
 }
