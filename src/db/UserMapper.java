@@ -7,7 +7,9 @@ import model.User;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
 import exceptions.PolygonException;
+
 /**
  * Created by Niki on 2016-11-09.
  *
@@ -21,7 +23,7 @@ public class UserMapper {
         UserMapper.conn = conn;
     }
 
-    public User getUser(int id)throws PolygonException {
+    public User getUser(int id) throws PolygonException {
         String query = "SELECT Id, `Name`, Email, Phone, FkRoleId, FkOrgId " +
                 "FROM `User` WHERE Id=?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -35,19 +37,26 @@ public class UserMapper {
         return null;
     }
 
-    public User getUserLogin(String email, String pass) throws PolygonException {
+    public User getUserLogin(String email, String pass) throws
+            PolygonException {
         String query = "SELECT Id, `Name`, Email, Phone, FkRoleId, FkOrgId " +
                 "FROM  `User` WHERE Email=? AND `Password`=?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, email);
             stmt.setString(2, pass);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next())
-                return constructUser(rs);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next())
+                    return constructUser(rs);
+                else
+                    throw new PolygonException("getUserLogin No result found," +
+                            " email: " + email);
+            } catch (PolygonException e) {
+                throw new PolygonException("getUserLogin ResultSet: " +
+                        e.getMessage());
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PolygonException("getUserLogin error: " + e.getMessage());
         }
-        return null;
     }
 
     public List<User> getUsers() throws PolygonException {
@@ -83,7 +92,7 @@ public class UserMapper {
         return null;
     }
 
-    public int insertUser(User u)throws PolygonException {
+    public int insertUser(User u) throws PolygonException {
         int id = -1;
         String query = "INSERT INTO `User` (`Name`, Email, Phone, FkRoleId, " +
                 "FkOrgId) VALUES (?, ?, ?, ?, ?);";
@@ -105,7 +114,7 @@ public class UserMapper {
         return id;
     }
 
-    public boolean updateUser(User u)throws PolygonException {
+    public boolean updateUser(User u) throws PolygonException {
         String query = "UPDATE `User` SET `Name`=?, Email=?, Phone=?, " +
                 "FkRoleId=?, FkOrgId=? WHERE Id=?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -122,7 +131,7 @@ public class UserMapper {
         return false;
     }
 
-    private User constructUser(ResultSet rs)throws PolygonException {
+    private User constructUser(ResultSet rs) throws PolygonException {
         try {
             User c = new User();
             c.setId(rs.getInt("Id"));
