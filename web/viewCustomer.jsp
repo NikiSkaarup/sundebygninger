@@ -35,6 +35,7 @@
                 <th>Tlf.nummer</th>
                 <td>${u.phone}</td>
             </tr>
+            
             <div>
                 <a href="addUpdateCustomer.jsp">Redigere kunde</a>
             </div>

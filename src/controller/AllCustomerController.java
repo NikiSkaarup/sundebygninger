@@ -17,7 +17,7 @@ import exceptions.PolygonException;
  *
  * @author Tanja
  */
-@WebServlet(name = "AllCustomerController", urlPatterns = {"/AllCustomerController"})
+@WebServlet(name = "AllCustomerController", urlPatterns = {"/users", "/customer"})
 public class AllCustomerController extends HttpServlet {
 
     /**
