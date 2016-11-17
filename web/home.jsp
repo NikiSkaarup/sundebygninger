@@ -16,17 +16,18 @@
 <%@ include file="navigation.jsp" %>
 
 <div class="container-fluid">
-    <h1> Velkommen til sunde bygninger!</h1>
+    <h1>Velkommen til sunde bygninger!</h1>
 
     <c:if test="${user.role.id == 1}">
         <h2>${user.org.name}</h2>
         <div class="row">
             <div class="col-md-6">
                 <h3>Buildings</h3>
-                <a href="building/insert?oid=${user.org.id}"
-                   class="btn btn-default">Add Building</a>
-                <a href="buildings?oid=${user.org.id}"
-                   class="btn btn-default">View Buildings</a>
+                <div class="btn-group">
+                    <a href="building/insert?oid=${user.org.id}"
+                       class="btn btn-primary">Add Building</a>
+                    <a href="buildings?oid=${user.org.id}"
+                       class="btn btn-default">View Buildings</a></div>
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
@@ -147,24 +148,6 @@
         </div>
 
     </c:if>
-
-    <div class="row">
-        <div class="col-md-6">
-
-        </div>
-        <div class="col-md-6">
-
-        </div>
-        <div class="col-md-6">
-
-        </div>
-        <div class="col-md-6">
-
-        </div>
-        <div class="col-md-6">
-
-        </div>
-    </div>
 
 </div>
 

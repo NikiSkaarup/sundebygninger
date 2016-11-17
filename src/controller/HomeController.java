@@ -54,8 +54,7 @@ public class HomeController extends HttpServlet {
                     doGetAdmin(req, res, user);
                     break;
                 default:
-                    doGetCustomer(req, res, user);
-                    break;
+                    throw new PolygonException("doGet: user have no role");
             }
         } catch (NullPointerException | PolygonException e) {
             req.setAttribute("error", "doGet: " + e.getMessage());
@@ -84,20 +83,23 @@ public class HomeController extends HttpServlet {
 
     private void doGetEmployee(HttpServletRequest req, HttpServletResponse
             res, User user) throws ServletException, IOException {
-        res.sendRedirect("/index.jsp");
-        /*try {
-            // Make Link to all requests
+        try {
+            // Link to all requests
+            // Link to all reports
+            // View 10 unaccepted requests
+            // View all accepted requests by employee
+            // View last 10 reports by the employee
+            // Figure out what else an employee needs to see
             throw new PolygonException("doGetEmployee not yet implemented");
         } catch (PolygonException e) {
             req.setAttribute("error", "doGetEmployee: " + e.getMessage());
             forwardGet(req, res, "/error.jsp");
-        }*/
+        }
     }
 
     private void doGetAdmin(HttpServletRequest req, HttpServletResponse res,
                             User user) throws ServletException, IOException {
-        res.sendRedirect("/index.jsp");
-        /*try {
+        try {
             // Get 5 Latest Organizations
             // Get 5 Latest users
             // Make Link to all users
@@ -105,6 +107,6 @@ public class HomeController extends HttpServlet {
         } catch (PolygonException e) {
             req.setAttribute("error", "doGetAdmin: " + e.getMessage());
             forwardGet(req, res, "/error.jsp");
-        }*/
+        }
     }
 }
