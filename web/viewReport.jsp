@@ -19,11 +19,33 @@
 
         <div class="container-fluid">
             <div class="row">
-                <h1>Building</h1>
+                <h1>Rapport #${r.id}</h1>
 
+                <p>Rapport dato: ${r.submission}</p>
                 <p>Navn på bygning: ${r.building.name}</p>
 
-                
+                <c:forEach items="${r.comments}" var="c">
+                    <table class="table table-bordered">
+                        <tr>
+                            <td>Placering:</td>
+                            <td>
+                                ${c}
+                            </td>
+                        </tr><tr>
+                            <td>Bemærkning:</td>
+                            <td>
+
+                                ${c}
+                            </td>
+                        </tr><tr>
+                            <td>Evt billede(r):</td>
+                            <td>
+
+                            </td>
+                        </tr>
+                    </table>
+                </c:forEach>
+
             </div>
         </div>
         <script src="js/jquery-2.2.4.js" type="text/javascript"></script>
