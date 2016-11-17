@@ -70,12 +70,19 @@ public class CustomerController extends HttpServlet {
             throws ServletException, IOException {
         //processRequest(request, response);
 
+        /*
         switch (request.getServletPath()) {
             case "/customer/insert":
                 doGetInsert(request, response);
+                break;
             case "/customer/update":
                 doGetUpdate(request, response);
+                break;
+            default:
+                doGetView(request, response);
+                break;
         }
+        */
 
         if (request.getParameter("Name") != null) {
             String name = request.getParameter("Name");
