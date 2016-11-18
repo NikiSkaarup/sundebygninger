@@ -15,16 +15,16 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <%@include file="navigation.jsp"  %>
+        <%@include file="navigation.jsp" %>
         <div class="container-fluid">
 
             <h4>${requestScope.action}Redigere kunde</h4>
             <div class="row">
                 <div class="col-md-6"> 
-                    <form action="customer" method="POST" class="form-horizontal">
+                    <form action="${requestScope.url}" method="POST" class="form-horizontal">
                         <%--UserId sendt from organisation--%>
                         <input type="hidden" value="${u.id}" name="uId"/>
-                        <input type="hidden" value="${o.Id}" name="oId"/>
+                        <input type="hidden" value="${o.id}" name="oId"/>
 
                         <div class="form-group">
                             <label class="col-md-3 control-label">ID:</label>
@@ -53,8 +53,7 @@
                                 <input class="form-control" type="text" value="${u.phone}" placeholder="Nummer" name="Phone"/> 
                             </div>
                         </div>
-
-
+                            
                         <button type="submit" class="btn btn-primary">${requestScope.action} Opdatere</button>
                         <button type="submit" class="btn btn-primary">${requestScope.action} Tilføj ny kunde</button>
                     </form>

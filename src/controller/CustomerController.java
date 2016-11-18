@@ -23,20 +23,11 @@ import model.User;
  *
  * @author Tanja
  */
-@WebServlet(name = "CustomerController", urlPatterns = {"/customer","/user"})
+@WebServlet(name = "CustomerController", urlPatterns = {"/customer", "/user"})
 public class CustomerController extends HttpServlet {
 
     private Facade facade = Facade.getFacade();
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request  servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -54,82 +45,135 @@ public class CustomerController extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-
-
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request  servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-<<<<<<< HEAD
-        switch(request.getServletPath()){
-            
-            case"/customer/insert":
-               doGetInsert(request, response);
-               break;
-            case"/customer/update":
-=======
 
-        /*
         switch (request.getServletPath()) {
-            case "/customer/insert":
+            case "/custommer/insert":
                 doGetInsert(request, response);
                 break;
             case "/customer/update":
->>>>>>> 15b2d9482791e98fdf7f73931259980456613c29
                 doGetUpdate(request, response);
                 break;
             default:
                 doGetView(request, response);
-                break;
         }
-        */
 
-        if (request.getParameter("Name") != null) {
-            String name = request.getParameter("Name");
-            String email = request.getParameter("Email");
+    }
 
+    private void doGetView(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            int id = Integer.parseInt(request.getParameter("id"));
+            User u = facade.getUser(id);
+
+            request.setAttribute("u", u);
+            Helper.forwardGet(request, response, "/viewCustomer.jsp");
+
+        } catch (Exception e) {
+            request.setAttribute("error", e.getMessage());
+            forwardGet(request, response, "/error.jsp");
+        }
+    }
+
+    private void doGetInsert(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            int Oid = Integer.parseInt(request.getParameter("oid"));
+            Org org = new Org();
+            org.setId(Oid);
+
+            request.setAttribute("org", org);
+            request.setAttribute("action", "Tilføj ny kunde");
+            Helper.forwardGet(request, response, "/addUpdateCustomer.jsp");
+        } catch (Exception e) {
+            request.setAttribute("error", e.getMessage());
+            forwardGet(request, response, "/error.jsp");
+        }
+    }
+
+    private void doGetUpdate(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            int id = Integer.parseInt("id");
+            int u = Integer.parseInt("u");
+
+            request.setAttribute("u", u);
+            request.setAttribute("Oid", id);
+            request.setAttribute("action", "Opdatere");
+            Helper.forwardGet(request, response, "/addUpdateCustomer.jsp");
+
+        } catch (Exception e) {
+            request.setAttribute("error", e.getMessage());
+            forwardGet(request, response, "/error.jsp");
         }
     }
 
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request  servlet request
+     * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost
-    (HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-<<<<<<< HEAD
-            processRequest(request, response);
-            switch(request.getServletPath()){
-            
-            case"/customer/insert":
-               doGetInsert(request, response);
-               break;
-            case"/customer/update":
+
+        switch (request.getServletPath()) {
+            case "/custommer/insert":
+                doGetInsert(request, response);
+                break;
+            case "/customer/update":
                 doGetUpdate(request, response);
                 break;
             default:
-                doGetView(request, response);
-                break;
-=======
-        processRequest(request, response);
->>>>>>> 15b2d9482791e98fdf7f73931259980456613c29
+                forwardGet(request, response, "/home.jsp");
+
+        }
+    }
+
+    private void doPostInsert(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            User u = doPostgetCustomerFromForm(request);
+            int id = facade.insertUser(u);
+
+            if (id > 0) {
+                Helper.forwardGet(request, response,"");
+            } else {
+
+            }
+
+        } catch (Exception e) {
+            request.setAttribute("error", e.getMessage());
+            forwardGet(request, response, "/error.jsp");
+        }
+    }
+
+    private User doPostUpdate(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            User u = doPostgetCustomerFromForm(request);
+
+        } catch (Exception e) {
+            request.setAttribute("error", e.getMessage());
+            forwardGet(request, response, "/error.jsp");
+        }
+       
+        
+
+    
+
+    
+
+    private User doPostgetCustomerFromForm(HttpServletRequest request)
+            throws ServletException, IOException {
 
         User u = new User();
+
         u.setId(-1);
 
         if (request.getParameter("uId") != null
@@ -144,18 +188,19 @@ public class CustomerController extends HttpServlet {
             org.setId(Integer.parseInt(request.getParameter("orgid")));
 
             u.setOrg(org);
+
+            Integer userid = Integer.parseInt(request.getParameter("UserId"));
+            String name = request.getParameter("Name");
+            String email = request.getParameter("Email");
+            String phone = request.getParameter("Phone");
+
+            u.setId(userid);
+            u.setName(name);
+            u.setEmail(email);
+            u.setPhone(phone);
+
         }
-
-        Integer userid = Integer.parseInt(request.getParameter("UserId"));
-        String name = request.getParameter("Name");
-        String email = request.getParameter("Email");
-        String phone = request.getParameter("Phone");
-
-        u.setId(userid);
-        u.setName(name);
-        u.setEmail(email);
-        u.setPhone(phone);
-
+        return u;
     }
 
     /**
@@ -163,9 +208,4 @@ public class CustomerController extends HttpServlet {
      *
      * @return a String containing servlet description
      */
-    private void forward(HttpServletRequest request, HttpServletResponse response, String string) throws ServletException, IOException {
-        RequestDispatcher rd = request.getRequestDispatcher("/" + string);
-        rd.forward(request, response);
-    }
-
 }
