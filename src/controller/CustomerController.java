@@ -67,12 +67,17 @@ public class CustomerController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        
         switch(request.getServletPath()){
-           case"/customer/insert":
+            
+            case"/customer/insert":
                doGetInsert(request, response);
+               break;
             case"/customer/update":
                 doGetUpdate(request, response);
+                break;
+            default:
+                doGetView(request, response);
+                break;
         }
 
         if (request.getParameter("Name") != null) {
@@ -95,6 +100,17 @@ public class CustomerController extends HttpServlet {
         (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             processRequest(request, response);
+            switch(request.getServletPath()){
+            
+            case"/customer/insert":
+               doGetInsert(request, response);
+               break;
+            case"/customer/update":
+                doGetUpdate(request, response);
+                break;
+            default:
+                doGetView(request, response);
+                break;
 
             User u = new User();
             u.setId(-1);
