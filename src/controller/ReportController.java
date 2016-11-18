@@ -7,11 +7,9 @@ import java.sql.Timestamp;
 import java.util.*;
 
 import domain.Facade;
-import exceptions.PolygonException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import model.*;
+import static util.Helper.forwardGet;
 
 /**
  * Created by Niki on 2016-10-26.
@@ -44,8 +42,9 @@ public class ReportController extends javax.servlet.http.HttpServlet {
             try {
                 int i = Integer.parseInt(req.getParameter("building"));
                 b = facade.getBuilding(i);
-            } catch (PolygonException ex) {
-                Logger.getLogger(ReportController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception e) {
+            req.setAttribute("error", e.getMessage());
+            forwardGet(req, res, "/error.jsp");
             }
         }
 

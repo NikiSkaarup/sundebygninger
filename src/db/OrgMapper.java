@@ -37,10 +37,8 @@ public class OrgMapper {
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next())
                     return constructOrg(rs);
-                else {
-                    throw new PolygonException("No result found with id: " +
-                            id);
-                }
+                else
+                    throw new PolygonException("No result found with id: " + id);
             } catch (PolygonException e) {
                 throw new PolygonException("getOrg ResultSet: " +
                         e.getMessage());
