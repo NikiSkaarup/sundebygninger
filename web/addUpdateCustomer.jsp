@@ -10,10 +10,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
-
         <title>JSP Page</title>
+        <link href="<c:url value="/css/bootstrap.css"/>"
+              rel="stylesheet" type="text/css"/>
     </head>
+    
     <body>
         <%@include file="navigation.jsp" %>
         <div class="container-fluid">

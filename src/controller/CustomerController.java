@@ -142,32 +142,38 @@ public class CustomerController extends HttpServlet {
             int id = facade.insertUser(u);
 
             if (id > 0) {
-                Helper.forwardGet(request, response,"");
+                Helper.forwardGet(request, response, "/customers?id=" + u.getOrg().getUsers());
             } else {
-
+                Helper.forwardGet(request, response, "/customer/insert?oId=" + u.getOrg().getUsers());
             }
 
         } catch (Exception e) {
             request.setAttribute("error", e.getMessage());
             forwardGet(request, response, "/error.jsp");
         }
+
     }
 
     private User doPostUpdate(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             User u = doPostgetCustomerFromForm(request);
+            int id = facade.insertUser(u);
 
+            if (id > 0) {
+                Helper.forwardGet(request, response,"/customers?id=" + u.getOrg().getUsers());
+
+            } else {
+                Helper.forwardGet(request, response, "/customer/insert?oId=" + u.getOrg().getUsers());
+            }
         } catch (Exception e) {
             request.setAttribute("error", e.getMessage());
             forwardGet(request, response, "/error.jsp");
         }
-       
-        
+         return null;
 
-    
-
-    
+    }
+   
 
     private User doPostgetCustomerFromForm(HttpServletRequest request)
             throws ServletException, IOException {
