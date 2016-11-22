@@ -22,8 +22,10 @@ and open the template in the editor.
     </head>
     <body>
         <div class="container-fluid">
-            <a href="addUpdateBuilding.jsp">Add/update building</a>
-            <h2> Polygon A/S </h2>
+            <a href="addUpdateBuilding.jsp">Add/update building</a><br>
+            <div style="text-align:left"> 
+                <img src="billeder/Polygon Logo.jpg">
+            </div>
 
             <h3>Sign in as customer/admin</h3>
 
