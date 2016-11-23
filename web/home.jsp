@@ -25,9 +25,9 @@
                 <h3>Buildings</h3>
                 <div class="btn-group">
                     <a href="building/insert?orgid=${user.org.id}"
-                       class="btn btn-primary">Add Building</a>
+                       class="btn btn-primary">Tilføj</a>
                     <a href="buildings?orgid=${user.org.id}"
-                       class="btn btn-default">View Buildings</a></div>
+                       class="btn btn-default">Vis Alle</a></div>
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
@@ -61,7 +61,7 @@
             <div class="col-md-6">
                 <h3>Users</h3>
                 <a href="users?oid=${user.org.id}"
-                   class="btn btn-default">Vis alle</a>
+                   class="btn btn-default">Vis Alle</a>
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
