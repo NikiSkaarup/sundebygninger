@@ -135,12 +135,12 @@ public class BuildingController extends HttpServlet {
         try {
             Building b = doPostBoth(request);
             //insert to DB via facade
-            int id = facade.insertBuilding(b);
+            facade.updateBuilding(b);
 
-            if (id > 0) {
+            if (facade.updateBuilding(b)) {
                 Helper.forwardGet(request, response, "/buildings?orgid=" + b.getOrg().getId());
             } else {
-                Helper.forwardGet(request, response, "//building/insert?orgid=" + b.getOrg().getId());
+                Helper.forwardGet(request, response, "/building/update?id=" + b.getId());
             }
         } catch (Exception e) {
             request.setAttribute("error", e.getMessage());
