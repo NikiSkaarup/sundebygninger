@@ -8,6 +8,7 @@ package controller;
 import domain.Facade;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 //import java.sql.SQLException;
 import javax.servlet.annotation.WebServlet;
@@ -18,6 +19,7 @@ import model.User;
 import static util.Helper.forwardGet;
 //import java.lang.Throwable;
 import exceptions.PolygonException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -80,15 +82,17 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
+        //String svar;
         Facade facade = Facade.getFacade();
 
         try {
 
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
-            User u = facade.getUserLogin(email, password);
-
+            String mail = request.getParameter("email");
+            String pass = request.getParameter("password");
+            User u = facade.getUserLogin(mail, pass);
+            
+        
             if (u != null) {
                 request.getSession().setAttribute("user", u);
                 response.sendRedirect("/home");
@@ -96,8 +100,8 @@ public class LoginController extends HttpServlet {
                 request.setAttribute("error", "Unknown user, please try again");
                 forwardGet(request, response, "/login.jsp");
             }
-        } 
-        catch (PolygonException e) {
+            
+        } catch (PolygonException e) {
             request.setAttribute("error", "doPost: " + e.getMessage());
             forwardGet(request, response, "/error.jsp");
         }
