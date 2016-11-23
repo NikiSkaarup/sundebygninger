@@ -18,7 +18,7 @@
     <body>
         <%@include file="navigation.jsp"  %>
         <div class="container-fluid">
-            <a href="building/insert?oid=" class="btn btn-primary">Add building</a>
+            <a href="building/insert?orgid=" class="btn btn-primary">Add building</a>
             <h1>All Buildings</h1>
             <div class="table-responsive">
                 <table class="table table-bordered table-hover table-striped">

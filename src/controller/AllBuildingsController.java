@@ -69,7 +69,7 @@ public class AllBuildingsController extends HttpServlet {
             //get DB conn
             Facade facade = Facade.getFacade();
 
-            int id = Integer.parseInt(request.getParameter("oid"));
+            int id = Integer.parseInt(request.getParameter("orgid"));
 
             List<Building> buildingList = facade.getBuildings(id);
 
