@@ -5,6 +5,7 @@
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="u" scope="request" class="model.User"/>
+<jsp:useBean id="o" scope="request" class="model.Org"/>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -14,16 +15,18 @@
         <link href="<c:url value="/css/bootstrap.css"/>"
               rel="stylesheet" type="text/css"/>
     </head>
-    
+
     <body>
         <%@include file="navigation.jsp" %>
         <div class="container-fluid">
 
             <h4>${requestScope.action}Redigere kunde</h4>
+            <table>
             <div class="row">
                 <div class="col-md-6"> 
-                    <form action="${requestScope.url}" method="POST" class="form-horizontal">
+                    <form action="<c:out value="${requestScope.url}"/>" method="POST" class="form-horizontal">
                         <%--UserId sendt from organisation--%>
+
                         <input type="hidden" value="${u.id}" name="uId"/>
                         <input type="hidden" value="${o.id}" name="oId"/>
 
@@ -54,15 +57,16 @@
                                 <input class="form-control" type="text" value="${u.phone}" placeholder="Nummer" name="Phone"/> 
                             </div>
                         </div>
-                            
-                        <button type="submit" class="btn btn-primary">${requestScope.action} Opdatere</button>
-                        <button type="submit" class="btn btn-primary">${requestScope.action} Tilføj ny kunde</button>
-                    </form>
-                </div>
-            </div>
-        </div> 
 
+                         <div>
+                <a href="/customer/update?id=${u.id}">Redigere kunde</a>
+            </div>
+
+    </body>
+</table>
         <script src="js/jquery-2.2.4.js" type="text/javascript"></script>
         <script src="js/bootstrap.js" type="text/javascript"></script>
-    </body>
+
+ </body>
 </html>
+
