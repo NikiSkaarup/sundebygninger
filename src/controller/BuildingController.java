@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Building;
 import model.Org;
+import model.User;
 import util.Helper;
 import static util.Helper.forwardGet;
 
@@ -64,15 +65,16 @@ public class BuildingController extends HttpServlet {
     private void doGetInsert(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             //get the hidden "requestScope=oid" from addUpdateBuilding 
-            int oId = Integer.parseInt(request.getParameter("oid"));
+            int oId = Integer.parseInt(request.getParameter("orgid"));
             Org org = new Org();
             org.setId(oId);
             //saves the organisation Id
             request.setAttribute("org", org);
+            request.setAttribute("url", request.getServletPath());
             request.setAttribute("action", "Tilføj");
             Helper.forwardGet(request, response, "/addUpdateBuilding.jsp");
 
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             request.setAttribute("error", e.getMessage());
             forwardGet(request, response, "/error.jsp");
         }
@@ -119,9 +121,9 @@ public class BuildingController extends HttpServlet {
 
             //hvis id er større end nul, så er der oprettet en bygning, og man får refereret id'et fra Databasen
             if (id > 0) {
-                Helper.forwardGet(request, response, "/buildings?oid=" + b.getOrg().getId());
+                Helper.forwardGet(request, response, "/buildings?orgid=" + b.getOrg().getId());
             } else {
-                Helper.forwardGet(request, response, "/building/insert?oid=" + b.getOrg().getId());
+                Helper.forwardGet(request, response, "/building/insert?orgid=" + b.getOrg().getId());
             }
         } catch (Exception e) {
             request.setAttribute("error", e.getMessage());
@@ -136,9 +138,9 @@ public class BuildingController extends HttpServlet {
             int id = facade.insertBuilding(b);
 
             if (id > 0) {
-                Helper.forwardGet(request, response, "/buildings?oid=" + b.getOrg().getId());
+                Helper.forwardGet(request, response, "/buildings?orgid=" + b.getOrg().getId());
             } else {
-                Helper.forwardGet(request, response, "//building/insert?oid=?oid=" + b.getOrg().getId());
+                Helper.forwardGet(request, response, "//building/insert?orgid=" + b.getOrg().getId());
             }
         } catch (Exception e) {
             request.setAttribute("error", e.getMessage());
@@ -164,15 +166,15 @@ public class BuildingController extends HttpServlet {
 
         //dette id bruges ved add
         Org org = new Org();
-        if (request.getParameter("oId") != null && !request.getParameter("oId").equals("")) {
-            org.setId(Integer.parseInt(request.getParameter("oId")));
+        if (request.getParameter("oId") != null && !request.getParameter("orgId").equals("")) {
+            org.setId(Integer.parseInt(request.getParameter("orgId")));
         }
 
         b.setOrg(org);
 
         //organisation tages ud af session
-        // User user = (User)request.getSession().getAttribute("user");
-        //b.setOrg(user.getOrg());
+        User user = (User) request.getSession().getAttribute("user");
+        b.setOrg(user.getOrg());
         //BUILDING DATA from form put into variables
         String name = request.getParameter("Name");
         String address = request.getParameter("Address");

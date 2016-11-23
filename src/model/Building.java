@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,6 +25,17 @@ public class Building {
     private List<Report> reports;
 
     public Building() {
+        id = 0;
+        name = "";
+        address = "";
+        currentUse = "";
+        previousUse = "";
+        area = "";
+        org = new Org();
+        requests = new ArrayList<>();
+        incidents = new ArrayList<>();
+        images = new ArrayList<>();
+        reports = new ArrayList<>();
     }
 
     public int getId() {

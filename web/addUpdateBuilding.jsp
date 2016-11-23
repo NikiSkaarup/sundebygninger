@@ -17,49 +17,50 @@
     </head>
 
     <body>
-        <%@include file="navigation.jsp"  %>
+        <%@ include file="navigation.jsp" %>
         <div class="container-fluid">
-
-            <h1>${requestScope.action} bygning</h1>
+            
+            <h1><c:out value="${requestScope.action}"/> bygning</h1>
             <div class="row">
                 <div class="col-md-6"> 
-                    <form action="${requestScope.url}" method="POST" class="form-horizontal">
+                                
+                    <form action="<c:out value="${requestScope.url}"/>" method="POST" class="form-horizontal">
                         <%--Id sendt from organisation--%>
-                        <input type="hidden" value="${b.id}" name="bId"/>
-                        <input type="hidden" value="${o.id}" name="oId"/>
+                        <input type="hidden" value="<c:out value="${b.id}"/>" name="bId"/>
+                        <input type="hidden" value="<c:out value="${org.id}"/>" name="orgId"/>
 
                         <div class="form-group">
                             <label class="col-md-3 control-label">Navn på bygning</label>
                             <div class="col-md-9">
-                                <input class="form-control" type="text" value="${b.name}" placeholder="Navn på bygning" name="Name"/> 
+                                <input class="form-control" type="text" value="<c:out value="${b.name}"/>" placeholder="Navn på bygning" name="Name"/> 
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-md-3 control-label">Adresse</label>
                             <div class="col-md-9">
-                                <input class="form-control" type="text" value="${b.address}" placeholder="Adresse" name="Address"/>
+                                <input class="form-control" type="text" value="<c:out value="${b.address}"/>" placeholder="Adresse" name="Address"/>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-md-3 control-label">Byggeår</label>
                             <div class="col-md-9">
-                                <input class="form-control" type="text" value="${b.constructionYear}" placeholder="yyyy-mm-dd" name="ConstructionYear"/>
+                                <input class="form-control" type="text" value="<c:out value="${b.constructionYear}"/>" placeholder="yyyy-mm-dd" name="ConstructionYear"/>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-md-3 control-label">Bygningsareal i m2</label>
                             <div class="col-md-9">
-                                <input class="form-control" type="text" value="${b.area}" placeholder="Bygningsareal i m2" name="Area"/>
+                                <input class="form-control" type="text" value="<c:out value="${b.area}"/>" placeholder="Bygningsareal i m2" name="Area"/>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-md-3 control-label">Nuværende benyttelse</label>
                             <div class="col-md-9">
-                                <input class="form-control" type="text" value="${b.currentUse}" placeholder="Nuværende benyttelse" name="CurrentUse"/>
+                                <input class="form-control" type="text" value="<c:out value="${b.currentUse}"/>" placeholder="Nuværende benyttelse" name="CurrentUse"/>
                                 <label>(Hvad bruges bygningen til?)</label>
                             </div>
                         </div>
@@ -67,13 +68,13 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">Tidligere benyttelse</label>
                             <div class="col-md-9">
-                                <input class="form-control" type="text" value="${b.previousUse}" placeholder="tidligere benyttelse" name="PreviousUse"/>
+                                <input class="form-control" type="text" value="<c:out value="${b.previousUse}"/>" placeholder="tidligere benyttelse" name="PreviousUse"/>
                                 <label>(Hvad har bygningen været brugt til?)</label>
                             </div>
                         </div>
 
                         <div class="col-md-offset-3">
-                            <button class="btn btn-primary" type="submit">${requestScope.action}</button>
+                            <button class="btn btn-primary" type="submit"><c:out value="${requestScope.action}"/></button>
                         </div>
 
                     </form>
