@@ -24,9 +24,9 @@
             <div class="col-md-6">
                 <h3>Buildings</h3>
                 <div class="btn-group">
-                    <a href="building/insert?oid=${user.org.id}"
+                    <a href="building/insert?orgid=${user.org.id}"
                        class="btn btn-primary">Add Building</a>
-                    <a href="buildings?oid=${user.org.id}"
+                    <a href="buildings?orgid=${user.org.id}"
                        class="btn btn-default">View Buildings</a></div>
                 <div class="table-responsive">
                     <table class="table table-bordered">
