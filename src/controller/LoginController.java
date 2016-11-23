@@ -89,13 +89,13 @@ public class LoginController extends HttpServlet {
             String password = request.getParameter("password");
             User u = facade.getUserLogin(email, password);
 
-            //if (u != null) {
+            if (u != null) {
                 request.getSession().setAttribute("user", u);
                 response.sendRedirect("/home");
-            //} else {
-                //request.setAttribute("error", "Unknown user, please try again");
-                //forwardGet(request, response, "/login.jsp");
-            //}
+            } else {
+                request.setAttribute("error", "Unknown user, please try again");
+                forwardGet(request, response, "/login.jsp");
+            }
         } 
         catch (PolygonException e) {
             request.setAttribute("error", "doPost: " + e.getMessage());
