@@ -134,15 +134,13 @@ public class BuildingController extends HttpServlet {
     private void doPostUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             Building b = doPostBoth(request);
-            //insert to DB via facade
-            facade.updateBuilding(b);
 
             if (facade.updateBuilding(b)) {
-                Helper.forwardGet(request, response, "/buildings?orgid=" + b.getOrg().getId());
+                response.sendRedirect("/buildings?orgid=" + b.getOrg().getId());
             } else {
                 Helper.forwardGet(request, response, "/building/update?id=" + b.getId());
             }
-        } catch (Exception e) {
+        } catch (PolygonException | NullPointerException e) {
             request.setAttribute("error", e.getMessage());
             forwardGet(request, response, "/error.jsp");
         }

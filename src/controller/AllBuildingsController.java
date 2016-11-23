@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Building;
 import exceptions.PolygonException;
+import model.Org;
 import static util.Helper.forwardGet;
 
 /**
@@ -70,10 +71,12 @@ public class AllBuildingsController extends HttpServlet {
             Facade facade = Facade.getFacade();
 
             int id = Integer.parseInt(request.getParameter("orgid"));
-
+            Org org = new Org(id);
+            
             List<Building> buildingList = facade.getBuildings(id);
-
+            
             //save the variable
+            request.setAttribute("org", org);
             request.setAttribute("buildings", buildingList);
 
             //forward from servlet to JSP
