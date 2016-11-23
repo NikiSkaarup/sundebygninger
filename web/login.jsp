@@ -30,7 +30,7 @@ and open the template in the editor.
                 </div>
             </div>
 
-            <h3>Sign in as customer/admin</h3>
+            <h4>Sign in as customer/admin</h4>
 
             <div class="row">
                 <div class="col-md-6">
