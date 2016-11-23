@@ -4,7 +4,7 @@ import domain.Facade;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-import model.User;
+//import model.User;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,7 +19,7 @@ import static util.Helper.forwardGet;
  *
  * @author Tanja
  */
-@WebServlet(name = "AllCustomerController", urlPatterns = {"/customers","/users"})
+@WebServlet(name = "AllCustomerController", urlPatterns = {"/customers", "/users"})
 public class AllCustomerController extends HttpServlet {
 
     /**
@@ -60,21 +60,19 @@ public class AllCustomerController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
         try {
 
-            //connect to DB
             Facade facade = Facade.getFacade();
-            int id = Integer.parseInt(request.getParameter("oId"));
+            int id = Integer.parseInt(request.getParameter("oid"));
 
             List<User> userList = facade.getUsers();
 
             request.setAttribute("users", userList);
 
-            
             RequestDispatcher rd = request.getRequestDispatcher("/allCustomers.jsp");
             rd.forward(request, response);
-            
+
         } catch (PolygonException p) {
             request.setAttribute("error", p.getMessage());
             forwardGet(request, response, "/error.jsp");

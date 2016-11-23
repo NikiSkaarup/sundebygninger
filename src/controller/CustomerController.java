@@ -8,7 +8,7 @@ package controller;
 import domain.Facade;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
+//import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,7 +26,7 @@ import model.User;
 @WebServlet(name = "CustomerController", urlPatterns = {"/customer", "/user"})
 public class CustomerController extends HttpServlet {
 
-    private Facade facade = Facade.getFacade();
+    private final Facade facade = Facade.getFacade();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -161,7 +161,7 @@ public class CustomerController extends HttpServlet {
             int id = facade.insertUser(u);
 
             if (id > 0) {
-                Helper.forwardGet(request, response,"/customers?id=" + u.getOrg().getUsers());
+                Helper.forwardGet(request, response, "/customers?id=" + u.getOrg().getUsers());
 
             } else {
                 Helper.forwardGet(request, response, "/customer/insert?oId=" + u.getOrg().getUsers());
@@ -170,10 +170,9 @@ public class CustomerController extends HttpServlet {
             request.setAttribute("error", e.getMessage());
             forwardGet(request, response, "/error.jsp");
         }
-         return null;
+        return null;
 
     }
-   
 
     private User doPostgetCustomerFromForm(HttpServletRequest request)
             throws ServletException, IOException {

@@ -5,6 +5,7 @@
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="u" scope="request" class="model.User"/>
+<jsp:useBean id="o" scope="request" class="model.Org"/>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -22,8 +23,9 @@
             <h4>${requestScope.action}Redigere kunde</h4>
             <div class="row">
                 <div class="col-md-6"> 
-                    <form action="${requestScope.url}" method="POST" class="form-horizontal">
+                    <form action="<c:out value="${requestScope.url}"/>" method="POST" class="form-horizontal">
                         <%--UserId sendt from organisation--%>
+                        
                         <input type="hidden" value="${u.id}" name="uId"/>
                         <input type="hidden" value="${o.id}" name="oId"/>
 
@@ -55,8 +57,8 @@
                             </div>
                         </div>
                             
-                        <button type="submit" class="btn btn-primary">${requestScope.action} Opdatere</button>
-                        <button type="submit" class="btn btn-primary">${requestScope.action} Tilføj ny kunde</button>
+                        <button type="submit" class="btn btn-primary"><c:out value="${requestScope.action}"/>Opdatere</button>
+                        <button type="submit" class="btn btn-primary"><c:out value="${requestScope.action}"/>Tilføj ny kunde</button>
                     </form>
                 </div>
             </div>

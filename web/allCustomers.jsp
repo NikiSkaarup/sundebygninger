@@ -29,7 +29,7 @@
                     <tr>
                         <td>${u.name}</td>
                         <td>${u.email}</td>
-                        <td><a href="user?id=${u.id}">Info</a></td>
+                        <td><a href="user?id=${u.id}">Mere</a></td>
                     </tr>
                 </c:forEach>
             </tbody>
