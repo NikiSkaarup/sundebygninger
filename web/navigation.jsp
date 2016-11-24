@@ -5,6 +5,8 @@
   Time: 11:38 AM
   To change this template use File | Settings | File Templates.
 --%>
+
+
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -13,12 +15,12 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.html">Sundebygninger</a>
+            <a class="navbar-brand" href="home">Sundebygninger</a>
         </div>
 
         <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="allBuildings.jsp">add Building</a></li>
+                <li><a href="buildings">add Building</a></li>
                 <li><a href="report.jsp">add Report</a></li>
                 <li><a href="document">add document</a></li>
                 <li><a href="image">add image</a></li>
