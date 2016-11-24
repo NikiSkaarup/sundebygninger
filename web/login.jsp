@@ -22,7 +22,6 @@ and open the template in the editor.
     </head>
     <body>
         <div class="container-fluid">
-            <a href="addUpdateBuilding.jsp">Add/update building</a><br>
             <div style="text-align:left"> 
                 <img src="billeder/Polygon Logo.jpg"> <br> 
                 <div> 
