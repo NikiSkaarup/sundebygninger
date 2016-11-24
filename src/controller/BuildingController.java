@@ -121,7 +121,7 @@ public class BuildingController extends HttpServlet {
 
             //hvis id er større end nul, så er der oprettet en bygning, og man får refereret id'et fra Databasen
             if (id > 0) {
-                Helper.forwardGet(request, response, "/buildings?orgid=" + b.getOrg().getId());
+                response.sendRedirect("/buildings?orgid=" + b.getOrg().getId());
             } else {
                 Helper.forwardGet(request, response, "/building/insert?orgid=" + b.getOrg().getId());
             }
