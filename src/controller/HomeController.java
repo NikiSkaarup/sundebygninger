@@ -21,7 +21,7 @@ import static util.Helper.userLoggedIn;
  *
  * @author Niki
  */
-@WebServlet(name = "HomeController", urlPatterns = {"/home"})
+@WebServlet(name = "HomeController", urlPatterns = {"/home", "/index"})
 public class HomeController extends HttpServlet {
 
     private Facade facade = Facade.getFacade();
