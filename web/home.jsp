@@ -72,18 +72,18 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach items="${user.org.users}" var="user">
+                        <c:forEach items="${user.org.users}" var="u">
                             <tr>
                                 <td>
-                                    <a href="customer?id=${user.id}">
-                                            ${user.name}</a>
+                                    <a href="customer?id=${u.id}">
+                                            ${u.name}</a>
                                 </td>
                                 <td>
-                                    <a href="customer?id=${user.id}">
-                                            ${user.email}</a>
+                                    <a href="customer?id=${u.id}">
+                                            ${u.email}</a>
                                 </td>
                                 <td>
-                                    <a href="customer?id=${user.id}"
+                                    <a href="customer?id=${u.id}"
                                        class="btn btn-default">More</a>
                                 </td>
                             </tr>

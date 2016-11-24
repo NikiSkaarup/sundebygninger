@@ -68,7 +68,13 @@ public class HomeController extends HttpServlet {
             Org org = facade.getOrg(user.getOrg());
             org.setBuildings(facade.getBuildings(org, 5));
             user.setOrg(org);
+
+            List<User> users = facade.getUsers(user.getOrg(), 5);
+            user.getOrg().setUsers(users);
+
+
             req.setAttribute("user", user);
+
 
             // Get Organization - Make Organization mapper.
             // Get 5-10 buildings
