@@ -21,7 +21,7 @@ import static util.Helper.userLoggedIn;
  *
  * @author Niki
  */
-@WebServlet(name = "HomeController", urlPatterns = {"/home", "/index"})
+@WebServlet(name = "HomeController", urlPatterns = {"/home", "/index", ""})
 public class HomeController extends HttpServlet {
 
     private Facade facade = Facade.getFacade();
@@ -37,7 +37,7 @@ public class HomeController extends HttpServlet {
             User user;
             user = getUser(req);
             if (user == null || !userLoggedIn(user)) {
-                res.sendRedirect("/login.jsp");
+                res.sendRedirect("/login");
                 return;
             }
 
@@ -66,12 +66,12 @@ public class HomeController extends HttpServlet {
             Home home = new Home();
             user.setOrg(facade.getOrg(user.getOrg()));
             home.setUser(user);
-            home.setBuildings(facade.getBuildings(home.getOrg(), 5));
+            home.setBuildings(facade.getBuildings(user.getOrg(), 5));
             home.setUsers(facade.getUsers(user.getOrg(), 5));
 
             // Get 5 Latest Reports
             // Make method 'getReportsLimitByOrg(Org org, int limit)'
-            // Make method 'getReportsLimitByOrg(int org, int limit)'
+            //home.setReports(facade.getReportsLimitByOrg(user.getOrg(), 5));
             home.setReports(facade.getReportsLimit(5));
 
             req.setAttribute("home", home);

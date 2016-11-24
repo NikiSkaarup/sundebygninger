@@ -24,7 +24,8 @@ import exceptions.PolygonException;
  *
  * @author Tanja
  */
-@WebServlet(name = "LoginController", urlPatterns = {"/LoginController"})
+@WebServlet(name = "LoginController", urlPatterns = {"/LoginController",
+        "/login"})
 public class LoginController extends HttpServlet {
 
     /**
@@ -58,16 +59,16 @@ public class LoginController extends HttpServlet {
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
-     * @param response servlet response
+     * @param req servlet request
+     * @param res servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
-        processRequest(request, response);
-
+        //processRequest(request, response);
+        forwardGet(req, res, "/login.jsp");
     }
 
     /**
