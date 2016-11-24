@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import domain.Facade;
@@ -33,6 +28,13 @@ public class BuildingController extends HttpServlet {
     //DB connection
     private Facade facade = Facade.getFacade();
 
+    /**
+     * 
+     * @param request - 
+     * @param response
+     * @throws ServletException
+     * @throws IOException 
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         switch (request.getServletPath()) {
@@ -49,6 +51,13 @@ public class BuildingController extends HttpServlet {
 
     }
 
+    /**
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException 
+     */
     private void doGetView(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             int id = Integer.parseInt(request.getParameter("id"));
@@ -62,6 +71,13 @@ public class BuildingController extends HttpServlet {
         }
     }
 
+    /**
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException 
+     */
     private void doGetInsert(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             //get the hidden "requestScope=oid" from addUpdateBuilding 
@@ -80,6 +96,13 @@ public class BuildingController extends HttpServlet {
         }
     }
 
+    /**
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException 
+     */
     private void doGetUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //organisation Id 
         try {
@@ -98,6 +121,13 @@ public class BuildingController extends HttpServlet {
 
     }
 
+    /**
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException 
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         switch (request.getServletPath()) {
@@ -113,6 +143,13 @@ public class BuildingController extends HttpServlet {
         }
     }
 
+    /**
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException 
+     */
     private void doPostInsert(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             Building b = doPostBoth(request);
@@ -131,6 +168,13 @@ public class BuildingController extends HttpServlet {
         }
     }
 
+    /**
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException 
+     */
     private void doPostUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             Building b = doPostBoth(request);
