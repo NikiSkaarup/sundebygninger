@@ -52,7 +52,7 @@ public class HomeController extends HttpServlet {
                     doGetAdmin(req, res, user);
                     break;
                 default:
-                    throw new PolygonException("doGet: user have no role");
+                    throw new PolygonException("user have no role");
             }
         } catch (NullPointerException | PolygonException e) {
             req.setAttribute("error", "doGet: " + e.getMessage());
@@ -64,18 +64,15 @@ public class HomeController extends HttpServlet {
             res, User user) throws ServletException, IOException {
         try {
             Home home = new Home();
-            home.setRole(user.getRole());
-
-            home.setRole(user.getRole());
-            // Get Organization - Make Organization mapper.
-            home.setOrg(facade.getOrg(user.getOrg()));
-            // Get 5-10 buildings
+            user.setOrg(facade.getOrg(user.getOrg()));
+            home.setUser(user);
             home.setBuildings(facade.getBuildings(home.getOrg(), 5));
-            // Make Link to all buildings
-
             home.setUsers(facade.getUsers(user.getOrg(), 5));
 
-            // Get 5 Latest Reports - Just make the HTML for it and add later
+            // Get 5 Latest Reports
+            // Make method 'getReportsLimitByOrg(Org org, int limit)'
+            // Make method 'getReportsLimitByOrg(int org, int limit)'
+            home.setReports(facade.getReportsLimit(5));
 
             req.setAttribute("home", home);
             forwardGet(req, res, "/home.jsp");
@@ -89,26 +86,15 @@ public class HomeController extends HttpServlet {
             res, User user) throws ServletException, IOException {
         try {
             Home home = new Home();
-            home.setRole(user.getRole());
-
-            home.setRequests(facade.getRequests());
-            home.setBuildings(facade.getBuildings(home.getOrg(), 5));
-            home.setUsers(facade.getUsers(user.getOrg(), 5));
-
-            // View 10 unaccepted requests
-            home.setUnacceptedRequests(facade.getRequestsUnaccepted(user.getId(), 5));
-            // View 10 accepted requests by employee
-            home.setAcceptedRequests(facade.getRequestsAcceptedByEmployee(user.getId(), 5));
-            // Link to all requests
-
-            // View last 10 reports by the employee
+            home.setUser(user);
+            home.setUnacceptedRequests(facade.getRequestsUnaccepted(5));
+            home.setAcceptedRequests(facade.getRequestsAcceptedByEmployee
+                    (user.getId(), 5));
             home.setReports(facade.getReportsByEmployee(user.getId(), 5));
-            // Link to all reports
 
             // Figure out what else an employee needs to see
             req.setAttribute("home", home);
             forwardGet(req, res, "/home.jsp");
-            throw new PolygonException("doGetEmployee not yet implemented");
         } catch (PolygonException e) {
             req.setAttribute("error", "doGetEmployee: " + e.getMessage());
             forwardGet(req, res, "/error.jsp");
@@ -119,22 +105,16 @@ public class HomeController extends HttpServlet {
                             User user) throws ServletException, IOException {
         try {
             Home home = new Home();
-            home.setRole(user.getRole());
+            home.setUser(user);
 
-            // Get 5 Latest Organizations
             home.setOrgs(facade.getOrgs(5));
-            // Get 5 Latest users
             home.setUsers(facade.getUsersLimit(5));
-
             home.setBuildings(facade.getBuildingsLimit(5));
-
             home.setRequests(facade.getRequestsLimit(5));
-
             home.setReports(facade.getReportsLimit(5));
 
             req.setAttribute("home", home);
             forwardGet(req, res, "/home.jsp");
-            throw new PolygonException("doGetAdmin not yet implemented");
         } catch (PolygonException e) {
             req.setAttribute("error", "doGetAdmin: " + e.getMessage());
             forwardGet(req, res, "/error.jsp");

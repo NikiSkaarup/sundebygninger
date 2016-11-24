@@ -400,39 +400,44 @@ public class Facade {
 
     public List<Report> getReportsByEmployee(int id, int limit)
             throws PolygonException {
-        throw new PolygonException("Not yet implemented");
+        ReportMapper mapper = new ReportMapper(conn);
+        return mapper.getReportsByEmployee(id, limit);
     }
 
-    public List<Request> getRequestsUnaccepted(int id, int limit)
+    public List<Report> getReportsLimit(int limit)
             throws PolygonException {
-        throw new PolygonException("Not yet implemented");
+        ReportMapper mapper = new ReportMapper(conn);
+        return mapper.getReportsLimit(limit);
+    }
+
+    public List<Request> getRequestsUnaccepted(int limit)
+            throws PolygonException {
+        RequestMapper mapper = new RequestMapper(conn);
+        return mapper.getRequestsUnaccepted(limit);
     }
 
     public List<Request> getRequestsAcceptedByEmployee(int id, int limit)
             throws PolygonException {
-        throw new PolygonException("Not yet implemented");
+        RequestMapper mapper = new RequestMapper(conn);
+        return mapper.getRequestsAcceptedByEmployee(id, limit);
+    }
+
+    public List<Request> getRequestsLimit(int limit)
+            throws PolygonException {
+        RequestMapper mapper = new RequestMapper(conn);
+        return mapper.getRequestsLimit(limit);
     }
 
 
     public List<User> getUsersLimit(int limit)
             throws PolygonException {
-        throw new PolygonException("Not yet implemented");
+        UserMapper mapper = new UserMapper(conn);
+        return mapper.getUsersLimit(limit);
     }
 
     public List<Building> getBuildingsLimit(int limit)
             throws PolygonException {
-        throw new PolygonException("Not yet implemented");
-
+        BuildingMapper mapper = new BuildingMapper(conn);
+        return mapper.getBuildingsLimit(limit);
     }
-
-    public List<Request> getRequestsLimit(int limit)
-            throws PolygonException {
-        throw new PolygonException("Not yet implemented");
-    }
-
-    public List<Report> getReportsLimit(int limit)
-            throws PolygonException {
-        throw new PolygonException("Not yet implemented");
-    }
-
 }

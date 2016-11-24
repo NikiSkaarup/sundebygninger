@@ -1,5 +1,6 @@
 package db;
 
+import exceptions.PolygonException;
 import model.*;
 
 import java.sql.*;
@@ -151,5 +152,16 @@ public class ReportMapper {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public List<Report> getReportsByEmployee(int id, int limit)
+            throws PolygonException {
+        return new ArrayList<>();
+        //throw new PolygonException("not implemented");
+    }
+
+    public List<Report> getReportsLimit(int limit) throws PolygonException {
+        return new ArrayList<>();
+        //throw new PolygonException("not implemented");
     }
 }

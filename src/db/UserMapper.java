@@ -49,10 +49,10 @@ public class UserMapper {
                     return constructUser(rs);
                 else
                     throw new PolygonException("getUserLogin No result found," +
-                            " email: " + email);
+                                                       " email: " + email);
             } catch (PolygonException e) {
                 throw new PolygonException("getUserLogin ResultSet: " +
-                        e.getMessage());
+                                                   e.getMessage());
             }
         } catch (SQLException e) {
             throw new PolygonException("getUserLogin error: " + e.getMessage());
@@ -149,8 +149,29 @@ public class UserMapper {
 
             return c;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PolygonException("failed to constructUser: " + e
+                    .getMessage());
         }
-        return null;
+    }
+
+    public List<User> getUsersLimit(int limit) throws PolygonException {
+        String query = "SELECT Id, `Name`, Email, Phone, FkRoleId, FkOrgId " +
+                "FROM `User` ORDER BY Id DESC LIMIT ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, limit);
+            try (ResultSet rs = stmt.executeQuery()) {
+                List<User> list = new ArrayList<>();
+                stmt.setInt(1, limit);
+                while (rs.next())
+                    list.add(constructUser(rs));
+                return list;
+            } catch (PolygonException e) {
+                throw new PolygonException("getUsersLimit: " + e
+                        .getMessage());
+            }
+        } catch (SQLException e) {
+            throw new PolygonException("getUsersLimit error: " + e
+                    .getMessage());
+        }
     }
 }

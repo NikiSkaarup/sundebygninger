@@ -83,7 +83,8 @@ public class RequestMapper {
         String query = "INSERT INTO `Request` (FkBuildingId, Description, " +
                 "FkServiceTypeId) VALUES (?, ?, ?)";
         try (PreparedStatement stmt = conn.prepareStatement(query,
-                Statement.RETURN_GENERATED_KEYS)) {
+                                                            Statement
+                                                                    .RETURN_GENERATED_KEYS)) {
             stmt.setInt(1, r.getBuilding().getId());
             stmt.setString(2, r.getDescription());
             stmt.setInt(3, r.getServiceType().getId());
@@ -93,10 +94,10 @@ public class RequestMapper {
                     return rs.getInt(1);
                 else
                     throw new PolygonException("insertRequest failed to get " +
-                            "generated Id");
+                                                       "generated Id");
             } catch (Exception e) {
                 throw new PolygonException("insertRequest failed to " +
-                        "insert document: " + e);
+                                                   "insert document: " + e);
             }
         } catch (SQLException e) {
             throw new PolygonException("insertRequest error: " + e
@@ -157,6 +158,80 @@ public class RequestMapper {
             return c;
         } catch (SQLException e) {
             throw new PolygonException("constructRequest error: " + e
+                    .getMessage());
+        }
+    }
+
+    public List<Request> getRequestsUnaccepted(int limit)
+            throws PolygonException {
+        String query = "SELECT Request.Id, FkBuildingId, Submission, " +
+                "FkReportId, Description, FkServiceTypeId, FkUserId, " +
+                "ServiceType.Name FROM Request INNER JOIN ServiceType ON " +
+                "Request .FkServiceTypeId = ServiceType.Id WHERE FkUserId IS " +
+                "NULL LIMIT ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, limit);
+            try (ResultSet rs = stmt.executeQuery()) {
+                List<Request> list = new ArrayList<>();
+                while (rs.next())
+                    list.add(constructRequest(rs));
+                return list;
+            } catch (PolygonException e) {
+                throw new PolygonException("getRequestsUnaccepted: " + e
+                        .getMessage());
+            }
+        } catch (SQLException e) {
+            throw new PolygonException("getRequestsUnaccepted error: " + e
+                    .getMessage());
+        }
+    }
+
+    public List<Request> getRequestsAcceptedByEmployee(int id, int limit)
+            throws PolygonException {
+        String query = "SELECT Request.Id, FkBuildingId, Submission, " +
+                "FkReportId, Description, FkServiceTypeId, FkUserId, " +
+                "ServiceType.Name, `User`.Name, `User`.Email, `User`.Phone " +
+                "FROM Request INNER JOIN ServiceType ON Request" +
+                ".FkServiceTypeId = ServiceType.Id INNER JOIN `User` ON " +
+                "Request.FkUserId = `User`.Id WHERE `User`.Id = ? LIMIT ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, id);
+            stmt.setInt(2, limit);
+            try (ResultSet rs = stmt.executeQuery()) {
+                List<Request> list = new ArrayList<>();
+                while (rs.next())
+                    list.add(constructRequest(rs));
+                return list;
+            } catch (PolygonException e) {
+                throw new PolygonException("getRequestsAcceptedByEmployee: " +
+                                                   e.getMessage());
+            }
+        } catch (SQLException e) {
+            throw new PolygonException("getRequestsAcceptedByEmployee error: " +
+                                               e.getMessage());
+        }
+    }
+
+    public List<Request> getRequestsLimit(int limit) throws PolygonException {
+        String query = "SELECT Request.Id, FkBuildingId, Submission, " +
+                "FkReportId, Description, FkServiceTypeId, FkUserId, " +
+                "ServiceType.Name, `User`.Name, `User`.Email, `User`.Phone " +
+                "FROM Request INNER JOIN ServiceType ON Request" +
+                ".FkServiceTypeId = ServiceType.Id LEFT JOIN `User` ON " +
+                "Request.FkUserId = `User`.Id LIMIT ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, limit);
+            try (ResultSet rs = stmt.executeQuery()) {
+                List<Request> list = new ArrayList<>();
+                while (rs.next())
+                    list.add(constructRequest(rs));
+                return list;
+            } catch (PolygonException e) {
+                throw new PolygonException("getRequestsLimit: " + e
+                        .getMessage());
+            }
+        } catch (SQLException e) {
+            throw new PolygonException("getRequestsLimit error: " + e
                     .getMessage());
         }
     }

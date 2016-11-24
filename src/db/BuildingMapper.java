@@ -3,6 +3,7 @@ package db;
 import model.Building;
 import model.Org;
 import exceptions.PolygonException;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,8 @@ public class BuildingMapper {
             if (rs.next()) {
                 return constructBuilding(rs);
             } else {
-                throw new PolygonException("The element is not found with id: " + id);
+                throw new PolygonException("The element is not found with id:" +
+                                                   " " + id);
             }
         } catch (SQLException e) {
             throw new PolygonException("getBuilding error: " + e.getMessage());
@@ -44,7 +46,8 @@ public class BuildingMapper {
         return getBuildings(org, -1);
     }
 
-    public List<Building> getBuildings(Org org, int count) throws PolygonException {
+    public List<Building> getBuildings(Org org, int count) throws
+            PolygonException {
         String query = "SELECT Id, `Name`, Address, ConstructionYear, "
                 + "CurrentUse, Area, PreviousUse, FkOrgId FROM `Building`";
         if (org != null) {
@@ -82,7 +85,8 @@ public class BuildingMapper {
         String query = "INSERT INTO `Building` (`Name`, Address, "
                 + "ConstructionYear, CurrentUse, Area, PreviousUse, FkOrgId) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?);";
-        try (PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement stmt = conn.prepareStatement(query, Statement
+                .RETURN_GENERATED_KEYS)) {
             stmt.setString(1, b.getName());
             stmt.setString(2, b.getAddress());
             stmt.setTimestamp(3, b.getConstructionYear());
@@ -96,13 +100,16 @@ public class BuildingMapper {
                 if (rs.next()) {
                     id = rs.getInt(1);
                 } else {
-                    throw new PolygonException("failed to get insertBuilding generated id");
+                    throw new PolygonException("failed to get insertBuilding " +
+                                                       "generated id");
                 }
             } catch (Exception e) {
-                throw new PolygonException("insertBuilding failed to insert building: " + e);
+                throw new PolygonException("insertBuilding failed to insert " +
+                                                   "building: " + e);
             }
         } catch (SQLException e) {
-            throw new PolygonException("insertBuilding error: " + e.getMessage());
+            throw new PolygonException("insertBuilding error: " + e
+                    .getMessage());
         }
         return id;
     }
@@ -122,7 +129,8 @@ public class BuildingMapper {
             stmt.setInt(8, b.getId());
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
-            throw new PolygonException("updateBuilding error: " + e.getMessage());
+            throw new PolygonException("updateBuilding error: " + e
+                    .getMessage());
         }
     }
 
@@ -148,7 +156,29 @@ public class BuildingMapper {
             c.setOrg(org);
             return c;
         } catch (SQLException e) {
-            throw new PolygonException("updateBuilding error: " + e.getMessage());
+            throw new PolygonException("failed to constructBuilding: " + e
+                    .getMessage());
+        }
+    }
+
+    public List<Building> getBuildingsLimit(int limit) throws PolygonException {
+        String query = "SELECT Id, `Name`, Address, ConstructionYear, " +
+                "CurrentUse, Area, PreviousUse, FkOrgId FROM `Building` ORDER" +
+                " BY Submission DESC LIMIT ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            List<Building> list = new ArrayList<>();
+            stmt.setInt(1, limit);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next())
+                    list.add(constructBuilding(rs));
+                return list;
+            } catch (PolygonException e) {
+                throw new PolygonException("getBuildingsLimit: " + e
+                        .getMessage());
+            }
+        } catch (SQLException e) {
+            throw new PolygonException("getBuildingsLimit error: " + e
+                    .getMessage());
         }
     }
 }

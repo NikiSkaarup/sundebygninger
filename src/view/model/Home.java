@@ -2,6 +2,7 @@ package view.model;
 
 import model.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,13 +15,24 @@ public class Home {
     private Org org;
     private List<Building> buildings;
     private List<User> users;
-    private Role role;
+    private User user;
     private List<Request> requests;
     private List<Request> unacceptedRequests;
     private List<Request> acceptedRequests;
     private List<Report> reports;
     private List<Incident> incidents;
     private List<Org> orgs;
+
+    public Home() {
+        buildings = new ArrayList<>();
+        users = new ArrayList<>();
+        requests = new ArrayList<>();
+        unacceptedRequests = new ArrayList<>();
+        acceptedRequests = new ArrayList<>();
+        reports = new ArrayList<>();
+        incidents = new ArrayList<>();
+        orgs = new ArrayList<>();
+    }
 
     public Org getOrg() {
         return org;
@@ -46,12 +58,12 @@ public class Home {
         this.users = users;
     }
 
-    public Role getRole() {
-        return role;
+    public User getUser() {
+        return user;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public List<Request> getRequests() {
