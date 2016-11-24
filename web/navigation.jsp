@@ -15,7 +15,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="home">Sundebygninger</a>
+            <a class="navbar-brand" href="home"><img src="billeder/polygon-logo.jpg" style="height:45px; width:95px"></a>
         </div>
 
         <div class="collapse navbar-collapse" id="navbar-collapse">
