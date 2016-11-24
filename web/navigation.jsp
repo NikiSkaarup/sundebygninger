@@ -15,7 +15,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="home"><img src="billeder/SundeBygningerLogo.png" style="height:43px; width:100px"></a>
+            <a class="navbar-brand" href="home"><img src="billeder/SundeBygningerLogo.png" style="height:43px; width:108px"></a>
         </div>
 
         <div class="collapse navbar-collapse" id="navbar-collapse">
@@ -26,7 +26,7 @@
                 <li><a href="image">add image</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="index.html">Logout</a></li>
+                <li><a href="/logout">Logout</a></li>
             </ul>
         </div>
     </div>
