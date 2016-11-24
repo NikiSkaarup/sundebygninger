@@ -154,9 +154,9 @@ public class Facade {
         return mapper.getOrgs();
     }
 
-    public List<Org> getOrgs(int n) throws PolygonException {
+    public List<Org> getOrgs(int limit) throws PolygonException {
         OrgMapper mapper = new OrgMapper(conn);
-        return mapper.getOrgs(n);
+        return mapper.getOrgs(limit);
     }
 
     public int insertOrg(Org u) throws PolygonException {
@@ -397,4 +397,42 @@ public class Facade {
         ServiceTypeMapper mapper = new ServiceTypeMapper(conn);
         return mapper.getServiceTypes();
     }
+
+    public List<Report> getReportsByEmployee(int id, int limit)
+            throws PolygonException {
+        throw new PolygonException("Not yet implemented");
+    }
+
+    public List<Request> getRequestsUnaccepted(int id, int limit)
+            throws PolygonException {
+        throw new PolygonException("Not yet implemented");
+    }
+
+    public List<Request> getRequestsAcceptedByEmployee(int id, int limit)
+            throws PolygonException {
+        throw new PolygonException("Not yet implemented");
+    }
+
+
+    public List<User> getUsersLimit(int limit)
+            throws PolygonException {
+        throw new PolygonException("Not yet implemented");
+    }
+
+    public List<Building> getBuildingsLimit(int limit)
+            throws PolygonException {
+        throw new PolygonException("Not yet implemented");
+
+    }
+
+    public List<Request> getRequestsLimit(int limit)
+            throws PolygonException {
+        throw new PolygonException("Not yet implemented");
+    }
+
+    public List<Report> getReportsLimit(int limit)
+            throws PolygonException {
+        throw new PolygonException("Not yet implemented");
+    }
+
 }
