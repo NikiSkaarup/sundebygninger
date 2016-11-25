@@ -118,7 +118,7 @@ public class HomeController extends HttpServlet {
     }
 
     /**
-     * This method is for when user is a Admin
+     * This method is for when user is an Admin
      * @param req request
      * @param res response
      * @param user user taken from session
