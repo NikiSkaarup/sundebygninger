@@ -29,11 +29,12 @@ public class BuildingController extends HttpServlet {
     private Facade facade = Facade.getFacade();
 
     /**
+     * This method get the building. 
      * 
-     * @param request - 
-     * @param response
-     * @throws ServletException
-     * @throws IOException 
+     * @param request - browser sends request to the server
+     * @param response - server sends response back to the browser
+     * @throws ServletException - håndtere request (data travels)
+     * @throws IOException - input/output - handle hardware issue
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -52,11 +53,12 @@ public class BuildingController extends HttpServlet {
     }
 
     /**
+     * This method gets and show a single building
      * 
-     * @param request
-     * @param response
-     * @throws ServletException
-     * @throws IOException 
+     * @param request - browser sends request to the server
+     * @param response - server sends response back to the browser
+     * @throws ServletException - håndtere request (data travels)
+     * @throws IOException - input/output - handle hardware issue
      */
     private void doGetView(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
@@ -72,11 +74,12 @@ public class BuildingController extends HttpServlet {
     }
 
     /**
+     * This method forwards the user to an empty form in addUpdateBuilding with the organisation Id
      * 
-     * @param request
-     * @param response
-     * @throws ServletException
-     * @throws IOException 
+     * @param request - browser sends request to the server
+     * @param response - server sends response back to the browser
+     * @throws ServletException - håndtere request (data travels)
+     * @throws IOException - input/output - handle hardware issue
      */
     private void doGetInsert(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
@@ -98,10 +101,10 @@ public class BuildingController extends HttpServlet {
 
     /**
      * 
-     * @param request
-     * @param response
-     * @throws ServletException
-     * @throws IOException 
+     * @param request - browser sends request to the server
+     * @param response - server sends response back to the browser
+     * @throws ServletException - håndtere request (data travels)
+     * @throws IOException - input/output - handle hardware issue
      */
     private void doGetUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //organisation Id 
@@ -123,10 +126,10 @@ public class BuildingController extends HttpServlet {
 
     /**
      * 
-     * @param request
-     * @param response
-     * @throws ServletException
-     * @throws IOException 
+     * @param request - browser sends request to the server
+     * @param response - server sends response back to the browser
+     * @throws ServletException - håndtere request (data travels)
+     * @throws IOException - input/output - handle hardware issue
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -145,10 +148,10 @@ public class BuildingController extends HttpServlet {
 
     /**
      * 
-     * @param request
-     * @param response
-     * @throws ServletException
-     * @throws IOException 
+     * @param request - browser sends request to the server
+     * @param response - server sends response back to the browser
+     * @throws ServletException - håndtere request (data travels)
+     * @throws IOException - input/output - handle hardware issue
      */
     private void doPostInsert(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
@@ -170,10 +173,10 @@ public class BuildingController extends HttpServlet {
 
     /**
      * 
-     * @param request
-     * @param response
-     * @throws ServletException
-     * @throws IOException 
+     * @param request - browser sends request to the server
+     * @param response - server sends response back to the browser
+     * @throws ServletException - håndtere request (data travels)
+     * @throws IOException - input/output - handle hardware issue
      */
     private void doPostUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
@@ -192,21 +195,21 @@ public class BuildingController extends HttpServlet {
 
     /**
      * *
-     *
-     * @param request
+     * 
+     * @param request - browser sends request to server
      * @return This method only need to handle request and has to be used in add
      * and update doPostInsert and doPostUpdate.
      */
     private Building doPostBoth(HttpServletRequest request) {
         Building b = new Building();
 
-        //dette id bruges ved edit
+        //this id is used for update
         b.setId(-1);
         if (request.getParameter("bId") != null && !request.getParameter("bId").equals("")) {
             b.setId(Integer.parseInt(request.getParameter("bId")));
         }
 
-        //dette id bruges ved add
+        //this id is used for add
         Org org = new Org();
         if (request.getParameter("oId") != null && !request.getParameter("orgId").equals("")) {
             org.setId(Integer.parseInt(request.getParameter("orgId")));
@@ -214,7 +217,7 @@ public class BuildingController extends HttpServlet {
 
         b.setOrg(org);
 
-        //organisation tages ud af session
+        //take the organisation out of the session 
         User user = (User) request.getSession().getAttribute("user");
         b.setOrg(user.getOrg());
         //BUILDING DATA from form put into variables
