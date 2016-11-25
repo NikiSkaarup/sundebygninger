@@ -3,7 +3,7 @@ package db;
 import java.sql.*;
 
 /**
- * Created by Niki on 2016-11-02.
+ * Database Connection class which can handle development and tests
  *
  * @author Niki
  */

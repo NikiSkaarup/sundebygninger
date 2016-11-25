@@ -3,7 +3,7 @@ package data;
 import java.sql.Connection;
 import java.sql.DriverManager;
 /**
- * Created by Niki on 2016-10-26.
+ * Deprecated class, use db.Conn instead which supports tests
  *
  * @author Niki
  */

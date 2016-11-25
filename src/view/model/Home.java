@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Niki on 2016-11-24.
+ * view model for home page, combines all required variables for ease of use
+ * reduces amount of beans and ensures less failures due to beans being null
  *
  * @author Niki
  */
@@ -23,6 +24,9 @@ public class Home {
     private List<Incident> incidents;
     private List<Org> orgs;
 
+    /**
+     * Constructor to ensure that ArrayLists are never null
+     */
     public Home() {
         buildings = new ArrayList<>();
         users = new ArrayList<>();

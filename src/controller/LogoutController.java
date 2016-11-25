@@ -14,12 +14,18 @@ import java.io.IOException;
  */
 @WebServlet(name = "LogoutController", urlPatterns = {"/logout"})
 public class LogoutController extends HttpServlet {
-    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
         doGet(req, res);
     }
 
-    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        req.getSession().removeAttribute("user");
-        res.sendRedirect("/");
+    protected void doGet(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+        try {
+            req.getSession().removeAttribute("user");
+        } catch (Exception ignored) {
+        } finally {
+            res.sendRedirect("/");
+        }
     }
 }

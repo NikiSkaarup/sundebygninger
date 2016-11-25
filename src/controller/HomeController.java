@@ -60,6 +60,14 @@ public class HomeController extends HttpServlet {
         }
     }
 
+    /**
+     * This method is for when user is a Customer
+     * @param req request
+     * @param res response
+     * @param user user taken from session
+     * @throws ServletException
+     * @throws IOException
+     */
     private void doGetCustomer(HttpServletRequest req, HttpServletResponse
             res, User user) throws ServletException, IOException {
         try {
@@ -82,6 +90,14 @@ public class HomeController extends HttpServlet {
         }
     }
 
+    /**
+     * This method is for when user is a Service Employee
+     * @param req request
+     * @param res response
+     * @param user user taken from session
+     * @throws ServletException
+     * @throws IOException
+     */
     private void doGetEmployee(HttpServletRequest req, HttpServletResponse
             res, User user) throws ServletException, IOException {
         try {
@@ -101,6 +117,14 @@ public class HomeController extends HttpServlet {
         }
     }
 
+    /**
+     * This method is for when user is a Admin
+     * @param req request
+     * @param res response
+     * @param user user taken from session
+     * @throws ServletException
+     * @throws IOException
+     */
     private void doGetAdmin(HttpServletRequest req, HttpServletResponse res,
                             User user) throws ServletException, IOException {
         try {
