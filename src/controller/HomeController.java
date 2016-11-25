@@ -41,6 +41,8 @@ public class HomeController extends HttpServlet {
                 return;
             }
 
+            // Switch case which handles where the request gets handled based
+            // on user role id
             switch (user.getRole().getId()) {
                 case 1: // Customer
                     doGetCustomer(req, res, user);
