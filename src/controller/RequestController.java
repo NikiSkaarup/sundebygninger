@@ -52,7 +52,7 @@ public class RequestController extends HttpServlet {
                 forwardGet(req, res, "/requests?b=" + r.getBuilding().getId());
             else
                 forwardGet(req, res, req.getServletPath());
-        } catch (Exception e) {
+        } catch (PolygonException e) {
             req.setAttribute("error", e.getMessage());
             forwardGet(req, res, "/error.jsp");
         }
@@ -66,7 +66,7 @@ public class RequestController extends HttpServlet {
                 forwardGet(req, res, "/requests?b=" + r.getBuilding().getId());
             else
                 forwardGet(req, res, req.getServletPath());
-        } catch (Exception e) {
+        } catch (PolygonException e) {
             req.setAttribute("error", e.getMessage());
             forwardGet(req, res, "/error.jsp");
         }

@@ -146,13 +146,12 @@ public class RequestMapper {
      */
     public boolean updateRequest(Request r) throws PolygonException {
         String query = "UPDATE `Request` SET Description=?, " +
-                "FkServiceTypeId=?, `FkBuildingId`=?, FkUserId=? WHERE Id=?";
+                "FkServiceTypeId=?, `FkBuildingId`=? WHERE Id=?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, r.getDescription());
             stmt.setInt(2, r.getServiceType().getId());
             stmt.setInt(3, r.getBuilding().getId());
-            stmt.setInt(4, r.getUser().getId());
-            stmt.setInt(5, r.getId());
+            stmt.setInt(4, r.getId());
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new PolygonException("updateRequest error: " + e
