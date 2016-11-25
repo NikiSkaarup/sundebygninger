@@ -17,7 +17,7 @@
         <%@include file="navigation.jsp"%>
         
         <h4>${requestScope.action}Oplysninger om den enkelte kunde</h4>
-        <table border=" " class="col-md-4">
+        <table border="1" class="col-md-4">
 
             <tr>
                 <th>ID</th>

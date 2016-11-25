@@ -20,10 +20,11 @@ import model.Org;
 import model.User;
 
 /**
- *
+ * 
+ * 
  * @author Tanja
  */
-@WebServlet(name = "CustomerController", urlPatterns = {"/customer", "/user"})
+@WebServlet(name = "CustomerController", urlPatterns = {"/customer", "/custommer/insert","/customer/update"})
 public class CustomerController extends HttpServlet {
 
     private final Facade facade = Facade.getFacade();
@@ -44,6 +45,13 @@ public class CustomerController extends HttpServlet {
             out.println("</html>");
         }
     }
+    /**
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException 
+     */
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -61,6 +69,16 @@ public class CustomerController extends HttpServlet {
         }
 
     }
+    /**When this servlet is called, the doGetView method is invoked to send a form to the web browser
+     * to pick up and show the HTML-document for already existing customer: viewCustomer.jsp page. 
+     * By sending "id" and using
+     * method setAttribute with "user" parameter, makes it possible to choose the right user.
+     * 
+     * @param request user id 
+     * @param response is sent to viewCustomer HTTP protocol on "/viewCustomer" browser
+     * @throws ServletException
+     * @throws IOException 
+     */
 
     private void doGetView(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -76,11 +94,19 @@ public class CustomerController extends HttpServlet {
             forwardGet(request, response, "/error.jsp");
         }
     }
+    /**doGetInsert method used to add a new customer by admin, sending "oid" object with getParameter methode.
+     * Useren is forwarded by browser over to webside "addUpdateCustomer.jsp"
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException 
+     */
 
     private void doGetInsert(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            int Oid = Integer.parseInt(request.getParameter("oid"));
+            int Oid = Integer.parseInt(request.getParameter("orgid"));
             Org org = new Org();
             org.setId(Oid);
 
@@ -92,6 +118,13 @@ public class CustomerController extends HttpServlet {
             forwardGet(request, response, "/error.jsp");
         }
     }
+    /**doGetUpdate method update user.
+     * The admin is forwarded by browser over to webside "addUpdateCustomer.jsp" 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException 
+     */
 
     private void doGetUpdate(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -100,8 +133,8 @@ public class CustomerController extends HttpServlet {
             int u = Integer.parseInt("u");
 
             request.setAttribute("u", u);
-            request.setAttribute("Oid", id);
-            request.setAttribute("action", "Opdatere");
+            request.setAttribute("orgid", id);
+            request.setAttribute("action", "Update");
             Helper.forwardGet(request, response, "/addUpdateCustomer.jsp");
 
         } catch (Exception e) {
@@ -134,6 +167,15 @@ public class CustomerController extends HttpServlet {
 
         }
     }
+    /**doPost method is used for already existing customers. Method is used 
+     * to communicate data from the HTML form addUpdateCustomer.jsp. The method
+     * avoid showing parameters in the URL (treats the sensitive information)
+     * 
+     * @param request only from admin
+     * @param response sending to http browser "/customer/insert?orgid="
+     * @throws ServletException
+     * @throws IOException 
+     */
 
     private void doPostInsert(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -144,7 +186,7 @@ public class CustomerController extends HttpServlet {
             if (id > 0) {
                 Helper.forwardGet(request, response, "/customers?id=" + u.getOrg().getUsers());
             } else {
-                Helper.forwardGet(request, response, "/customer/insert?oId=" + u.getOrg().getUsers());
+                Helper.forwardGet(request, response, "/customer/insert?orgid=" + u.getOrg().getUsers());
             }
 
         } catch (Exception e) {
@@ -153,6 +195,14 @@ public class CustomerController extends HttpServlet {
         }
 
     }
+    /**doPostUpdate used to insert a sensitive information by admin
+     * 
+     * @param request
+     * @param responseused 
+     * @return
+     * @throws ServletException
+     * @throws IOException 
+     */
 
     private User doPostUpdate(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -164,7 +214,7 @@ public class CustomerController extends HttpServlet {
                 Helper.forwardGet(request, response, "/customers?id=" + u.getOrg().getUsers());
 
             } else {
-                Helper.forwardGet(request, response, "/customer/insert?oId=" + u.getOrg().getUsers());
+                Helper.forwardGet(request, response, "/customer/update?orgid=" + u.getOrg().getUsers());
             }
         } catch (Exception e) {
             request.setAttribute("error", e.getMessage());
@@ -173,6 +223,13 @@ public class CustomerController extends HttpServlet {
         return null;
 
     }
+    /**The method used to insert infromation for a new customer and an organisation; 
+     * to search for the existing customer and organisation in the DB
+     * @param request
+     * @return
+     * @throws ServletException
+     * @throws IOException 
+     */
 
     private User doPostgetCustomerFromForm(HttpServletRequest request)
             throws ServletException, IOException {
@@ -181,20 +238,20 @@ public class CustomerController extends HttpServlet {
 
         u.setId(-1);
 
-        if (request.getParameter("uId") != null
-                && !request.getParameter("uId").equals("")) {
+        if (request.getParameter("uid") != null
+                && !request.getParameter("uid").equals("")) {
 
-            u.setId(Integer.parseInt(request.getParameter("uId")));
+            u.setId(Integer.parseInt(request.getParameter("uid")));
         }
-        if (request.getParameter("orgId") != null
-                && !request.getParameter("orgId").equals("")) {
+        if (request.getParameter("orgid") != null
+                && !request.getParameter("orgid").equals("")) {
 
             Org org = new Org();
             org.setId(Integer.parseInt(request.getParameter("orgid")));
 
             u.setOrg(org);
 
-            Integer userid = Integer.parseInt(request.getParameter("UserId"));
+            Integer userid = Integer.parseInt(request.getParameter("uid"));
             String name = request.getParameter("Name");
             String email = request.getParameter("Email");
             String phone = request.getParameter("Phone");

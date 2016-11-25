@@ -5,7 +5,7 @@
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="u" scope="request" class="model.User"/>
-<jsp:useBean id="o" scope="request" class="model.Org"/>
+<jsp:useBean id="org" scope="request" class="model.Org"/>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -19,54 +19,47 @@
     <body>
         <%@include file="navigation.jsp" %>
         <div class="container-fluid">
+            <form action="<c:out value="${requestScope.url}"/>" method="POST" class="form-horizontal">
+                <input type="hidden" value="${u.id}" name="uid"/>
+                <input type="hidden" value="${org.id}" name="oid"/>
 
-            <h4>${requestScope.action}Redigere kunde</h4>
-            <table>
-            <div class="row">
-                <div class="col-md-6"> 
-                    <form action="<c:out value="${requestScope.url}"/>" method="POST" class="form-horizontal">
-                        <%--UserId sendt from organisation--%>
-
-                        <input type="hidden" value="${u.id}" name="uId"/>
-                        <input type="hidden" value="${o.id}" name="oId"/>
-
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">ID:</label>
-                            <div class="col-md-9">
-                                <input class="form-control" type="text" value="${u.id}" placeholder="Kunde id" name="id"/> 
-                            </div>
+                <h4>${requestScope.action}Redigere kunde</h4>
+                <table>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">ID:</label>
+                        <div class="col-md-9">
+                            <input class="form-control" type="text" value="${u.id}" placeholder="Kunde id" name="uid"/> 
                         </div>
+                    </div>
 
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Navn:</label>
-                            <div class="col-md-9">
-                                <input class="form-control" type="text" value="${u.name}" placeholder="Fulde navn" name="Name"/> 
-                            </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Navn:</label>
+                        <div class="col-md-9">
+                            <input class="form-control" type="text" value="${u.name}" placeholder="Fulde navn" name="name"/> 
                         </div>
+                    </div>
 
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Email:</label>
-                            <div class="col-md-9">
-                                <input class="form-control" type="text" value="${u.email}" placeholder="Email" name="Email"/> 
-                            </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Email:</label>
+                        <div class="col-md-9">
+                            <input class="form-control" type="text" value="${u.email}" placeholder="Email" name="email"/> 
                         </div>
+                    </div>
 
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Tlf. nummer:</label>
-                            <div class="col-md-9">
-                                <input class="form-control" type="text" value="${u.phone}" placeholder="Nummer" name="Phone"/> 
-                            </div>
+                    <div>
+                        <label class="col-md-3 control-label">Tlf. nummer:</label>
+                        <div>
+                            <input class="form-control" type="text" value="${u.phone}" placeholder="Nummer" name="phone"/> 
                         </div>
-
-                         <div>
-                <a href="/customer/update?id=${u.id}">Redigere kunde</a>
-            </div>
-
-    </body>
-</table>
+                    </div>
+                    <div>
+                        <a href="/customer/update?id=${u.id}">Redigere kunde</a>
+                    </div>
+                </table>
+        </div>
         <script src="js/jquery-2.2.4.js" type="text/javascript"></script>
         <script src="js/bootstrap.js" type="text/javascript"></script>
 
- </body>
+    </body>
 </html>
 

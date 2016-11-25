@@ -13,13 +13,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.User;
 import exceptions.PolygonException;
+import model.Org;
 import static util.Helper.forwardGet;
 
 /**
+ * 
  *
  * @author Tanja
  */
-@WebServlet(name = "AllCustomerController", urlPatterns = {"/customers", "/users"})
+@WebServlet(name = "AllCustomerController", urlPatterns = {"/customers"})
 public class AllCustomerController extends HttpServlet {
 
     /**
@@ -60,15 +62,16 @@ public class AllCustomerController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         try {
 
             Facade facade = Facade.getFacade();
-            int id = Integer.parseInt(request.getParameter("oid"));
+            int id = Integer.parseInt(request.getParameter("uid"));
+            Org org = new Org(id);
 
             List<User> userList = facade.getUsers();
 
-            request.setAttribute("users", userList);
+            request.setAttribute("customers", userList);
 
             RequestDispatcher rd = request.getRequestDispatcher("/allCustomers.jsp");
             rd.forward(request, response);
@@ -85,19 +88,16 @@ public class AllCustomerController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        /**
-         * Returns a short description of the servlet.
-         *
-         * @return a String containing servlet description
-         */
     }
-}
 
-/**
- * Handles the HTTP <code>POST</code> method.
- *
- * @param request servlet request
- * @param response servlet response
- * @throws ServletException if a servlet-specific error occurs
- * @throws IOException if an I/O error occurs
- */
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
+}
