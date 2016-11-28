@@ -100,10 +100,12 @@ public class BuildingController extends HttpServlet {
     }
 
     /**
+     * This method forwards the user to addUpdateBuilding and fill out the form with the building information
+     * - id, organisation and building is send with the request 
      * 
      * @param request - browser sends request to the server
      * @param response - server sends response back to the browser
-     * @throws ServletException - håndtere request (data travels)
+     * @throws ServletException - handle request (data travels)
      * @throws IOException - input/output - handle hardware issue
      */
     private void doGetUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -125,6 +127,7 @@ public class BuildingController extends HttpServlet {
     }
 
     /**
+     * Is used when user press the add or update button  
      * 
      * @param request - browser sends request to the server
      * @param response - server sends response back to the browser
@@ -147,6 +150,9 @@ public class BuildingController extends HttpServlet {
     }
 
     /**
+     * This method runs when a building is added.
+     * When the user have filled in the form and click on submit,
+     * there it connects to the DB and puts the data from the form into DB
      * 
      * @param request - browser sends request to the server
      * @param response - server sends response back to the browser
@@ -172,6 +178,9 @@ public class BuildingController extends HttpServlet {
     }
 
     /**
+     * This method runs when a building has to be updatet
+     * The fields in the form gets filled in with the building information,
+     * when the user click submit the changes is being send to DB
      * 
      * @param request - browser sends request to the server
      * @param response - server sends response back to the browser
@@ -194,7 +203,12 @@ public class BuildingController extends HttpServlet {
     }
 
     /**
-     * *
+     * This method is used in doPostInsert and doPostUpdate
+     * If user adds a building this method use the organisations Id and shows an empty form
+     * and put the data into variables 
+     * 
+     * If user updates a building this method use the building Id to fill in the form with the information
+     * 
      * 
      * @param request - browser sends request to server
      * @return This method only need to handle request and has to be used in add
