@@ -4,7 +4,7 @@
     Author     : Tanja
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<jsp:useBean id="users" scope="request" type="java.util.List<model.User>"/>
+<jsp:useBean id="customers" scope="request" type="java.util.List<model.User>"/>
 <jsp:useBean id="org" scope="request" class="model.Org"/>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -16,8 +16,8 @@
     </head>
     <body>
         <%@include file="navigation.jsp"%>
-        <h3>${requestScope.action}Liste over alle kunder</h3>
-
+        <h3>Liste over alle kunder</h3>
+        
         <table class="table table-bordered table-hover table-striped">
             <thead>
                 <tr class="active">
@@ -36,7 +36,7 @@
                 </c:forEach>
             </tbody>
         </table>
-        <a href="user/insert?oid=<c:out value="${org.id}"/>" class="btn btn-primary">Tilføj en ny kunde</a>
+        <a href="user/insert?orgid=<c:out value="${org.id}"/>" class="btn btn-primary">Tilføj en ny kunde</a>
 
         <script src="js/jquery-2.2.4.js" type="text/javascript"></script>
         <script src="js/bootstrap.js" type="text/javascript"></script>

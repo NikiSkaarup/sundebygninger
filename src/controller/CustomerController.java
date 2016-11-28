@@ -129,11 +129,10 @@ public class CustomerController extends HttpServlet {
     private void doGetUpdate(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            int id = Integer.parseInt("id");
-            int u = Integer.parseInt("u");
-
+            int id = Integer.parseInt(request.getParameter("id"));
+            User u = facade.getUser(id);
+            
             request.setAttribute("u", u);
-            request.setAttribute("orgid", id);
             request.setAttribute("action", "Update");
             Helper.forwardGet(request, response, "/addUpdateCustomer.jsp");
 
@@ -214,7 +213,7 @@ public class CustomerController extends HttpServlet {
                 Helper.forwardGet(request, response, "/customers?id=" + u.getOrg().getUsers());
 
             } else {
-                Helper.forwardGet(request, response, "/customer/update?orgid=" + u.getOrg().getUsers());
+                Helper.forwardGet(request, response, "/customer/update?id=" + u.getOrg().getUsers());
             }
         } catch (Exception e) {
             request.setAttribute("error", e.getMessage());

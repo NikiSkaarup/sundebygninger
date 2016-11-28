@@ -19,44 +19,48 @@
     <body>
         <%@include file="navigation.jsp" %>
         <div class="container-fluid">
-            <form action="<c:out value="${requestScope.url}"/>" method="POST" class="form-horizontal">
-                <input type="hidden" value="${u.id}" name="uid"/>
-                <input type="hidden" value="${org.id}" name="oid"/>
+            <h4>Redigér kunde</h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <form action="<c:out value="${requestScope.url}"/>" method="POST" class="form-horizontal">
+                        <input type="hidden" value="<c:out value="${u.id}"/>" name="uid"/>
+                        <input type="hidden" value="<c:out value="${org.id}"/>" name="orgid"/>
 
-                <h4>${requestScope.action}Redigere kunde</h4>
-                <table>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">ID:</label>
-                        <div class="col-md-9">
-                            <input class="form-control" type="text" value="${u.id}" placeholder="Kunde id" name="uid"/> 
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">ID:</label>
+                            <div class="col-md-9">
+                                <input class="form-control" type="text" value="<c:out value="${u.id}"/>" placeholder="Kunde id" name="uid"/> 
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Navn:</label>
-                        <div class="col-md-9">
-                            <input class="form-control" type="text" value="${u.name}" placeholder="Fulde navn" name="name"/> 
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Navn:</label>
+                            <div class="col-md-9">
+                                <input class="form-control" type="text" value="<c:out value="${u.name}"/>" placeholder="Fulde navn" name="name"/> 
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Email:</label>
-                        <div class="col-md-9">
-                            <input class="form-control" type="text" value="${u.email}" placeholder="Email" name="email"/> 
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Email:</label>
+                            <div class="col-md-9">
+                                <input class="form-control" type="text" value="<c:out value="${u.email}"/>" placeholder="Email" name="email"/> 
+                            </div>
                         </div>
-                    </div>
-
-                    <div>
-                        <label class="col-md-3 control-label">Tlf. nummer:</label>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Tlf. nummer:</label>
+                            <div class="col-md-9">
+                                <input class="form-control" type="text" value="<c:out value="${u.phone}"/>" placeholder="Nummer" name="phone"/> 
+                            </div>
+                        </div>
                         <div>
-                            <input class="form-control" type="text" value="${u.phone}" placeholder="Nummer" name="phone"/> 
+                            <button class="btn btn-primary" type="submit"><c:out value="GEM"/></button>
                         </div>
-                    </div>
-                    <div>
-                        <a href="/customer/update?id=${u.id}">Redigere kunde</a>
-                    </div>
-                </table>
+                    </form>
+
+                </div>
+
+            </div>
         </div>
+
+
         <script src="js/jquery-2.2.4.js" type="text/javascript"></script>
         <script src="js/bootstrap.js" type="text/javascript"></script>
 

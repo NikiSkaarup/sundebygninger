@@ -66,11 +66,13 @@ public class AllCustomerController extends HttpServlet {
         try {
 
             Facade facade = Facade.getFacade();
-            int id = Integer.parseInt(request.getParameter("uid"));
+            int id = Integer.parseInt(request.getParameter("oid"));
             Org org = new Org(id);
 
-            List<User> userList = facade.getUsers();
-
+            List<User> userList = facade.getUsers(id);
+            
+            //save the variable
+            request.setAttribute("org", org); 
             request.setAttribute("customers", userList);
 
             RequestDispatcher rd = request.getRequestDispatcher("/allCustomers.jsp");

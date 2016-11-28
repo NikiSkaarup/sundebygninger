@@ -16,8 +16,8 @@
     <body>
         <%@include file="navigation.jsp"%>
         
-        <h4>${requestScope.action}Oplysninger om den enkelte kunde</h4>
-        <table border="1" class="col-md-4">
+        <h4>Oplysninger om den enkelte kunde</h4>
+        <table border="" class="col-md-4">
 
             <tr>
                 <th>ID</th>
@@ -37,7 +37,7 @@
             </tr>
             
             <div>
-                <a href="/customer/update?id=${u.id}">Redigere kunde</a>
+                <a href="/customer/update?id=${u.id}">Redigér kunde</a>
             </div>
 
     </body>
