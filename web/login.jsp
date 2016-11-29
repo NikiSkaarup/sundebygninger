@@ -25,37 +25,39 @@ and open the template in the editor.
 <body>
 <div class="container-fluid">
     <div style="text-align:left">
-        <img src="billeder/Polygon Logo.jpg"> <br>
-        <div>
-            <h1>Sunde bygninger</h1>
+        <img src="billeder/PolygonLogo.png" style="height:44px; width:250px" > <br>
+        <div style="text-align:center">
+            
+            <img src="billeder/SundeBygningerLogo.png" style="height:160px; width:400px" > 
+            <br><br><br>
         </div>
     </div>
 
-    <h4>Sign in as customer/admin</h4>
 
-    <div class="row">
+    <div class="row" style="align-items: center">
+        <div class="col-md-3"></div>
         <div class="col-md-6">
             <!--Add email-->
             <form method="POST" action="LoginController"
                   class="form-horizontal">
                 <div class="form-group">
-                    <label class="col-md-3" for="email">Email:</label>
-                    <div class="col-md-9">
+                    <label class="col-md-2" for="email">Email:</label>
+                    <div class="col-md-10">
                         <input type="email" class="form-control" id="email"
                                placeholder="Enter email" name="email" autofocus>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-3" for="pwd">Password:</label>
-                    <div class="col-md-9">
+                    <label class="col-md-2" for="pwd">Password:</label>
+                    <div class="col-md-10">
                         <input type="password" class="form-control"
                                id="pwd" placeholder="Enter password"
                                name="password">
                     </div>
                 </div>
 
-                <div class="col-md-offset-3">
-                    <button type="submit" class="btn btn-default">Submit
+                <div class="col-md-offset-2">
+                    <button type="submit" class="btn btn-default">Sign in
                     </button>
                 </div>
             </form>
