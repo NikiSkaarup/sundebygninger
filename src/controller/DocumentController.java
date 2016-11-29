@@ -2,24 +2,17 @@ package controller;
 
 import domain.Facade;
 import exceptions.PolygonException;
-import model.Building;
-import model.Document;
-import model.Image;
+import model.File;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 import java.io.BufferedOutputStream;
-import java.io.File;
 import java.io.IOException;
 
-import static util.Helper.extractFileName;
 import static util.Helper.forwardGet;
-import static util.Helper.generateSemiUniqueFileName;
 
 /**
  * Created by Niki on 2016-10-26.
@@ -40,7 +33,7 @@ public class DocumentController extends HttpServlet {
         try {
             String idString = req.getPathInfo().substring(1);
             int id = Integer.parseInt(idString);
-            Document f = (Document) facade.getFileDocument(id);
+            File f = facade.getFileDocument(id);
             req.setAttribute("f", f);
             String[] arr = f.getName().split("\\.");
             if (arr.length > 1)

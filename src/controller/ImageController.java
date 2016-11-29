@@ -3,7 +3,6 @@ package controller;
 import domain.Facade;
 import exceptions.PolygonException;
 import model.File;
-import model.Image;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,7 +33,7 @@ public class ImageController extends HttpServlet {
         try {
             String idString = req.getPathInfo().substring(1);
             int id = Integer.parseInt(idString);
-            Image f = (Image) facade.getFileImage(id);
+            File f = facade.getFileImage(id);
             req.setAttribute("f", f);
             String[] arr = f.getName().split("\\.");
             if (arr.length > 1)

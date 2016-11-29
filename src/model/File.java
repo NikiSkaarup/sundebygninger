@@ -15,12 +15,7 @@ public class File {
     private byte[] data;
     private Building building;
     private FileType type;
-
-    /***
-     * Initialize without ID and never have an ID on the object
-     */
-    public File() {
-    }
+    private String path;
 
     /***
      * Initialize with ID in order to have a file with an ID
@@ -116,6 +111,14 @@ public class File {
      */
     public void setType(FileType type) {
         this.type = type;
+        updatePath();
+    }
+
+    private void updatePath() {
+        if(type.getId() == 1)
+            path = "/document/" + id;
+        if(type.getId() == 2)
+            path = "/image/" + id;
     }
 
     /***
@@ -123,6 +126,10 @@ public class File {
      * @param id id of the FileType
      */
     public void setType(int id) {
-        this.type = new FileType(id);
+        setType(new FileType(id));
+    }
+
+    public String getPath() {
+        return path;
     }
 }

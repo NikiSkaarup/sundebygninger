@@ -23,7 +23,7 @@ public class FileTypeMapper {
         FileTypeMapper.conn = conn;
     }
 
-    public List<FileType> getServiceTypes() throws PolygonException {
+    public List<FileType> getFileTypes() throws PolygonException {
         String query = "SELECT Id, `Name` FROM FileType";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
             try (ResultSet rs = stmt.executeQuery()) {

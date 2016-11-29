@@ -6,7 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:useBean id="d" scope="request" class="model.File"/>
+<jsp:useBean id="f" scope="request" class="model.File"/>
+<jsp:useBean id="fts" scope="request"
+             type="java.util.ArrayList<model.FileType>"/>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -26,14 +28,27 @@
                       class="form-horizontal"
                       enctype="multipart/form-data">
                     <input type="hidden" value="${requestScope.b}" name="b"/>
-                    <input type="hidden" value="${d.id}" name="id"/>
+                    <input type="hidden" value="${f.id}" name="id"/>
 
                     <div class="form-group">
                         <label class="col-md-3 control-label">Upload
-                            Document</label>
+                            File</label>
                         <div class="col-md-9">
                             <input type="file" name="file"/>
                         </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fileType">File type:</label>
+                        <select class="form-control" name="fileType"
+                                id="fileType">
+                            <c:forEach items="${fts}" var="ft">
+                                <option value="${ft.id}" <c:if
+                                        test="${f.type.id == ft.id}"> selected</c:if>>
+                                        ${ft.name}
+                                </option>
+                            </c:forEach>
+                        </select>
                     </div>
 
                     <div class="col-md-offset-3">
@@ -43,10 +58,19 @@
                 </form>
             </div>
         </c:if>
-        <c:if test="${d.name != null}">
+        <c:if test="${f.name != null}">
             <div class="col-md-6">
-                <a href="/documents/${d.path}" download="${d.name}"
-                   class="btn btn-default">Download ${d.name}</a>
+                <a href="/<c:if
+                test="${f.type.id == 1}">document</c:if><c:if
+                test="${f.type.id == 2}">image</c:if>/${f.id}"
+                   download="${f.name}"
+                   class="btn btn-default">Download ${f.name}</a>
+            </div>
+        </c:if>
+        <c:if test="${f.type.id == 2}">
+            <div class="col-md-6">
+                <img src="/image/${f.id}" alt="${f.name}"
+                     class="img-responsive"/>
             </div>
         </c:if>
     </div>

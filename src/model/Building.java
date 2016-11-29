@@ -22,6 +22,7 @@ public class Building {
     private List<Request> requests;
     private List<Incident> incidents;
     private List<Image> images;
+    private List<Document> documents;
     private List<Report> reports;
 
     public Building() {
@@ -128,6 +129,14 @@ public class Building {
 
     public void setImages(List<Image> images) {
         this.images = images;
+    }
+
+    public List<Document> getDocuments() {
+        return documents;
+    }
+
+    public void setDocuments(List<Document> documents) {
+        this.documents = documents;
     }
 
     public List<Report> getReports() {
