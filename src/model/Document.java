@@ -5,54 +5,33 @@ package model;
  *
  * @author Niki
  */
-public class Document {
-    private int id;
-    private String name;
-    private String path;
-    private Building building;
+public class Document extends File {
+
+    private String path = "/document/" + this.getId();
 
     public Document() {
     }
 
-    public int getId() {
-        return id;
+    /***
+     * Initialize with ID in order to have a file with an ID
+
+     * @param id the id of the file
+     */
+    public Document(int id) {
+        super(id);
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public FileType getType() {
+        int ftId = 1;
+        if (super.getType().getId() != ftId) {
+            FileType ft = new FileType(ftId);
+            ft.setName(super.getType().getName());
+            super.setType(ft);
+        }
+        return super.getType();
     }
 
     public String getPath() {
         return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public Building getBuilding() {
-        return building;
-    }
-
-    public void setBuilding(Building building) {
-        this.building = building;
-    }
-
-    @Override
-    public String toString() {
-        return "Document{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", path='" + path + '\'' +
-                ", building=" + building +
-                '}';
     }
 }

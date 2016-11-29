@@ -5,44 +5,33 @@ package model;
  *
  * @author Niki
  */
-public class Image {
-    private int id;
-    private String name;
-    private String path;
-    private Building building;
+public class Image extends File {
+
+    private String path = "/image/" + this.getId();
 
     public Image() {
     }
 
-    public int getId() {
-        return id;
+    /***
+     * Initialize with ID in order to have a file with an ID
+
+     * @param id the id of the file
+     */
+    public Image(int id) {
+        super(id);
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public FileType getType() {
+        int ftId = 2;
+        if (super.getType().getId() != ftId) {
+            FileType ft = new FileType(ftId);
+            ft.setName(super.getType().getName());
+            super.setType(ft);
+        }
+        return super.getType();
     }
 
     public String getPath() {
         return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public Building getBuilding() {
-        return building;
-    }
-
-    public void setBuilding(Building building) {
-        this.building = building;
     }
 }

@@ -169,99 +169,24 @@ public class Facade {
         return mapper.updateOrg(u);
     }
 
-    public Image getImage(int id) throws PolygonException {
-        ImageMapper mapper = new ImageMapper(conn);
-        return mapper.getImage(id);
-    }
-
-    public List<Image> getImages() {
-        ImageMapper mapper = new ImageMapper(conn);
-        return mapper.getImages();
-    }
-
-    public List<Image> getImages(int bId) {
-        ImageMapper mapper = new ImageMapper(conn);
-        Building b = new Building();
-        b.setId(bId);
-        return mapper.getImages(b);
-    }
-
-    public List<Image> getImages(int bId, int count) {
-        ImageMapper mapper = new ImageMapper(conn);
-        Building b = new Building();
-        b.setId(bId);
-        return mapper.getImages(b, count);
-    }
-
-    public List<Image> getImages(Building b) {
-        ImageMapper mapper = new ImageMapper(conn);
-        return mapper.getImages(b);
-    }
-
-    public List<Image> getImages(Building b, int count) {
-        ImageMapper mapper = new ImageMapper(conn);
-        return mapper.getImages(b, count);
-    }
-
-    public int insertImage(Image i) {
-        ImageMapper mapper = new ImageMapper(conn);
-        return mapper.insertImage(i);
-    }
-
-    public boolean updateImage(Image i) {
-        ImageMapper mapper = new ImageMapper(conn);
-        return mapper.updateImage(i);
-    }
-
-    public Document getDocument(int id) throws PolygonException {
-        DocumentMapper mapper = new DocumentMapper(conn);
-        return mapper.getDocument(id);
-    }
-
-    public List<Document> getDocuments() throws PolygonException {
-        DocumentMapper mapper = new DocumentMapper(conn);
-        return mapper.getDocuments();
-    }
-
-    public List<Document> getDocuments(int bId) throws PolygonException {
-        DocumentMapper mapper = new DocumentMapper(conn);
-        Building b = new Building();
-        b.setId(bId);
-        return mapper.getDocuments(b);
-    }
-
-    public List<Document> getDocuments(int bId, int count) throws
-            PolygonException {
-        DocumentMapper mapper = new DocumentMapper(conn);
-        Building b = new Building();
-        b.setId(bId);
-        return mapper.getDocuments(b, count);
-    }
-
-    public List<Document> getDocuments(Building b) throws PolygonException {
-        DocumentMapper mapper = new DocumentMapper(conn);
-        return mapper.getDocuments(b);
-    }
-
-    public List<Document> getDocuments(Building b, int count) throws
-            PolygonException {
-        DocumentMapper mapper = new DocumentMapper(conn);
-        return mapper.getDocuments(b, count);
-    }
-
-    public int insertDocument(Document d) throws PolygonException {
-        DocumentMapper mapper = new DocumentMapper(conn);
-        return mapper.insertDocument(d);
-    }
-
-    public boolean updateDocument(Document d) throws PolygonException {
-        DocumentMapper mapper = new DocumentMapper(conn);
-        return mapper.updateDocument(d);
-    }
-
     public File getFile(int id) throws PolygonException {
         FileMapper mapper = new FileMapper(conn);
         return mapper.getFile(id);
+    }
+
+    public File getFileOfType(int id, FileType ft) throws PolygonException {
+        FileMapper mapper = new FileMapper(conn);
+        return mapper.getFile(id, ft);
+    }
+
+    public File getFileDocument(int id) throws PolygonException {
+        FileMapper mapper = new FileMapper(conn);
+        return mapper.getFile(id, new FileType(1));
+    }
+
+    public File getFileImage(int id) throws PolygonException {
+        FileMapper mapper = new FileMapper(conn);
+        return mapper.getFile(id, new FileType(2));
     }
 
     public List<File> getFiles() throws PolygonException {
@@ -286,6 +211,11 @@ public class Facade {
     public List<File> getFiles(Building b, int count) throws PolygonException {
         FileMapper mapper = new FileMapper(conn);
         return mapper.getFiles(b, count);
+    }
+
+    public List<File> getFiles(FileType ft) throws PolygonException {
+        FileMapper mapper = new FileMapper(conn);
+        return mapper.getFiles(ft);
     }
 
     public List<File> getFiles(FileType ft, int count) throws PolygonException {
@@ -396,6 +326,11 @@ public class Facade {
     public List<ServiceType> getServiceTypes() throws PolygonException {
         ServiceTypeMapper mapper = new ServiceTypeMapper(conn);
         return mapper.getServiceTypes();
+    }
+
+    public List<FileType> getFileTypes() throws PolygonException {
+        FileTypeMapper mapper = new FileTypeMapper(conn);
+        return mapper.getFileTypes();
     }
 
     public List<Report> getReportsByEmployee(int id, int limit)

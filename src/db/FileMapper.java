@@ -56,6 +56,34 @@ public class FileMapper {
 
     /***
      *
+     * @param id
+     * @return
+     * @throws PolygonException
+     */
+    public File getFile(int id, FileType ft) throws PolygonException {
+        String query = "SELECT Id, `Name`, `Data`, FkBuildingId, FkFileTypeId" +
+                " FROM `File` WHERE Id=? AND FkFileTypeId=?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, id);
+            stmt.setInt(2, ft.getId());
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next())
+                    return constructFile(rs);
+                else {
+                    throw new PolygonException("No result found with id: " +
+                                                       id);
+                }
+            } catch (PolygonException e) {
+                throw new PolygonException("getFile ResultSet: " +
+                                                   e.getMessage());
+            }
+        } catch (SQLException e) {
+            throw new PolygonException("getFile error: " + e.getMessage());
+        }
+    }
+
+    /***
+     *
      * @return
      * @throws PolygonException
      */
@@ -104,9 +132,8 @@ public class FileMapper {
                 throw new PolygonException("getFiles: " + e.getMessage());
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PolygonException("getFiles sql: " + e.getMessage());
         }
-        return null;
     }
 
     /***
@@ -152,16 +179,6 @@ public class FileMapper {
         } catch (SQLException e) {
             throw new PolygonException("getFiles: " + e.getMessage());
         }
-    }
-
-    /***
-     *
-     * @param query
-     * @param count
-     * @return
-     */
-    private List<File> getFiles(String query, int count) {
-        return null;
     }
 
     /***
