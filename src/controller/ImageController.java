@@ -1,7 +1,9 @@
 package controller;
 
 import domain.Facade;
+import exceptions.PolygonException;
 import model.File;
+import model.Image;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,19 +32,18 @@ public class ImageController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse
             res) throws ServletException, IOException {
         try {
-            String imgId = req.getPathInfo().substring(1);
-            int id = Integer.parseInt(imgId);
-            File f = facade.getFile(id);
+            String idString = req.getPathInfo().substring(1);
+            int id = Integer.parseInt(idString);
+            Image f = (Image) facade.getFileImage(id);
             req.setAttribute("f", f);
             String[] arr = f.getName().split("\\.");
             if (arr.length > 1)
                 res.setContentType("image/" + arr[1]);
-            BufferedOutputStream bos = new BufferedOutputStream(res
-                    .getOutputStream());
+            BufferedOutputStream bos = new BufferedOutputStream(res.getOutputStream());
             bos.write(f.getData());
             bos.flush();
             bos.close();
-        } catch (Exception e) {
+        } catch (NullPointerException | PolygonException e) {
             req.setAttribute("error", e.getMessage());
             forwardGet(req, res, "/error.jsp");
         }
