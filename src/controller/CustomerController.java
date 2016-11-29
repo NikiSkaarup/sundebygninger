@@ -6,6 +6,7 @@
 package controller;
 
 import domain.Facade;
+import exceptions.PolygonException;
 import java.io.IOException;
 import java.io.PrintWriter;
 //import javax.servlet.RequestDispatcher;
@@ -20,11 +21,11 @@ import model.Org;
 import model.User;
 
 /**
- * 
- * 
+ *
+ *
  * @author Tanja
  */
-@WebServlet(name = "CustomerController", urlPatterns = {"/customer", "/custommer/insert","/customer/update"})
+@WebServlet(name = "CustomerController", urlPatterns = {"/customer", "/customer/insert", "/customer/update"})
 public class CustomerController extends HttpServlet {
 
     private final Facade facade = Facade.getFacade();
@@ -45,20 +46,20 @@ public class CustomerController extends HttpServlet {
             out.println("</html>");
         }
     }
+
     /**
-     * 
+     *
      * @param request
      * @param response
      * @throws ServletException
-     * @throws IOException 
+     * @throws IOException
      */
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         switch (request.getServletPath()) {
-            case "/custommer/insert":
+            case "/customer/insert":
                 doGetInsert(request, response);
                 break;
             case "/customer/update":
@@ -69,17 +70,20 @@ public class CustomerController extends HttpServlet {
         }
 
     }
-    /**When this servlet is called, the doGetView method is invoked to send a form to the web browser
-     * to pick up and show the HTML-document for already existing customer: viewCustomer.jsp page. 
-     * By sending "id" and using
-     * method setAttribute with "user" parameter, makes it possible to choose the right user.
-     * 
-     * @param request user id 
-     * @param response is sent to viewCustomer HTTP protocol on "/viewCustomer" browser
-     * @throws ServletException
-     * @throws IOException 
-     */
 
+    /**
+     * When this servlet is called, the doGetView method is invoked to send a
+     * form to the web browser to pick up and show the HTML-document for already
+     * existing customer: viewCustomer.jsp page. By sending "id" and using
+     * method setAttribute with "user" parameter, makes it possible to choose
+     * the right user.
+     *
+     * @param request user id
+     * @param response is sent to viewCustomer HTTP protocol on "/viewCustomer"
+     * browser
+     * @throws ServletException
+     * @throws IOException
+     */
     private void doGetView(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
@@ -94,45 +98,51 @@ public class CustomerController extends HttpServlet {
             forwardGet(request, response, "/error.jsp");
         }
     }
-    /**doGetInsert method used to add a new customer by admin, sending "oid" object with getParameter methode.
-     * Useren is forwarded by browser over to webside "addUpdateCustomer.jsp"
-     * 
+
+    /**
+     * doGetInsert method used to add a new customer by admin, sending "oid"
+     * object with getParameter methode. Useren is forwarded by browser over to
+     * webside "addUpdateCustomer.jsp"
+     *
      * @param request
      * @param response
      * @throws ServletException
-     * @throws IOException 
+     * @throws IOException
      */
-
     private void doGetInsert(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            int Oid = Integer.parseInt(request.getParameter("orgid"));
+            int oid = Integer.parseInt(request.getParameter("orgid"));
             Org org = new Org();
-            org.setId(Oid);
+            org.setId(oid);
 
             request.setAttribute("org", org);
+            request.setAttribute("url", request.getServletPath());
             request.setAttribute("action", "Tilføj ny kunde");
             Helper.forwardGet(request, response, "/addUpdateCustomer.jsp");
+
         } catch (Exception e) {
             request.setAttribute("error", e.getMessage());
             forwardGet(request, response, "/error.jsp");
         }
     }
-    /**doGetUpdate method update user.
-     * The admin is forwarded by browser over to webside "addUpdateCustomer.jsp" 
+
+    /**
+     * doGetUpdate method update user. The admin is forwarded by browser over to
+     * webside "addUpdateCustomer.jsp"
+     *
      * @param request
      * @param response
      * @throws ServletException
-     * @throws IOException 
+     * @throws IOException
      */
-
     private void doGetUpdate(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             int id = Integer.parseInt(request.getParameter("id"));
             User u = facade.getUser(id);
-            
-            request.setAttribute("u", u);
+
+            request.setAttribute("org", u.getOrg());
             request.setAttribute("action", "Update");
             Helper.forwardGet(request, response, "/addUpdateCustomer.jsp");
 
@@ -166,16 +176,17 @@ public class CustomerController extends HttpServlet {
 
         }
     }
-    /**doPost method is used for already existing customers. Method is used 
-     * to communicate data from the HTML form addUpdateCustomer.jsp. The method
+
+    /**
+     * doPost method is used for already existing customers. Method is used to
+     * communicate data from the HTML form addUpdateCustomer.jsp. The method
      * avoid showing parameters in the URL (treats the sensitive information)
-     * 
+     *
      * @param request only from admin
      * @param response sending to http browser "/customer/insert?orgid="
      * @throws ServletException
-     * @throws IOException 
+     * @throws IOException
      */
-
     private void doPostInsert(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
@@ -183,9 +194,9 @@ public class CustomerController extends HttpServlet {
             int id = facade.insertUser(u);
 
             if (id > 0) {
-                Helper.forwardGet(request, response, "/customers?id=" + u.getOrg().getUsers());
+                Helper.forwardGet(request, response, "/customers?oid=" + u.getOrg().getUsers());
             } else {
-                Helper.forwardGet(request, response, "/customer/insert?orgid=" + u.getOrg().getUsers());
+                Helper.forwardGet(request, response, "/customer/insert?oid=" + u.getOrg().getUsers());
             }
 
         } catch (Exception e) {
@@ -194,42 +205,46 @@ public class CustomerController extends HttpServlet {
         }
 
     }
-    /**doPostUpdate used to insert a sensitive information by admin
-     * 
+
+    /**
+     * doPostUpdate used to insert a sensitive information by admin
+     *
      * @param request
-     * @param responseused 
+     * @param responseused
      * @return
      * @throws ServletException
-     * @throws IOException 
+     * @throws IOException
      */
-
     private User doPostUpdate(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             User u = doPostgetCustomerFromForm(request);
-            int id = facade.insertUser(u);
+            //int id = facade.insertUser(u);
 
-            if (id > 0) {
-                Helper.forwardGet(request, response, "/customers?id=" + u.getOrg().getUsers());
+            if (facade.updateUser(u)) {
+                response.sendRedirect("/customers?oid=" + u.getOrg().getUsers());
 
             } else {
                 Helper.forwardGet(request, response, "/customer/update?id=" + u.getOrg().getUsers());
             }
-        } catch (Exception e) {
+        } catch (PolygonException | NullPointerException e) {
             request.setAttribute("error", e.getMessage());
             forwardGet(request, response, "/error.jsp");
         }
         return null;
 
     }
-    /**The method used to insert infromation for a new customer and an organisation; 
-     * to search for the existing customer and organisation in the DB
+
+    /**
+     * The method used to insert infromation for a new customer and an
+     * organisation; to search for the existing customer and organisation in the
+     * DB
+     *
      * @param request
      * @return
      * @throws ServletException
-     * @throws IOException 
+     * @throws IOException
      */
-
     private User doPostgetCustomerFromForm(HttpServletRequest request)
             throws ServletException, IOException {
 
@@ -239,34 +254,35 @@ public class CustomerController extends HttpServlet {
 
         if (request.getParameter("uid") != null
                 && !request.getParameter("uid").equals("")) {
-
             u.setId(Integer.parseInt(request.getParameter("uid")));
         }
-        if (request.getParameter("orgid") != null
-                && !request.getParameter("orgid").equals("")) {
 
-            Org org = new Org();
-            org.setId(Integer.parseInt(request.getParameter("orgid")));
+        Org org = new Org();
 
-            u.setOrg(org);
-
-            Integer userid = Integer.parseInt(request.getParameter("uid"));
-            String name = request.getParameter("Name");
-            String email = request.getParameter("Email");
-            String phone = request.getParameter("Phone");
-
-            u.setId(userid);
-            u.setName(name);
-            u.setEmail(email);
-            u.setPhone(phone);
-
+        if (request.getParameter("oid") != null
+                && !request.getParameter("oid").equals("")) {
+            org.setId(Integer.parseInt(request.getParameter("oid")));
         }
-        return u;
-    }
+        u.setOrg(org);
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+        Integer userid = Integer.parseInt(request.getParameter("uid"));
+        String name = request.getParameter("Name");
+        String email = request.getParameter("Email");
+        String phone = request.getParameter("Phone");
+
+        u.setId(userid);
+        u.setName(name);
+        u.setEmail(email);
+        u.setPhone(phone);
+
+    
+    return u;
+}
+
+/**
+ * Returns a short description of the servlet.
+ *
+ * @return a String containing servlet description
+ */
+
 }

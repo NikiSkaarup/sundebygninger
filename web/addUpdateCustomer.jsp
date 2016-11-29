@@ -4,8 +4,8 @@
     Author     : Tanja
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:useBean id="customer" scope="request" class="model.User"/>
-<jsp:useBean id="org" scope="request" class="model.Org"/>
+<jsp:useBean id="u" scope="request" class="model.User"/>
+<jsp:useBean id="o" scope="request" class="model.Org"/>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -24,7 +24,7 @@
                 <div class="col-md-6">
                     <form action="<c:out value="${requestScope.url}"/>" method="POST" class="form-horizontal">
                         <input type="hidden" value="<c:out value="${u.id}"/>" name="uid"/>
-                        <input type="hidden" value="<c:out value="${org.id}"/>" name="orgid"/>
+                        <input type="hidden" value="<c:out value="${o.id}"/>" name="oid"/>
 
                         <div class="form-group">
                             <label class="col-md-3 control-label">ID:</label>

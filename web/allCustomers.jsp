@@ -31,12 +31,12 @@
                     <tr>
                         <td>${u.name}</td>
                         <td>${u.email}</td>
-                        <td><a href="user?id=${u.id}">Mere</a></td>
+                        <td><a href="customer?id=${u.id}">Mere</a></td>
                     </tr>
                 </c:forEach>
             </tbody>
         </table>
-        <a href="user/insert?orgid=<c:out value="${org.id}"/>" class="btn btn-primary">Tilføj en ny kunde</a>
+        <a href="customer/insert?orgid=<c:out value="${org.id}"/>" class="btn btn-primary">Tilføj en ny kunde</a>
 
         <script src="js/jquery-2.2.4.js" type="text/javascript"></script>
         <script src="js/bootstrap.js" type="text/javascript"></script>
