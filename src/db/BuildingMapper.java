@@ -81,7 +81,6 @@ public class BuildingMapper {
     }
 
     public int insertBuilding(Building b) throws PolygonException {
-        int id = -1;
         String query = "INSERT INTO `Building` (`Name`, Address, "
                 + "ConstructionYear, CurrentUse, Area, PreviousUse, FkOrgId) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?);";
@@ -98,7 +97,7 @@ public class BuildingMapper {
 
             try (ResultSet rs = stmt.getGeneratedKeys()) {
                 if (rs.next()) {
-                    id = rs.getInt(1);
+                    return rs.getInt(1);
                 } else {
                     throw new PolygonException("failed to get insertBuilding " +
                                                        "generated id");
@@ -111,7 +110,6 @@ public class BuildingMapper {
             throw new PolygonException("insertBuilding error: " + e
                     .getMessage());
         }
-        return id;
     }
 
     public boolean updateBuilding(Building b) throws PolygonException {

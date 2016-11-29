@@ -43,11 +43,11 @@ public class FileMapper {
                     return constructFile(rs);
                 else {
                     throw new PolygonException("No result found with id: " +
-                            id);
+                                                       id);
                 }
             } catch (PolygonException e) {
                 throw new PolygonException("getFile ResultSet: " +
-                        e.getMessage());
+                                                   e.getMessage());
             }
         } catch (SQLException e) {
             throw new PolygonException("getFile error: " + e.getMessage());
@@ -181,6 +181,29 @@ public class FileMapper {
         }
     }
 
+    public List<File> getFilesOfFileType(Building b, FileType ft)
+            throws PolygonException {
+        String query = "SELECT `File`.Id, `File`.`Name`, `Data`, " +
+                "FkBuildingId, FkFileTypeId FROM `File` INNER JOIN FileType " +
+                "ON `File`.FkFileTypeId = FileType.Id WHERE FkBuildingId=? " +
+                "AND FkFileTypeId=?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, b.getId());
+            stmt.setInt(2, ft.getId());
+            try (ResultSet rs = stmt.executeQuery()) {
+                List<File> list = new ArrayList<>();
+                while (rs.next())
+                    list.add(constructFile(rs));
+                return list;
+            } catch (PolygonException e) {
+                throw new PolygonException("getFilesOfFileType: " + e
+                        .getMessage());
+            }
+        } catch (SQLException e) {
+            throw new PolygonException("getFilesOfFileType: " + e.getMessage());
+        }
+    }
+
     /***
      *
      * @param f
@@ -202,10 +225,10 @@ public class FileMapper {
                     return rs.getInt(1);
                 else
                     throw new PolygonException("insertFile failed to get " +
-                            "generated Id");
+                                                       "generated Id");
             } catch (Exception e) {
                 throw new PolygonException("insertFile failed to " +
-                        "insert file: " + e);
+                                                   "insert file: " + e);
             }
         } catch (SQLException e) {
             throw new PolygonException("insertFile error: " + e

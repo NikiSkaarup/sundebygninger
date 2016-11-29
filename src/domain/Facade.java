@@ -213,6 +213,16 @@ public class Facade {
         return mapper.getFiles(b, count);
     }
 
+    public List<File> getFilesDocuments(Building b) throws PolygonException {
+        FileMapper mapper = new FileMapper(conn);
+        return mapper.getFilesOfFileType(b, new FileType(1));
+    }
+
+    public List<File> getFilesImages(Building b) throws PolygonException {
+        FileMapper mapper = new FileMapper(conn);
+        return mapper.getFilesOfFileType(b, new FileType(2));
+    }
+
     public List<File> getFiles(FileType ft) throws PolygonException {
         FileMapper mapper = new FileMapper(conn);
         return mapper.getFiles(ft);

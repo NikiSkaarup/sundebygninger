@@ -18,19 +18,48 @@
 
         <div class="container-fluid">
             <div class="row">
-                <h1>Building</h1>
+                <div class="col-md-6">
+                    <h1>Building</h1>
 
-                <p>Organisation: ${b.org.name}</p>
-                <p>Navn på bygning: ${b.name}</p>
-                <p>Adresse: ${b.address}</p>
-                <p>Byggeår: ${b.constructionYear}</p>
-                <p>Nuværende benyttelse: ${b.currentUse}</p>
-                <p>Areal: ${b.area}</p>
-                <p>Tidlige benyttelse: ${b.previousUse}</p>
+                    <p>Organisation: ${b.org.name}</p>
+                    <p>Navn på bygning: ${b.name}</p>
+                    <p>Adresse: ${b.address}</p>
+                    <p>Byggeår: ${b.constructionYear}</p>
+                    <p>Nuværende benyttelse: ${b.currentUse}</p>
+                    <p>Areal: ${b.area}</p>
+                    <p>Tidlige benyttelse: ${b.previousUse}</p>
 
-                <a href="/image/insert?b=${b.id}">Tilføj billeder</a>
-                <a href="/document/insert?b=${b.id}">Tilføj dokumenter/rapporter</a>
-                <a href="/building/update?id=${b.id}">Rediger bygning</a>
+                    <a href="/file/insert?b=${b.id}">Tilføj billede/dokument</a>
+                    <a href="/building/update?id=${b.id}">Rediger bygning</a>
+
+                    </div>
+                <c:if test="${b.documents.size() > 0}">
+                    <div class="col-md-6">
+                        <div class="list-group">
+                            <c:forEach items="b.documents" var="d">
+                                <a class="list-group-item"
+                                   href="/document/${d.id}"
+                                   download="${d.name}">download ${d.name}</a>
+                            </c:forEach>
+                        </div>
+                    </div>
+                </c:if>
+                <c:if test="${b.images.size() > 0}">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <c:forEach items="b.images" var="i">
+                                <div class="col-md-3">
+                                    <a class="thumbnail"
+                                       href="/image/${i.id}"
+                                       download="${i.name}">
+                                        <img src="/image/${i.id}"
+                                             alt="${i.name}">
+                                    </a>
+                                </div>
+                            </c:forEach>
+                        </div>
+                    </div>
+                </c:if>
             </div>
         </div>
         <script src="js/jquery-2.2.4.js" type="text/javascript"></script>

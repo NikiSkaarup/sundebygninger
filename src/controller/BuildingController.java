@@ -64,6 +64,8 @@ public class BuildingController extends HttpServlet {
         try {
             int id = Integer.parseInt(request.getParameter("id"));
             Building b = facade.getBuilding(id);
+            b.setDocuments(facade.getFilesDocuments(b));
+            b.setImages(facade.getFilesImages(b));
             //Save the variable
             request.setAttribute("b", b);
             Helper.forwardGet(request, response, "/viewBuilding.jsp");
