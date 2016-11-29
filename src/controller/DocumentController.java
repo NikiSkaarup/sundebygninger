@@ -37,7 +37,7 @@ public class DocumentController extends HttpServlet {
             req.setAttribute("f", f);
             String[] arr = f.getName().split("\\.");
             if (arr.length > 1)
-                res.setContentType("document/" + arr[1]);
+                res.setContentType("application/" + arr[1]);
             BufferedOutputStream bos = new BufferedOutputStream(res.getOutputStream());
             bos.write(f.getData());
             bos.flush();

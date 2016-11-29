@@ -1,9 +1,10 @@
 package controller;
 
 import domain.Facade;
+import exceptions.PolygonException;
 import model.Building;
 import model.File;
-import sun.misc.IOUtils;
+import model.FileType;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -12,7 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Paths;
 
 import static util.Helper.forwardGet;
@@ -67,11 +69,12 @@ public class FileController extends HttpServlet {
         try {
             File f = doPostBoth(req);
             if (facade.insertFile(f) > 0)
-                forwardGet(req, res, "/building?id=" + f.getBuilding().getId());
+                res.sendRedirect("/building?id=" + f.getBuilding().getId());
             else
                 forwardGet(req, res, req.getServletPath());
-        } catch (Exception e) {
+        } catch (NullPointerException | PolygonException e) {
             req.setAttribute("error", e.getMessage());
+            e.printStackTrace();
             forwardGet(req, res, "/error.jsp");
         }
     }
@@ -89,11 +92,12 @@ public class FileController extends HttpServlet {
         try {
             File f = doPostBoth(req);
             if (facade.updateFile(f))
-                forwardGet(req, res, "/building?id=" + f.getBuilding().getId());
+                res.sendRedirect("/building?id=" + f.getBuilding().getId());
             else
                 forwardGet(req, res, req.getServletPath());
-        } catch (Exception e) {
+        } catch (NullPointerException | PolygonException e) {
             req.setAttribute("error", e.getMessage());
+            e.printStackTrace();
             forwardGet(req, res, "/error.jsp");
         }
     }
@@ -108,6 +112,10 @@ public class FileController extends HttpServlet {
     private File doPostBoth(HttpServletRequest req)
             throws ServletException, IOException {
         File f = new File(Integer.parseInt(req.getParameter("id")));
+
+        String fileType = req.getParameter("fileType");
+        FileType ft = new FileType(Integer.parseInt(fileType));
+        f.setType(ft);
 
         Building b = new Building();
         b.setId(Integer.parseInt(req.getParameter("b")));
@@ -158,6 +166,7 @@ public class FileController extends HttpServlet {
             int id = Integer.parseInt(req.getParameter("id"));
             File f = facade.getFile(id);
             req.setAttribute("f", f);
+            req.setAttribute("fts", facade.getFileTypes());
             forwardGet(req, res, "/file.jsp");
         } catch (Exception e) {
             req.setAttribute("error", e.getMessage());
@@ -179,6 +188,7 @@ public class FileController extends HttpServlet {
             req.setAttribute("b", b);
             req.setAttribute("action", "Insert");
             req.setAttribute("url", req.getServletPath());
+            req.setAttribute("fts", facade.getFileTypes());
             forwardGet(req, res, "/file.jsp");
         } catch (Exception e) {
             req.setAttribute("error", e.getMessage());
@@ -202,6 +212,7 @@ public class FileController extends HttpServlet {
             req.setAttribute("f", f);
             req.setAttribute("url", req.getServletPath());
             req.setAttribute("action", "Update");
+            req.setAttribute("fts", facade.getFileTypes());
             forwardGet(req, res, "/file.jsp");
         } catch (Exception e) {
             req.setAttribute("error", e.getMessage());

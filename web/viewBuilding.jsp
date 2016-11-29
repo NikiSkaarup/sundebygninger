@@ -36,9 +36,9 @@
                 <c:if test="${b.documents.size() > 0}">
                     <div class="col-md-6">
                         <div class="list-group">
-                            <c:forEach items="b.documents" var="d">
+                            <c:forEach items="${b.documents}" var="d">
                                 <a class="list-group-item"
-                                   href="/document/${d.id}"
+                                   href="${d.path}"
                                    download="${d.name}">download ${d.name}</a>
                             </c:forEach>
                         </div>
@@ -47,12 +47,12 @@
                 <c:if test="${b.images.size() > 0}">
                     <div class="col-md-12">
                         <div class="row">
-                            <c:forEach items="b.images" var="i">
+                            <c:forEach items="${b.images}" var="i">
                                 <div class="col-md-3">
                                     <a class="thumbnail"
-                                       href="/image/${i.id}"
+                                       href="${i.path}"
                                        download="${i.name}">
-                                        <img src="/image/${i.id}"
+                                        <img src="${i.path}"
                                              alt="${i.name}">
                                     </a>
                                 </div>

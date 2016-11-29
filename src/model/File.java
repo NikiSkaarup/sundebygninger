@@ -17,6 +17,15 @@ public class File {
     private FileType type;
     private String path;
 
+    public File() {
+        id=-1;
+        name = "";
+        data = new byte[]{};
+        building = new Building();
+        type = new FileType();
+        path = "";
+    }
+
     /***
      * Initialize with ID in order to have a file with an ID
      * @param id the id of the file

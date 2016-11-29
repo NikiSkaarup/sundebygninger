@@ -36,6 +36,7 @@ public class Building {
         requests = new ArrayList<>();
         incidents = new ArrayList<>();
         images = new ArrayList<>();
+        documents = new ArrayList<>();
         reports = new ArrayList<>();
     }
 

@@ -5,6 +5,7 @@ import model.Building;
 import model.File;
 import model.FileType;
 
+import javax.sql.rowset.serial.SerialBlob;
 import java.io.ByteArrayInputStream;
 import java.sql.*;
 import java.util.ArrayList;
@@ -61,8 +62,10 @@ public class FileMapper {
      * @throws PolygonException
      */
     public File getFile(int id, FileType ft) throws PolygonException {
-        String query = "SELECT Id, `Name`, `Data`, FkBuildingId, FkFileTypeId" +
-                " FROM `File` WHERE Id=? AND FkFileTypeId=?";
+        String query = "SELECT `File`.Id, `File`.`Name`, `Data`, " +
+                "FkBuildingId, FkFileTypeId, `FileType`.Name FROM `File` " +
+                "INNER JOIN FileType ON `File`.FkFileTypeId = FileType.Id " +
+                "WHERE `File`.Id=? AND FkFileTypeId=?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, id);
             stmt.setInt(2, ft.getId());
@@ -109,9 +112,9 @@ public class FileMapper {
      * @throws PolygonException
      */
     public List<File> getFiles(Building b, int count) throws PolygonException {
-        String query = "SELECT `File`.Id, `File`.`Name`, `Data`, " +
-                "FkBuildingId, FkFileTypeId FROM `File` INNER JOIN FileType " +
-                "ON `File`.FkFileTypeId = FileType.Id";
+        String query = "SELECT `File`.Id, `File`.`Name`, " +
+                "FkBuildingId, FkFileTypeId, `FileType`.Name FROM `File` " +
+                "INNER JOIN FileType ON `File`.FkFileTypeId = FileType.Id";
         if (b != null) {
             query += " WHERE FkBuildingId=?";
             if (count > 0)
@@ -154,9 +157,9 @@ public class FileMapper {
      * @throws PolygonException
      */
     public List<File> getFiles(FileType t, int count) throws PolygonException {
-        String query = "SELECT `File`.Id, `File`.`Name`, `Data`, " +
-                "FkBuildingId, FkFileTypeId FROM `File` INNER JOIN FileType " +
-                "ON `File`.FkFileTypeId = FileType.Id";
+        String query = "SELECT `File`.Id, `File`.`Name`, " +
+                "FkBuildingId, FkFileTypeId, `FileType`.Name FROM `File` " +
+                "INNER JOIN FileType ON `File`.FkFileTypeId = FileType.Id";
         if (t != null) {
             query += " WHERE FkFileTypeId=?";
             if (count > 0)
@@ -183,10 +186,10 @@ public class FileMapper {
 
     public List<File> getFilesOfFileType(Building b, FileType ft)
             throws PolygonException {
-        String query = "SELECT `File`.Id, `File`.`Name`, `Data`, " +
-                "FkBuildingId, FkFileTypeId FROM `File` INNER JOIN FileType " +
-                "ON `File`.FkFileTypeId = FileType.Id WHERE FkBuildingId=? " +
-                "AND FkFileTypeId=?";
+        String query = "SELECT `File`.Id, `File`.`Name`, " +
+                "FkBuildingId, FkFileTypeId, `FileType`.Name FROM `File` " +
+                "INNER JOIN FileType ON `File`.FkFileTypeId = FileType.Id " +
+                "WHERE FkBuildingId=? AND FkFileTypeId=?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, b.getId());
             stmt.setInt(2, ft.getId());
@@ -216,7 +219,7 @@ public class FileMapper {
         try (PreparedStatement stmt = conn.prepareStatement(query, Statement
                 .RETURN_GENERATED_KEYS)) {
             stmt.setString(1, f.getName());
-            stmt.setBlob(2, new ByteArrayInputStream(f.getData()));
+            stmt.setBytes(2, f.getData());
             stmt.setInt(3, f.getBuilding().getId());
             stmt.setInt(4, f.getType().getId());
             stmt.executeUpdate();
@@ -268,8 +271,10 @@ public class FileMapper {
             File f = new File(rs.getInt("File.Id"));
             f.setName(rs.getString("File.Name"));
 
-            Blob blob = rs.getBlob("Data");
-            f.setData(blob.getBytes(0, (int) blob.length()));
+            try {
+                f.setData(rs.getBytes("Data"));
+            } catch (Exception ignored) {
+            }
 
             Building b = new Building();
             b.setId(rs.getInt("FkBuildingId"));

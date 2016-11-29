@@ -31,24 +31,27 @@
                     <input type="hidden" value="${f.id}" name="id"/>
 
                     <div class="form-group">
-                        <label class="col-md-3 control-label">Upload
-                            File</label>
+                        <label class="col-md-3 control-label"
+                               for="file">Upload File</label>
                         <div class="col-md-9">
-                            <input type="file" name="file"/>
+                            <input id="file" type="file" name="file"/>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="fileType">File type:</label>
-                        <select class="form-control" name="fileType"
-                                id="fileType">
-                            <c:forEach items="${fts}" var="ft">
-                                <option value="${ft.id}" <c:if
-                                        test="${f.type.id == ft.id}"> selected</c:if>>
-                                        ${ft.name}
-                                </option>
-                            </c:forEach>
-                        </select>
+                        <label class="col-md-3 control-label"
+                               for="fileType">File type:</label>
+                        <div class="col-md-9">
+                            <select class="form-control" name="fileType"
+                                    id="fileType">
+                                <c:forEach items="${fts}" var="ft">
+                                    <option value="${ft.id}" <c:if
+                                            test="${f.type.id == ft.id}"> selected</c:if>>
+                                            ${ft.name}
+                                    </option>
+                                </c:forEach>
+                            </select>
+                        </div>
                     </div>
 
                     <div class="col-md-offset-3">
@@ -58,7 +61,7 @@
                 </form>
             </div>
         </c:if>
-        <c:if test="${f.name != null}">
+        <c:if test="${f.id > 0}">
             <div class="col-md-6">
                 <a href="/<c:if
                 test="${f.type.id == 1}">document</c:if><c:if
