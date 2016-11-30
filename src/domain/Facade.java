@@ -129,9 +129,9 @@ public class Facade {
         return mapper.getUsers(org, count);
     }
 
-    public int insertUser(User u) throws PolygonException {
+    public int insertUser(User u, String password) throws PolygonException {
         UserMapper mapper = new UserMapper(conn);
-        return mapper.insertUser(u);
+        return mapper.insertUser(u, password);
     }
 
     public boolean updateUser(User u) throws PolygonException {

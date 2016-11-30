@@ -92,16 +92,17 @@ public class UserMapper {
         return null;
     }
 
-    public int insertUser(User u) throws PolygonException {
-        String query = "INSERT INTO `User` (`Name`, Email, Phone, FkRoleId, " +
-                "FkOrgId) VALUES (?, ?, ?, ?, ?);";
+    public int insertUser(User u, String password) throws PolygonException {
+        String query = "INSERT INTO `User` (`Name`, Email, `Password`, Phone, FkRoleId, " +
+                "FkOrgId) VALUES (?, ?, ?, ?, ?, ?);";
         try (PreparedStatement stmt = conn.prepareStatement(query, Statement
                 .RETURN_GENERATED_KEYS)) {
             stmt.setString(1, u.getName());
             stmt.setString(2, u.getEmail());
-            stmt.setString(3, u.getPhone());
-            stmt.setInt(4, 1);
-            stmt.setInt(5, u.getOrg().getId());
+            stmt.setString(3, password);
+            stmt.setString(4, u.getPhone());
+            stmt.setInt(5, 1);
+            stmt.setInt(6, u.getOrg().getId());
             int changed = stmt.executeUpdate();
             try (ResultSet rs = stmt.getGeneratedKeys()) {
                 if (rs.next())
