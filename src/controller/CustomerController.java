@@ -142,7 +142,7 @@ public class CustomerController extends HttpServlet {
             int id = Integer.parseInt(request.getParameter("id"));
             User u = facade.getUser(id);
 
-            request.setAttribute("org", u.getOrg());
+            request.setAttribute("o", u.getOrg());
             request.setAttribute("u", u);
             request.setAttribute("action", "GEM");
             Helper.forwardGet(request, response, "/addUpdateCustomer.jsp");
@@ -166,11 +166,11 @@ public class CustomerController extends HttpServlet {
             throws ServletException, IOException {
 
         switch (request.getServletPath()) {
-            case "/custommer/insert":
-                doGetInsert(request, response);
+            case "/customer/insert":
+                doPostInsert(request, response);
                 break;
             case "/customer/update":
-                doGetUpdate(request, response);
+                doPostUpdate(request, response);
                 break;
             default:
                 forwardGet(request, response, "/home.jsp");
