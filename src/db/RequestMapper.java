@@ -129,7 +129,7 @@ public class RequestMapper {
                                                        "generated Id");
             } catch (Exception e) {
                 throw new PolygonException("insertRequest failed to " +
-                                                   "insert document: " + e);
+                                                   "insert request: " + e);
             }
         } catch (SQLException e) {
             throw new PolygonException("insertRequest error: " + e
