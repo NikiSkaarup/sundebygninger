@@ -106,7 +106,7 @@ public class UserMapper {
             int changed = stmt.executeUpdate();
             try (ResultSet rs = stmt.getGeneratedKeys()) {
                 if (rs.next())
-                    return rs.getInt("Id");
+                    return rs.getInt(1);
                 else
                     throw new PolygonException("Failed to insert user");
             } catch (Exception e) {
