@@ -93,7 +93,6 @@ public class UserMapper {
     }
 
     public int insertUser(User u) throws PolygonException {
-        int id = -1;
         String query = "INSERT INTO `User` (`Name`, Email, Phone, FkRoleId, " +
                 "FkOrgId) VALUES (?, ?, ?, ?, ?);";
         try (PreparedStatement stmt = conn.prepareStatement(query, Statement
@@ -101,34 +100,35 @@ public class UserMapper {
             stmt.setString(1, u.getName());
             stmt.setString(2, u.getEmail());
             stmt.setString(3, u.getPhone());
-            stmt.setInt(4, u.getRole().getId());
+            stmt.setInt(4, 1);
             stmt.setInt(5, u.getOrg().getId());
             int changed = stmt.executeUpdate();
-            ResultSet rs = stmt.getGeneratedKeys();
-            if (rs.next())
-                id = rs.getInt("Id");
-            rs.close();
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next())
+                    return rs.getInt("Id");
+                else
+                    throw new PolygonException("Failed to insert user");
+            } catch (Exception e) {
+                throw new PolygonException("insertUser:" + e.getMessage());
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PolygonException("insertUser:" + e.getMessage());
         }
-        return id;
     }
 
     public boolean updateUser(User u) throws PolygonException {
         String query = "UPDATE `User` SET `Name`=?, Email=?, Phone=?, " +
-                "FkRoleId=?, FkOrgId=? WHERE Id=?";
+                "FkOrgId=? WHERE Id=?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, u.getName());
             stmt.setString(2, u.getEmail());
             stmt.setString(3, u.getPhone());
-            stmt.setInt(4, u.getRole().getId());
-            stmt.setInt(5, u.getOrg().getId());
-            stmt.setInt(6, u.getId());
+            stmt.setInt(4, u.getOrg().getId());
+            stmt.setInt(5, u.getId());
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PolygonException("updateUser:" + e.getMessage());
         }
-        return false;
     }
 
     private User constructUser(ResultSet rs) throws PolygonException {
