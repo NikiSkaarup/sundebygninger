@@ -143,7 +143,8 @@ public class CustomerController extends HttpServlet {
             User u = facade.getUser(id);
 
             request.setAttribute("org", u.getOrg());
-            request.setAttribute("action", "Update");
+            request.setAttribute("u", u);
+            request.setAttribute("action", "GEM");
             Helper.forwardGet(request, response, "/addUpdateCustomer.jsp");
 
         } catch (Exception e) {
@@ -194,9 +195,9 @@ public class CustomerController extends HttpServlet {
             int id = facade.insertUser(u);
 
             if (id > 0) {
-                Helper.forwardGet(request, response, "/customers?oid=" + u.getOrg().getUsers());
+                Helper.forwardGet(request, response, "/customers?oid=" + u.getOrg().getId());
             } else {
-                Helper.forwardGet(request, response, "/customer/insert?oid=" + u.getOrg().getUsers());
+                Helper.forwardGet(request, response, "/customer/insert?oid=" + u.getId());
             }
 
         } catch (Exception e) {
@@ -215,24 +216,22 @@ public class CustomerController extends HttpServlet {
      * @throws ServletException
      * @throws IOException
      */
-    private User doPostUpdate(HttpServletRequest request, HttpServletResponse response)
+    private void doPostUpdate(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             User u = doPostgetCustomerFromForm(request);
-            //int id = facade.insertUser(u);
 
             if (facade.updateUser(u)) {
-                response.sendRedirect("/customers?oid=" + u.getOrg().getUsers());
+                response.sendRedirect("/customers?oid=" + u.getOrg().getId());
 
             } else {
-                Helper.forwardGet(request, response, "/customer/update?id=" + u.getOrg().getUsers());
+                Helper.forwardGet(request, response, "/customer/update?id=" + u.getId());
             }
+            
         } catch (PolygonException | NullPointerException e) {
             request.setAttribute("error", e.getMessage());
             forwardGet(request, response, "/error.jsp");
         }
-        return null;
-
     }
 
     /**
@@ -251,11 +250,10 @@ public class CustomerController extends HttpServlet {
         User u = new User();
 
         u.setId(-1);
-
         if (request.getParameter("uid") != null
                 && !request.getParameter("uid").equals("")) {
             u.setId(Integer.parseInt(request.getParameter("uid")));
-        }
+        }        
 
         Org org = new Org();
 
@@ -265,12 +263,10 @@ public class CustomerController extends HttpServlet {
         }
         u.setOrg(org);
 
-        Integer userid = Integer.parseInt(request.getParameter("uid"));
-        String name = request.getParameter("Name");
-        String email = request.getParameter("Email");
-        String phone = request.getParameter("Phone");
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
 
-        u.setId(userid);
         u.setName(name);
         u.setEmail(email);
         u.setPhone(phone);

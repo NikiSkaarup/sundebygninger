@@ -27,12 +27,6 @@
                         <input type="hidden" value="<c:out value="${o.id}"/>" name="oid"/>
 
                         <div class="form-group">
-                            <label class="col-md-3 control-label">ID:</label>
-                            <div class="col-md-9">
-                                <input class="form-control" type="text" value="<c:out value="${u.id}"/>" placeholder="Kunde id" name="uid"/> 
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label class="col-md-3 control-label">Navn:</label>
                             <div class="col-md-9">
                                 <input class="form-control" type="text" value="<c:out value="${u.name}"/>" placeholder="Fulde navn" name="name"/> 
@@ -51,7 +45,7 @@
                             </div>
                         </div>
                         <div>
-                            <button class="btn btn-primary" type="submit"><c:out value="GEM"/></button>
+                            <button class="btn btn-primary" type="submit">GEM</button>
                         </div>
                     </form>
 
