@@ -16,7 +16,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="home"><img src="<c:url value="/billeder/SundeBygningerLogo.png"/>" style="height:43px; width:108px"></a>
+            <a class="navbar-brand" href="<c:url value="/home"/>"><img src="<c:url value="/billeder/SundeBygningerLogo.png"/>" style="height:43px; width:108px"/></a>
         </div>
 
         <div class="collapse navbar-collapse" id="navbar-collapse">
