@@ -116,7 +116,7 @@ public class CustomerController extends HttpServlet {
             Org org = new Org();
             org.setId(oid);
 
-            request.setAttribute("org", org);
+            request.setAttribute("o", org);
             request.setAttribute("url", request.getServletPath());
             request.setAttribute("action", "Tilføj ny kunde");
             Helper.forwardGet(request, response, "/addUpdateCustomer.jsp");
@@ -192,12 +192,14 @@ public class CustomerController extends HttpServlet {
             throws ServletException, IOException {
         try {
             User u = doPostgetCustomerFromForm(request);
-            int id = facade.insertUser(u);
+            
+            String password = request.getParameter("password");
+            int id = facade.insertUser(u, password);
 
             if (id > 0) {
-                Helper.forwardGet(request, response, "/customers?oid=" + u.getOrg().getId());
+                response.sendRedirect("/customers?oid=" + u.getOrg().getId());
             } else {
-                Helper.forwardGet(request, response, "/customer/insert?oid=" + u.getId());
+                Helper.forwardGet(request, response, "/customer/insert?orgid=" + u.getId());
             }
 
         } catch (Exception e) {

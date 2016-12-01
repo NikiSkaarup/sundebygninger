@@ -44,6 +44,14 @@
                                 <input class="form-control" type="text" value="<c:out value="${u.phone}"/>" placeholder="Nummer" name="phone"/> 
                             </div>
                         </div>
+                        <c:if test="${u.id < 1}">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Kodeord</label>
+                            <div class="col-md-9">
+                                <input class="form-control" type="text" placeholder="Kodeord" name="password"/> 
+                            </div>
+                        </div>
+                        </c:if>
                         <div>
                             <button class="btn btn-primary" type="submit">GEM</button>
                         </div>
