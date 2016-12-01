@@ -344,7 +344,7 @@
                             <tr>
                                 <th>Name</th>
                                 <th>Phone</th>
-                                <th></th>
+                                <%--<th></th>--%>
                             </tr>
                             </thead>
                             <tbody>
@@ -358,10 +358,10 @@
                                         <a href="org?id=${o.id}">
                                                 ${o.phone}</a>
                                     </td>
-                                    <td>
+                                    <%--<td>
                                         <a href="org?id=${o.id}"
                                            class="btn btn-default">More</a>
-                                    </td>
+                                    </td>--%>
                                 </tr>
                             </c:forEach>
                             </tbody>
