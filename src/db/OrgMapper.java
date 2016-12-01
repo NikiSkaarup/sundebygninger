@@ -65,10 +65,10 @@ public class OrgMapper {
      */
     public List<Org> getOrgs(int n) throws PolygonException {
         String query = "SELECT Id, `Name`, Phone FROM Org";
-        if (n == -1)
+        if (n > 0)
             query += " LIMIT ?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
-            if (n == -1)
+            if (n > 0)
                 stmt.setInt(1, n);
             try (ResultSet rs = stmt.executeQuery()) {
                 List<Org> list = new ArrayList<>();
