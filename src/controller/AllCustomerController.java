@@ -3,6 +3,7 @@ package controller;
 import domain.Facade;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 //import model.User;
 import javax.servlet.RequestDispatcher;
@@ -15,6 +16,8 @@ import model.User;
 import exceptions.PolygonException;
 import model.Org;
 import static util.Helper.forwardGet;
+import static util.Helper.getUser;
+import static util.Helper.userLoggedIn;
 
 /**
  * 
@@ -62,26 +65,38 @@ public class AllCustomerController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         try {
-
             Facade facade = Facade.getFacade();
-            int id = Integer.parseInt(request.getParameter("oid"));
-            Org org = new Org(id);
 
-            List<User> userList = facade.getUsers(id);
-            
+            User user = getUser(request);
+            if (user == null || !userLoggedIn(user)) {
+                response.sendRedirect("/login");
+                return;
+            }
+
+            Org org = new Org(-1);
+            List<User> list = new ArrayList<>();
+            try {
+                int id = Integer.parseInt(request.getParameter("oid"));
+                org = facade.getOrg(id);
+                list = facade.getUsers(org.getId());
+            } catch (Exception ignored) {
+                if (user.getRole().getId() == 1) {
+                    org = user.getOrg();
+                    list = facade.getUsers(user.getOrg().getId());
+                } else if (user.getRole().getId() == 3) {
+                    list = facade.getUsers();
+                }
+            }
+
             //save the variable
             request.setAttribute("org", org); 
-            request.setAttribute("customers", userList);
+            request.setAttribute("customers", list);
 
-            RequestDispatcher rd = request.getRequestDispatcher("/allCustomers.jsp");
-            rd.forward(request, response);
-
+            forwardGet(request, response, "/allCustomers.jsp");
         } catch (PolygonException p) {
             request.setAttribute("error", p.getMessage());
             forwardGet(request, response, "/error.jsp");
-
         }
 
     }
@@ -89,7 +104,8 @@ public class AllCustomerController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+        doGet(request, response);
     }
 
     /**
