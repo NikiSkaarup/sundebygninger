@@ -68,6 +68,12 @@ public class Facade {
         return mapper.getBuildings(org, count);
     }
 
+    public List<Building> getBuildings() throws
+            PolygonException {
+        BuildingMapper mapper = new BuildingMapper(conn);
+        return mapper.getBuildings();
+    }
+
     public int insertBuilding(Building b) throws PolygonException {
         BuildingMapper mapper = new BuildingMapper(conn);
         return mapper.insertBuilding(b);

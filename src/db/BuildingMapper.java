@@ -42,6 +42,10 @@ public class BuildingMapper {
         }
     }
 
+    public List<Building> getBuildings() throws PolygonException {
+        return getBuildings(null);
+    }
+
     public List<Building> getBuildings(Org org) throws PolygonException {
         return getBuildings(org, -1);
     }

@@ -19,7 +19,9 @@
     <body>
         <%@include file="navigation.jsp"  %>
         <div class="container-fluid">
-            <a href="building/insert?orgid=<c:out value="${org.id}"/>" class="btn btn-primary">Add building</a>
+            <c:if test="${org.id > 0}">
+                <a href="building/insert?orgid=<c:out value="${org.id}"/>" class="btn btn-primary">Add building</a>
+            </c:if>
             <h1>All Buildings</h1>
             <div class="table-responsive">
                 <table class="table table-bordered table-hover table-striped">
