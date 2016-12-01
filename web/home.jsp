@@ -337,7 +337,7 @@
                 <div class="col-md-6">
                         <%-- Display organizations --%>
                     <h3>Organizations</h3>
-                    <a href="#" class="btn btn-default disabled">Vis Alle</a>
+                    <a href="<c:url value="/orgs"/>" class="btn btn-default">Vis Alle</a>
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
