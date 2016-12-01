@@ -34,8 +34,7 @@ public class HomeController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
         try {
-            User user;
-            user = getUser(req);
+            User user = getUser(req);
             if (user == null || !userLoggedIn(user)) {
                 res.sendRedirect("/login");
                 return;
