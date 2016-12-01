@@ -8,6 +8,7 @@ package controller;
 import domain.Facade;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,7 +18,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Building;
 import model.Org;
+import model.User;
 import static util.Helper.forwardGet;
+import static util.Helper.getUser;
+import static util.Helper.userLoggedIn;
 
 /**
  *
@@ -59,15 +63,21 @@ public class AllOrgsController extends HttpServlet {
             //get DB conn
             Facade facade = Facade.getFacade();
 
-            
-            List<Org> orgList = facade.getOrgs();
-            
-            //save the variable
-            request.setAttribute("orgs", orgList);
+            User user = getUser(request);
+            if (user == null || 
+                    !userLoggedIn(user) || 
+                    user.getRole().getId()==1) {
+                response.sendRedirect("/login");
+                return;
+            }
 
+            List<Org> list = facade.getOrgs();
+            
+
+            //save the variables
+            request.setAttribute("orgs", list);
             //forward from servlet to JSP
-            RequestDispatcher rd = request.getRequestDispatcher("/allOrgs.jsp");
-            rd.forward(request, response);
+            forwardGet(request, response, "/allOrgs.jsp");
         }
         catch(Exception e){
              request.setAttribute("error", e.getMessage());

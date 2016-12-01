@@ -24,7 +24,6 @@
                         <tr class="active">
                             <th>Name</th>
                             <th>Phone no.</th>
-                            <th>Link</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -32,7 +31,6 @@
                             <tr>
                                 <td>${o.name}</td>
                                 <td>${o.phone}</td>
-                                <td><a href="org?id=${o.id}">Mere</a></td>
                             </tr>
                         </c:forEach>
                     </tbody>
