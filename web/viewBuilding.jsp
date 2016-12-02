@@ -19,7 +19,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-6">
-                    <h1>Building</h1>
+                    <h1>Bygning</h1>
 
                     <p>Organisation: ${b.org.name}</p>
                     <p>Navn på bygning: ${b.name}</p>
