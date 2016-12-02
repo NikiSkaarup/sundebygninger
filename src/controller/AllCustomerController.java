@@ -15,9 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import model.User;
 import exceptions.PolygonException;
 import model.Org;
-import static util.Helper.forwardGet;
-import static util.Helper.getUser;
-import static util.Helper.userLoggedIn;
+
+import static util.Helper.*;
 
 /**
  * 
@@ -65,6 +64,9 @@ public class AllCustomerController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // setup navigation bar
+        setupNavigation(request);
+
         try {
             Facade facade = Facade.getFacade();
 

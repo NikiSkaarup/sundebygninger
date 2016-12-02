@@ -18,6 +18,7 @@ import java.io.InputStream;
 import java.nio.file.Paths;
 
 import static util.Helper.forwardGet;
+import static util.Helper.setupNavigation;
 
 /**
  * Created by Niki on 2016-11-16.
@@ -140,6 +141,9 @@ public class FileController extends HttpServlet {
      */
     protected void doGet(HttpServletRequest req, HttpServletResponse
             res) throws ServletException, IOException {
+        // setup navigation bar
+        setupNavigation(req);
+
         switch (req.getServletPath()) {
             case "/file/insert":
                 doGetInsert(req, res);

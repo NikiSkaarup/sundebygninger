@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static util.Helper.forwardGet;
+import static util.Helper.setupNavigation;
 
 /**
  * Created by Niki on 2016-11-04.
@@ -93,6 +94,9 @@ public class RequestController extends HttpServlet {
 
     protected void doGet(HttpServletRequest req, HttpServletResponse
             res) throws ServletException, IOException {
+        // setup navigation bar
+        setupNavigation(req);
+
         try {
             req.setAttribute("sts", facade.getServiceTypes());
             req.setAttribute("requests", new ArrayList<>());

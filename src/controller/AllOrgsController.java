@@ -19,9 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import model.Building;
 import model.Org;
 import model.User;
-import static util.Helper.forwardGet;
-import static util.Helper.getUser;
-import static util.Helper.userLoggedIn;
+
+import static util.Helper.*;
 
 /**
  *
@@ -59,6 +58,9 @@ public class AllOrgsController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // setup navigation bar
+        setupNavigation(request);
+
         try {
             //get DB conn
             Facade facade = Facade.getFacade();
@@ -96,7 +98,7 @@ public class AllOrgsController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
     }
 
     /**

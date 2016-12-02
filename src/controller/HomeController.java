@@ -12,9 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static util.Helper.forwardGet;
-import static util.Helper.getUser;
-import static util.Helper.userLoggedIn;
+import static util.Helper.*;
 
 /**
  * Created by Niki on 2016-11-16.
@@ -33,6 +31,9 @@ public class HomeController extends HttpServlet {
 
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
+        // setup navigation bar
+        setupNavigation(req);
+
         try {
             User user = getUser(req);
             if (user == null || !userLoggedIn(user)) {

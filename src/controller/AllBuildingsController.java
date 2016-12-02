@@ -24,9 +24,7 @@ import model.Org;
 import model.User;
 import util.Helper;
 
-import static util.Helper.forwardGet;
-import static util.Helper.getUser;
-import static util.Helper.userLoggedIn;
+import static util.Helper.*;
 
 /**
  * @author Menja
@@ -77,6 +75,9 @@ public class AllBuildingsController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse
             response)
             throws ServletException, IOException {
+        // setup navigation bar
+        setupNavigation(request);
+
         try {
             //get DB conn
             Facade facade = Facade.getFacade();

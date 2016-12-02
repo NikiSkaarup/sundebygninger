@@ -16,6 +16,7 @@ import model.Org;
 import model.User;
 import util.Helper;
 import static util.Helper.forwardGet;
+import static util.Helper.setupNavigation;
 
 /**
  *
@@ -38,6 +39,9 @@ public class BuildingController extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // setup navigation bar
+        setupNavigation(request);
+
         switch (request.getServletPath()) {
             case "/building/insert":
                 doGetInsert(request, response);

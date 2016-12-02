@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import util.Helper;
 import static util.Helper.forwardGet;
+import static util.Helper.setupNavigation;
+
 import model.Org;
 import model.User;
 
@@ -57,6 +59,8 @@ public class CustomerController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // setup navigation bar
+        setupNavigation(request);
 
         switch (request.getServletPath()) {
             case "/customer/insert":
