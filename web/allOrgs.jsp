@@ -11,19 +11,19 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Organisationer</title>
         <link href="<c:url value="/css/bootstrap.css"/>" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <%@include file="navigation.jsp"  %>
         <div class="container-fluid">
-            <h1>All Organisations</h1>
+            <h1>Alle organisationer</h1>
             <div class="table-responsive">
                 <table class="table table-bordered table-hover table-striped">
                     <thead>
                         <tr class="active">
-                            <th>Name</th>
-                            <th>Phone no.</th>
+                            <th>Navn</th>
+                            <th>Telefon Nr.</th>
                         </tr>
                     </thead>
                     <tbody>

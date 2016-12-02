@@ -44,20 +44,20 @@ and open the template in the editor.
                     <label class="col-md-2" for="email">Email:</label>
                     <div class="col-md-10">
                         <input type="email" class="form-control" id="email"
-                               placeholder="Enter email" name="email" required autofocus>
+                               placeholder="Email" name="email" required autofocus>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2" for="pwd">Password:</label>
                     <div class="col-md-10">
                         <input type="password" class="form-control"
-                               id="pwd" placeholder="Enter password"
+                               id="pwd" placeholder="Password"
                                name="password" required>
                     </div>
                 </div>
 
                 <div class="col-md-offset-2">
-                    <button type="submit" class="btn btn-default">Sign in
+                    <button type="submit" class="btn btn-default">Log ind
                     </button>
                 </div>
             </form>
