@@ -20,7 +20,7 @@
         <%@include file="navigation.jsp"  %>
         <div class="container-fluid">
             <c:if test="${org.id > 0}">
-                <a href="building/insert?orgid=<c:out value="${org.id}"/>" class="btn btn-primary">Add building</a>
+                <a href="building/insert?orgid=<c:out value="${org.id}"/>" class="btn btn-primary">Tilføj bygning</a>
             </c:if>
             <h1>Alle bygninger</h1>
             <div class="table-responsive">
