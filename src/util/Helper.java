@@ -2,6 +2,7 @@ package util;
 
 import domain.Facade;
 import exceptions.PolygonException;
+import model.Link;
 import model.User;
 
 import javax.servlet.RequestDispatcher;
@@ -11,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Contains a few helper methods which are meant to reduce repeated code
@@ -104,6 +107,116 @@ public class Helper {
             res, String url) throws ServletException, IOException {
         RequestDispatcher rd = req.getRequestDispatcher(url);
         rd.forward(new RequestWrap(req), res);
+    }
+
+    public static void setupNavigation(HttpServletRequest req)
+            throws ServletException, IOException {
+        try {
+            User user = getUser(req);
+            if (user == null || !userLoggedIn(user))
+                return;
+
+            // Switch case which handles where the request gets handled based
+            // on user role id
+            switch (user.getRole().getId()) {
+                case 1: // Customer
+                    doGetCustomer(req, user);
+                    break;
+                case 2: // Employee
+                    doGetEmployee(req, user);
+                    break;
+                case 3: // Admin
+                    doGetAdmin(req, user);
+                    break;
+                default:
+                    throw new PolygonException("user have no role");
+            }
+        } catch (NullPointerException | PolygonException e) {
+            req.setAttribute("error", "doGet: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This method is for when user is a Customer
+     *
+     * @param req  request
+     * @param user user taken from session
+     * @throws ServletException
+     * @throws IOException
+     */
+    private static void doGetCustomer(HttpServletRequest req, User user)
+            throws ServletException, IOException {
+        try {
+            List<Link> list = new ArrayList<>();
+
+            list.add(new Link("/home",
+                              "home"));
+            list.add(new Link("/buildings?orgid=" + user.getOrg().getId(),
+                              "buildings"));
+            list.add(new Link("/customers?oid=" + user.getOrg().getId(),
+                              "customers"));
+
+            req.setAttribute("links", list);
+        } catch (Exception e) {
+            req.setAttribute("error", "navigation doGetCustomer: " + e
+                    .getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This method is for when user is a Service Employee
+     *
+     * @param req  request
+     * @param user user taken from session
+     * @throws ServletException
+     * @throws IOException
+     */
+    private static void doGetEmployee(HttpServletRequest req, User user)
+            throws ServletException, IOException {
+        try {
+            List<Link> list = new ArrayList<>();
+
+            list.add(new Link("/home",
+                              "home"));
+
+            req.setAttribute("links", list);
+        } catch (Exception e) {
+            req.setAttribute("error", "navigation doGetEmployee: " + e
+                    .getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This method is for when user is an Admin
+     *
+     * @param req  request
+     * @param user user taken from session
+     * @throws ServletException
+     * @throws IOException
+     */
+    private static void doGetAdmin(HttpServletRequest req, User user)
+            throws ServletException, IOException {
+        try {
+            List<Link> list = new ArrayList<>();
+
+            list.add(new Link("/home",
+                              "home"));
+            list.add(new Link("/orgs",
+                              "organizations"));
+            list.add(new Link("/buildings",
+                              "buildings"));
+            list.add(new Link("/customers",
+                              "customers"));
+
+            req.setAttribute("links", list);
+        } catch (Exception e) {
+            req.setAttribute("error", "navigation doGetAdmin: " + e
+                    .getMessage());
+            e.printStackTrace();
+        }
     }
 
 }
