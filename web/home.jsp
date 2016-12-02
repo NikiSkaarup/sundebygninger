@@ -160,8 +160,7 @@
                                                 ${r.submission.toGMTString()}</a>
                                     </td>
                                     <td>
-                                        <a href="report?id=${r.id}"
-                                           class="btn btn-default">More</a>
+                                        <a href="report?id=${r.id}">Mere</a>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -197,8 +196,7 @@
                                                 ${u.email}</a>
                                     </td>
                                     <td>
-                                        <a href="customer?id=${u.id}"
-                                           class="btn btn-default">More</a>
+                                        <a href="customer?id=${u.id}">Mere</a>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -240,8 +238,7 @@
                                                 ${u.email}</a>
                                     </td>
                                     <td>
-                                        <a href="customer?id=${u.id}"
-                                           class="btn btn-default">More</a>
+                                        <a href="customer?id=${u.id}">Mere</a>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -277,8 +274,7 @@
                                                 ${u.email}</a>
                                     </td>
                                     <td>
-                                        <a href="customer?id=${u.id}"
-                                           class="btn btn-default">More</a>
+                                        <a href="customer?id=${u.id}">Mere</a>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -314,8 +310,7 @@
                                                 ${r.submission.toGMTString()}</a>
                                     </td>
                                     <td>
-                                        <a href="report?id=${r.id}"
-                                           class="btn btn-default">More</a>
+                                        <a href="report?id=${r.id}">Mere</a>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -392,8 +387,7 @@
                                                 ${u.email}</a>
                                     </td>
                                     <td>
-                                        <a href="customer?id=${u.id}"
-                                           class="btn btn-default">More</a>
+                                        <a href="customer?id=${u.id}">Mere</a>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -428,8 +422,7 @@
                                                 ${b.address}</a>
                                     </td>
                                     <td>
-                                        <a href="building?id=${b.id}"
-                                           class="btn btn-default">More</a>
+                                        <a href="building?id=${b.id}">Mere</a>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -464,8 +457,7 @@
                                                 ${r.description}</a>
                                     </td>
                                     <td>
-                                        <a href="request?id=${r.id}"
-                                           class="btn btn-default">More</a>
+                                        <a href="request?id=${r.id}">Mere</a>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -501,8 +493,7 @@
                                                 ${r.submission.toGMTString()}</a>
                                     </td>
                                     <td>
-                                        <a href="report?id=${r.id}"
-                                           class="btn btn-default">More</a>
+                                        <a href="report?id=${r.id}">Mere</a>
                                     </td>
                                 </tr>
                             </c:forEach>
