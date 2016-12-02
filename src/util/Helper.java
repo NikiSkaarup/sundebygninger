@@ -153,9 +153,9 @@ public class Helper {
             list.add(new Link("/home",
                               "home"));
             list.add(new Link("/buildings?orgid=" + user.getOrg().getId(),
-                              "buildings"));
+                              "bygninger"));
             list.add(new Link("/customers?oid=" + user.getOrg().getId(),
-                              "customers"));
+                              "kunder"));
 
             req.setAttribute("links", list);
         } catch (Exception e) {
@@ -205,11 +205,11 @@ public class Helper {
             list.add(new Link("/home",
                               "home"));
             list.add(new Link("/orgs",
-                              "organizations"));
+                              "organisationer"));
             list.add(new Link("/buildings",
-                              "buildings"));
+                              "bygninger"));
             list.add(new Link("/customers",
-                              "customers"));
+                              "kunder"));
 
             req.setAttribute("links", list);
         } catch (Exception e) {
