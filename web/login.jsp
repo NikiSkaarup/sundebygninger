@@ -44,7 +44,7 @@ and open the template in the editor.
                     <label class="col-md-2" for="email">Email:</label>
                     <div class="col-md-10">
                         <input type="email" class="form-control" id="email"
-                               placeholder="Enter email" name="email" autofocus>
+                               placeholder="Enter email" name="email" required autofocus>
                     </div>
                 </div>
                 <div class="form-group">
@@ -52,7 +52,7 @@ and open the template in the editor.
                     <div class="col-md-10">
                         <input type="password" class="form-control"
                                id="pwd" placeholder="Enter password"
-                               name="password">
+                               name="password" required>
                     </div>
                 </div>
 

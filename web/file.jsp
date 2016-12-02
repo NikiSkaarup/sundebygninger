@@ -34,7 +34,7 @@
                         <label class="col-md-3 control-label"
                                for="file">Upload File</label>
                         <div class="col-md-9">
-                            <input id="file" type="file" name="file"/>
+                            <input id="file" type="file" name="file" required/>
                         </div>
                     </div>
 

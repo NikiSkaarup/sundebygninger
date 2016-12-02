@@ -29,26 +29,27 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">Navn:</label>
                             <div class="col-md-9">
-                                <input class="form-control" type="text" value="<c:out value="${u.name}"/>" placeholder="Fulde navn" name="name"/> 
+                                <input class="form-control" type="text" value="<c:out value="${u.name}"/>" placeholder="Fulde navn" name="name" required/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-3 control-label">Email:</label>
                             <div class="col-md-9">
-                                <input class="form-control" type="text" value="<c:out value="${u.email}"/>" placeholder="Email" name="email"/> 
+                                <input class="form-control" type="text" value="<c:out value="${u.email}"/>" placeholder="Email" name="email" required/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-3 control-label">Tlf. nummer:</label>
                             <div class="col-md-9">
-                                <input class="form-control" type="text" value="<c:out value="${u.phone}"/>" placeholder="Nummer" name="phone"/> 
+                                <input class="form-control" type="text" value="<c:out value="${u.phone}"/>" placeholder="Nummer" name="phone" required/>
                             </div>
                         </div>
                         <c:if test="${u.id < 1}">
                         <div class="form-group">
                             <label class="col-md-3 control-label">Kodeord</label>
                             <div class="col-md-9">
-                                <input class="form-control" type="text" placeholder="Kodeord" name="password"/> 
+                                <input class="form-control" type="text"
+                                       placeholder="Kodeord" name="password" required/>
                             </div>
                         </div>
                         </c:if>

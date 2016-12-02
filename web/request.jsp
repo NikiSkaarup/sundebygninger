@@ -39,7 +39,7 @@
                         <textarea class="form-control" id="description"
                                   name="description"
                                   rows="5" placeholder="kort beskrivelse"
-                                  style="resize: vertical">${r.description}</textarea>
+                                  style="resize: vertical" required>${r.description}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="serviceType">Service type:</label>
