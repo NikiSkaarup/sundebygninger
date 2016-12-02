@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <title>Hjem - Sundebygninger</title>
+    <title>Home - Sundebygninger</title>
     <link href="<c:url value="/css/bootstrap.css"/>" rel="stylesheet"
           type="text/css"/>
 </head>
@@ -25,7 +25,7 @@
             <c:if test="${home.buildings.size() > 0}">
                 <div class="col-md-6">
                         <%-- Display buildings --%>
-                    <h3>Buildings</h3>
+                    <h3>Bygninger</h3>
                     <div class="btn-group">
                         <a href="building/insert?orgid=${home.user.org.id}"
                            class="btn btn-primary">Tilføj</a>
@@ -35,8 +35,8 @@
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Address</th>
+                                <th>Navn</th>
+                                <th>Adresse</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -52,8 +52,7 @@
                                                 ${b.address}</a>
                                     </td>
                                     <td>
-                                        <a href="building?id=${b.id}"
-                                           class="btn btn-default">More</a>
+                                        <a href="building?id=${b.id}">Mere</a>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -65,14 +64,14 @@
             <c:if test="${home.users.size() > 0}">
                 <div class="col-md-6">
                         <%-- Display users --%>
-                    <h3>Customers</h3>
+                    <h3>Kunder</h3>
                     <a href="customers?oid=${home.user.org.id}"
                        class="btn btn-default">Vis Alle</a>
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th>Name</th>
+                                <th>Navn</th>
                                 <th>Email</th>
                                 <th></th>
                             </tr>
@@ -89,8 +88,7 @@
                                                 ${u.email}</a>
                                     </td>
                                     <td>
-                                        <a href="customer?id=${u.id}"
-                                           class="btn btn-default">More</a>
+                                        <a href="customer?id=${u.id}">Mere</a>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -102,14 +100,14 @@
             <c:if test="${home.requests.size() > 0}">
                 <div class="col-md-6">
                         <%-- Display requests --%>
-                    <h3>Requests</h3>
+                    <h3>Anmodninger</h3>
                     <a href="requests?oid=${home.user.org.id}"
                        class="btn btn-default">Vis Alle</a>
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th>Name</th>
+                                <th>Navn</th>
                                 <th>Email</th>
                                 <th></th>
                             </tr>
@@ -126,8 +124,7 @@
                                                 ${u.email}</a>
                                     </td>
                                     <td>
-                                        <a href="customer?id=${u.id}"
-                                           class="btn btn-default">More</a>
+                                        <a href="customer?id=${u.id}">Mere</a>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -139,15 +136,15 @@
             <c:if test="${home.reports.size() > 0}">
                 <div class="col-md-6">
                         <%-- Display reports --%>
-                    <h3>Reports</h3>
+                    <h3>Reporter</h3>
                     <a href="reports?oid=${home.user.org.id}"
                        class="btn btn-default">Vis Alle</a>
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th>Building Name</th>
-                                <th>submission</th>
+                                <th>Bygnings navn</th>
+                                <th>Tilføjelse</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -163,8 +160,7 @@
                                                 ${r.submission.toGMTString()}</a>
                                     </td>
                                     <td>
-                                        <a href="report?id=${r.id}"
-                                           class="btn btn-default">More</a>
+                                        <a href="report?id=${r.id}">Mere</a>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -176,14 +172,14 @@
             <c:if test="${home.incidents.size() > 0}">
                 <div class="col-md-6">
                         <%-- Display incidents --%>
-                    <h3>Incidents</h3>
+                    <h3>Skader</h3>
                     <a href="incidents?oid=${home.user.org.id}"
                        class="btn btn-default">Vis Alle</a>
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th>Name</th>
+                                <th>Navn</th>
                                 <th>Email</th>
                                 <th></th>
                             </tr>
@@ -200,8 +196,7 @@
                                                 ${u.email}</a>
                                     </td>
                                     <td>
-                                        <a href="customer?id=${u.id}"
-                                           class="btn btn-default">More</a>
+                                        <a href="customer?id=${u.id}">Mere</a>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -219,14 +214,14 @@
             <c:if test="${home.unacceptedRequests.size() > 0}">
                 <div class="col-md-6">
                         <%-- Display unaccepted requests --%>
-                    <h3>Unaccepted Requests</h3>
+                    <h3>Uaccepterede Anmodninger</h3>
                     <a href="requests/unaccepted"
                        class="btn btn-default">Vis Alle</a>
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th>Name</th>
+                                <th>Navn</th>
                                 <th>Email</th>
                                 <th></th>
                             </tr>
@@ -243,8 +238,7 @@
                                                 ${u.email}</a>
                                     </td>
                                     <td>
-                                        <a href="customer?id=${u.id}"
-                                           class="btn btn-default">More</a>
+                                        <a href="customer?id=${u.id}">Mere</a>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -256,14 +250,14 @@
             <c:if test="${home.acceptedRequests.size() > 0}">
                 <div class="col-md-6">
                         <%-- Display accepted requests --%>
-                    <h3>Accepted Requests</h3>
+                    <h3>Accepterede Anmodninger</h3>
                     <a href="requests/accepted?uid=${home.user.id}"
                        class="btn btn-default">Vis Alle</a>
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th>Name</th>
+                                <th>Navn</th>
                                 <th>Email</th>
                                 <th></th>
                             </tr>
@@ -280,8 +274,7 @@
                                                 ${u.email}</a>
                                     </td>
                                     <td>
-                                        <a href="customer?id=${u.id}"
-                                           class="btn btn-default">More</a>
+                                        <a href="customer?id=${u.id}">Mere</a>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -293,15 +286,15 @@
             <c:if test="${home.reports.size() > 0}">
                 <div class="col-md-6">
                         <%-- Display reports --%>
-                    <h3>Reports</h3>
+                    <h3>Reporter</h3>
                     <a href="reports?uid=${home.user.id}"
                        class="btn btn-default">Vis Alle</a>
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th>Building Name</th>
-                                <th>submission</th>
+                                <th>Bygnings navn</th>
+                                <th>Tilføjelse</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -317,8 +310,7 @@
                                                 ${r.submission.toGMTString()}</a>
                                     </td>
                                     <td>
-                                        <a href="report?id=${r.id}"
-                                           class="btn btn-default">More</a>
+                                        <a href="report?id=${r.id}">Mere</a>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -336,14 +328,14 @@
             <c:if test="${home.orgs.size() > 0}">
                 <div class="col-md-6">
                         <%-- Display organizations --%>
-                    <h3>Organizations</h3>
+                    <h3>Organisationer</h3>
                     <a href="<c:url value="/orgs"/>" class="btn btn-default">Vis Alle</a>
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Phone</th>
+                                <th>Navn</th>
+                                <th>Tlf</th>
                                 <%--<th></th>--%>
                             </tr>
                             </thead>
@@ -372,13 +364,13 @@
             <c:if test="${home.users.size() > 0}">
                 <div class="col-md-6">
                         <%-- Display users --%>
-                    <h3>Users</h3>
+                    <h3>Kunder</h3>
                     <a href="customers" class="btn btn-default">Vis Alle</a>
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th>Name</th>
+                                <th>Navn</th>
                                 <th>Email</th>
                                 <th></th>
                             </tr>
@@ -395,8 +387,7 @@
                                                 ${u.email}</a>
                                     </td>
                                     <td>
-                                        <a href="customer?id=${u.id}"
-                                           class="btn btn-default">More</a>
+                                        <a href="customer?id=${u.id}">Mere</a>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -408,14 +399,14 @@
             <c:if test="${home.buildings.size() > 0}">
                 <div class="col-md-6">
                         <%-- Display buildings --%>
-                    <h3>Buildings</h3>
+                    <h3>Bygninger</h3>
                     <a href="buildings" class="btn btn-default">Vis Alle</a>
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Address</th>
+                                <th>Navn</th>
+                                <th>Adresse</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -431,8 +422,7 @@
                                                 ${b.address}</a>
                                     </td>
                                     <td>
-                                        <a href="building?id=${b.id}"
-                                           class="btn btn-default">More</a>
+                                        <a href="building?id=${b.id}">Mere</a>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -444,14 +434,14 @@
             <c:if test="${home.requests.size() > 0}">
                 <div class="col-md-6">
                         <%-- Display requests --%>
-                    <h3>Requests</h3>
+                    <h3>Anmodninger</h3>
                     <a href="requests" class="btn btn-default">Vis Alle</a>
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th>Building Name</th>
-                                <th>Description</th>
+                                <th>Bygnings navn</th>
+                                <th>Beskrivelse</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -467,8 +457,7 @@
                                                 ${r.description}</a>
                                     </td>
                                     <td>
-                                        <a href="request?id=${r.id}"
-                                           class="btn btn-default">More</a>
+                                        <a href="request?id=${r.id}">Mere</a>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -480,15 +469,15 @@
             <c:if test="${home.reports.size() > 0}">
                 <div class="col-md-6">
                         <%-- Display reports --%>
-                    <h3>Reports</h3>
+                    <h3>Reporter</h3>
                     <a href="reports"
                        class="btn btn-default">Vis Alle</a>
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th>Building Name</th>
-                                <th>submission</th>
+                                <th>Bygnings navn</th>
+                                <th>Tilføjelse</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -504,8 +493,7 @@
                                                 ${r.submission.toGMTString()}</a>
                                     </td>
                                     <td>
-                                        <a href="report?id=${r.id}"
-                                           class="btn btn-default">More</a>
+                                        <a href="report?id=${r.id}">Mere</a>
                                     </td>
                                 </tr>
                             </c:forEach>
