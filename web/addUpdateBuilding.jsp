@@ -19,7 +19,7 @@
         <%@ include file="navigation.jsp" %>
         <div class="container-fluid">
             
-            <h1><c:out value="${requestScope.action}"/> bygning</h1>
+            <h1><c:out value="${requestScope.action}"/> Bygning</h1>
             <div class="row">
                 <div class="col-md-6"> 
                                 
