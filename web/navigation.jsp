@@ -32,7 +32,7 @@
                 </c:if>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="<c:url value="/logout"/>">Logout</a></li>
+                <li><a href="<c:url value="/logout"/>">log ud</a></li>
             </ul>
         </div>
     </div>
