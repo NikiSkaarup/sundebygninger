@@ -127,7 +127,7 @@ public class RequestController extends HttpServlet {
             int b = Integer.parseInt(req.getParameter("b"));
             req.setAttribute("b", b);
             req.setAttribute("sts", facade.getServiceTypes());
-            req.setAttribute("action", "Insert");
+            req.setAttribute("action", "Opret");
             req.setAttribute("url", req.getServletPath());
             forwardGet(req, res, "/request.jsp");
         } catch (PolygonException e) {
@@ -144,7 +144,7 @@ public class RequestController extends HttpServlet {
             req.setAttribute("b", r.getBuilding().getId());
             req.setAttribute("r", r);
             req.setAttribute("url", req.getServletPath());
-            req.setAttribute("action", "Update");
+            req.setAttribute("action", "Opdater");
             forwardGet(req, res, "/request.jsp");
         } catch (NullPointerException | PolygonException e) {
             req.setAttribute("error", e.getMessage());

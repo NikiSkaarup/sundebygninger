@@ -27,7 +27,7 @@
         <c:if test="${requests.size() == 0 && requestScope.b > 0}">
             <div class="col-md-6">
 
-                <h1>${requestScope.action} Request</h1>
+                <h1>${requestScope.action} Forespørgsel</h1>
                     <%-- INSERT UPDATE --%>
                 <form action="${requestScope.url}" method="post"
                       class="form-horizontal">
