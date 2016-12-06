@@ -22,6 +22,7 @@ public class Conn {
             try {
                 Class.forName(driver);
                 String url = "jdbc:mysql://" + ip + ":" + port + "/" + db;
+                url += "?useUnicode=true&characterEncoding=utf-8";
                 conn = DriverManager.getConnection(url , user, password);
             } catch (Exception e) {
                 e.printStackTrace();
