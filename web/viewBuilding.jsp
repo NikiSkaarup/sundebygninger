@@ -30,6 +30,8 @@
                     <p>Tidlige benyttelse: ${b.previousUse}</p>
 
                     <a href="/file/insert?b=${b.id}">Tilføj billede/dokument</a>
+                    <a href="/request/insert?b=${b.id}">Tilføj forespørgsel</a>
+                    <a href="/requests?b=${b.id}">Vis alle forespørgsler</a>
                     <a href="/building/update?id=${b.id}">Rediger bygning</a>
 
                     </div>
