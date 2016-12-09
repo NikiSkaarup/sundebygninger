@@ -36,10 +36,10 @@ public class Conn {
         try {
             Class.forName(driver);
             String url = "jdbc:mysql://" + ip + ":" + port + "/" + db;
-            conn = DriverManager.getConnection(url, user, password);
+            return DriverManager.getConnection(url, user, password);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return conn;
+        return null;
     }
 }
