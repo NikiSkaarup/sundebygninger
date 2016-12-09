@@ -31,8 +31,7 @@ public class Conn {
         return conn;
     }
 
-    public static Connection get(String ip, String db,
-                                 String user, String password) {
+    public static Connection get(String db) {
         try {
             Class.forName(driver);
             String url = "jdbc:mysql://" + ip + ":" + port + "/" + db;
