@@ -14,7 +14,7 @@ public class TestHelper {
                 "USE `junitTestDB` ;" +
                 "GRANT USAGE ON `junitTestDB`.* TO 'junitTest'@'localhost' ;" +
                 "DROP USER 'junitTest'@'localhost' ;" +
-                "GRANT ALL PRIVILEGES ON junitTestDB.* TO " +
+                "GRANT ALL PRIVILEGES ON `junitTestDB`.* TO " +
                 "'junitTest'@'localhost' " +
                 "IDENTIFIED BY 'junitTest' ;" +
                 "FLUSH PRIVILEGES ;" +
@@ -30,9 +30,12 @@ public class TestHelper {
                 "CREATE TABLE Building LIKE sundebygninger.Building;" +
                 "INSERT INTO Building " +
                 "SELECT * FROM sundebygninger.Building;" +
-                "CREATE TABLE Document LIKE sundebygninger.Document;" +
-                "INSERT INTO Document " +
-                "SELECT * FROM sundebygninger.Document;" +
+                "CREATE TABLE FileType LIKE sundebygninger.FileType;" +
+                "INSERT INTO FileType " +
+                "SELECT * FROM sundebygninger.FileType;" +
+                "CREATE TABLE File LIKE sundebygninger.File;" +
+                "INSERT INTO File " +
+                "SELECT * FROM sundebygninger.File;" +
                 "CREATE TABLE Report LIKE sundebygninger.Report;" +
                 "INSERT INTO Report " +
                 "SELECT * FROM sundebygninger.Report;" +
@@ -48,9 +51,6 @@ public class TestHelper {
                 "CREATE TABLE Incident LIKE sundebygninger.Incident;" +
                 "INSERT INTO Incident " +
                 "SELECT * FROM sundebygninger.Incident;" +
-                "CREATE TABLE Image LIKE sundebygninger.Image;" +
-                "INSERT INTO Image " +
-                "SELECT * FROM sundebygninger.Image;" +
                 "CREATE TABLE Room LIKE sundebygninger.Room;" +
                 "INSERT INTO Room " +
                 "SELECT * FROM sundebygninger.Room;" +
