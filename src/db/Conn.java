@@ -23,7 +23,7 @@ public class Conn {
                 Class.forName(driver);
                 String url = "jdbc:mysql://" + ip + ":" + port + "/" + db;
                 url += "?useUnicode=true&amp;characterEncoding=UTF8";
-                conn = DriverManager.getConnection(url , user, password);
+                conn = DriverManager.getConnection(url, user, password);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -33,14 +33,12 @@ public class Conn {
 
     public static Connection get(String ip, String db,
                                  String user, String password) {
-        if (conn == null) {
-            try {
-                Class.forName(driver);
-                String url = "jdbc:mysql://" + ip + ":" + port + "/" + db;
-                conn = DriverManager.getConnection(url, user, password);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        try {
+            Class.forName(driver);
+            String url = "jdbc:mysql://" + ip + ":" + port + "/" + db;
+            conn = DriverManager.getConnection(url, user, password);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return conn;
     }
