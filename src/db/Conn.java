@@ -32,11 +32,11 @@ public class Conn {
         return conn;
     }
 
-    public static Connection get(String db) {
+    public static Connection getTest() {
         if (testConn == null) {
             try {
                 Class.forName(driver);
-                String url = "jdbc:mysql://" + ip + ":" + port + "/" + db;
+                String url = "jdbc:mysql://" + ip + ":" + port;
                 testConn = DriverManager.getConnection(url, user, password);
             } catch (Exception e) {
                 e.printStackTrace();
