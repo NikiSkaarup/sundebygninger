@@ -29,7 +29,7 @@ public class BuildingsTest {
 
     private Connection conn = null;
     Building b = new Building();
-    Facade facade = Facade.getFacade();
+    Facade facade ;
 
     public BuildingsTest() {
     }
@@ -46,9 +46,11 @@ public class BuildingsTest {
     @Before
     public void setUp() throws PolygonException {
         try {
-            conn = Conn.get("localhost", "junitTestDB", "junitTest", "junitTest");
+            conn = Conn.getTest();
             try (Statement stmt = conn.createStatement()) {
-                stmt.execute(TestHelper.getCloneDBScript());
+                TestHelper.runDBScript(stmt);
+                
+                //stmt.execute(TestHelper.getCloneDBScript());
             }
             facade = Facade.getFacadeWithConn(conn);
         } catch (Exception ex) {
