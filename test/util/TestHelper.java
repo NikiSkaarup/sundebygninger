@@ -19,49 +19,49 @@ public class TestHelper {
                 "IDENTIFIED BY 'junitTest' ;" +
                 "FLUSH PRIVILEGES ;" +
                 "CREATE TABLE Org LIKE sundebygninger.Org;" +
+                "CREATE TABLE Role LIKE sundebygninger.Role;" +
+                "CREATE TABLE User LIKE sundebygninger.User;" +
+                "CREATE TABLE Building LIKE sundebygninger.Building;" +
+                "CREATE TABLE FileType LIKE sundebygninger.FileType;" +
+                "CREATE TABLE File LIKE sundebygninger.File;" +
+                "CREATE TABLE Report LIKE sundebygninger.Report;" +
+                "CREATE TABLE ServiceType LIKE sundebygninger.ServiceType;" +
+                "CREATE TABLE Request LIKE sundebygninger.Request;" +
+                "CREATE TABLE DamageType LIKE sundebygninger.DamageType;" +
+                "CREATE TABLE Incident LIKE sundebygninger.Incident;" +
+                "CREATE TABLE Room LIKE sundebygninger.Room;" +
+                "CREATE TABLE RoomToDamageType LIKE sundebygninger" +
+                "CREATE TABLE CommentType LIKE sundebygninger.CommentType;" +
+                "CREATE TABLE Comment LIKE sundebygninger.Comment;" +
                 "INSERT INTO Org " +
                 "SELECT * FROM sundebygninger.Org;" +
-                "CREATE TABLE Role LIKE sundebygninger.Role;" +
                 "INSERT INTO Role " +
                 "SELECT * FROM sundebygninger.Role;" +
-                "CREATE TABLE User LIKE sundebygninger.User;" +
                 "INSERT INTO User " +
                 "SELECT * FROM sundebygninger.User;" +
-                "CREATE TABLE Building LIKE sundebygninger.Building;" +
                 "INSERT INTO Building " +
                 "SELECT * FROM sundebygninger.Building;" +
-                "CREATE TABLE FileType LIKE sundebygninger.FileType;" +
                 "INSERT INTO FileType " +
                 "SELECT * FROM sundebygninger.FileType;" +
-                "CREATE TABLE File LIKE sundebygninger.File;" +
                 "INSERT INTO File " +
                 "SELECT * FROM sundebygninger.File;" +
-                "CREATE TABLE Report LIKE sundebygninger.Report;" +
                 "INSERT INTO Report " +
                 "SELECT * FROM sundebygninger.Report;" +
-                "CREATE TABLE ServiceType LIKE sundebygninger.ServiceType;" +
                 "INSERT INTO ServiceType " +
                 "SELECT * FROM sundebygninger.ServiceType;" +
-                "CREATE TABLE Request LIKE sundebygninger.Request;" +
                 "INSERT INTO Request " +
                 "SELECT * FROM sundebygninger.Request;" +
-                "CREATE TABLE DamageType LIKE sundebygninger.DamageType;" +
                 "INSERT INTO DamageType " +
                 "SELECT * FROM sundebygninger.DamageType;" +
-                "CREATE TABLE Incident LIKE sundebygninger.Incident;" +
                 "INSERT INTO Incident " +
                 "SELECT * FROM sundebygninger.Incident;" +
-                "CREATE TABLE Room LIKE sundebygninger.Room;" +
                 "INSERT INTO Room " +
                 "SELECT * FROM sundebygninger.Room;" +
-                "CREATE TABLE RoomToDamageType LIKE sundebygninger" +
                 ".RoomToDamageType;" +
                 "INSERT INTO RoomToDamageType " +
                 "SELECT * FROM sundebygninger.RoomToDamageType;" +
-                "CREATE TABLE CommentType LIKE sundebygninger.CommentType;" +
                 "INSERT INTO CommentType " +
                 "SELECT * FROM sundebygninger.CommentType;" +
-                "CREATE TABLE Comment LIKE sundebygninger.Comment;" +
                 "INSERT INTO Comment " +
                 "SELECT * FROM sundebygninger.Comment;";
     }
