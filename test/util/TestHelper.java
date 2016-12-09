@@ -8,11 +8,11 @@ package util;
 public class TestHelper {
     public static String getCloneDBScript() {
         return "" +
-                "DROP SCHEMA IF EXISTS junitTestDB;\n" +
+                "DROP SCHEMA IF EXISTS `junitTestDB`;\n" +
                 "CREATE SCHEMA IF NOT EXISTS `junitTestDB` DEFAULT " +
                 "CHARACTER SET utf8;\n" +
                 "USE `junitTestDB`;\n" +
-                "GRANT USAGE ON junitTestDB.* TO 'junitTest'@'localhost';\n" +
+                "GRANT USAGE ON `junitTestDB`.* TO 'junitTest'@'localhost';\n" +
                 "DROP USER 'junitTest'@'localhost';\n" +
                 "GRANT ALL PRIVILEGES ON junitTestDB.* TO " +
                 "'junitTest'@'localhost' " +
