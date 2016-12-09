@@ -17,11 +17,11 @@
     <body>
         <%@include file="navigation.jsp"%>
         <h3>Liste over alle kunder</h3>
-        
+
         <table class="table table-bordered table-hover table-striped">
             <thead>
                 <tr class="active">
-                    <th>Name</th>
+                    <th>Navn</th>
                     <th>Email</th>
                     <th>Link</th>
                 </tr>  
@@ -36,8 +36,10 @@
                 </c:forEach>
             </tbody>
         </table>
-        <a href="customer/insert?orgid=<c:out value="${org.id}"/>" class="btn btn-primary">Tilføj en ny kunde</a>
 
+        <c:if test="${org.id > 0}">
+            <a href="customer/insert?orgid=<c:out value="${org.id}"/>" class="btn btn-primary">Tilføj en ny kunde</a>
+        </c:if>
         <script src="js/jquery-2.2.4.js" type="text/javascript"></script>
         <script src="js/bootstrap.js" type="text/javascript"></script>
     </body>

@@ -4,7 +4,7 @@
     Author     : Tanja
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:useBean id="customer" scope="request" class="model.User"/>
+<jsp:useBean id="u" scope="request" class="model.User"/>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -16,7 +16,7 @@
     <body>
         <%@include file="navigation.jsp"%>
         
-        <h4>Oplysninger om den enkelte kunde</h4>
+        <h4>Info om den enkelte kunde</h4>
         <table border="" class="col-md-4">
 
             <tr>
