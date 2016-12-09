@@ -100,31 +100,25 @@
             <c:if test="${home.requests.size() > 0}">
                 <div class="col-md-6">
                         <%-- Display requests --%>
-                    <h3>Anmodninger</h3>
+                    <h3>Forespørgsel</h3>
                     <a href="requests?oid=${home.user.org.id}"
                        class="btn btn-default">Vis Alle</a>
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th>Navn</th>
-                                <th>Email</th>
+                                <th>Service Type</th>
+                                <th>Beskrivelse</th>
                                 <th></th>
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach items="${home.users}" var="u">
+                            <c:forEach items="${home.requests}" var="r">
                                 <tr>
+                                    <td>${r.serviceType.name}</td>
+                                    <td>${r.description}</td>
                                     <td>
-                                        <a href="customer?id=${u.id}">
-                                                ${u.name}</a>
-                                    </td>
-                                    <td>
-                                        <a href="customer?id=${u.id}">
-                                                ${u.email}</a>
-                                    </td>
-                                    <td>
-                                        <a href="customer?id=${u.id}">Mere</a>
+                                        <a href="request?id=${r.id}">Mere</a>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -214,31 +208,26 @@
             <c:if test="${home.unacceptedRequests.size() > 0}">
                 <div class="col-md-6">
                         <%-- Display unaccepted requests --%>
-                    <h3>Uaccepterede Anmodninger</h3>
+                    <h3>Uaccepterede Forespørgsel</h3>
                     <a href="requests/unaccepted"
                        class="btn btn-default">Vis Alle</a>
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th>Navn</th>
-                                <th>Email</th>
+                                <th>Service Type</th>
+                                <th>Beskrivelse</th>
                                 <th></th>
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach items="${home.users}" var="u">
+                            <c:forEach items="${home.unacceptedRequests}"
+                                       var="r">
                                 <tr>
+                                    <td>${r.serviceType.name}</td>
+                                    <td>${r.description}</td>
                                     <td>
-                                        <a href="customer?id=${u.id}">
-                                                ${u.name}</a>
-                                    </td>
-                                    <td>
-                                        <a href="customer?id=${u.id}">
-                                                ${u.email}</a>
-                                    </td>
-                                    <td>
-                                        <a href="customer?id=${u.id}">Mere</a>
+                                        <a href="request?id=${r.id}">Mere</a>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -250,31 +239,25 @@
             <c:if test="${home.acceptedRequests.size() > 0}">
                 <div class="col-md-6">
                         <%-- Display accepted requests --%>
-                    <h3>Accepterede Anmodninger</h3>
+                    <h3>Accepterede Forespørgsel</h3>
                     <a href="requests/accepted?uid=${home.user.id}"
                        class="btn btn-default">Vis Alle</a>
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th>Navn</th>
-                                <th>Email</th>
+                                <th>Service Type</th>
+                                <th>Beskrivelse</th>
                                 <th></th>
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach items="${home.users}" var="u">
+                            <c:forEach items="${home.acceptedRequests}" var="r">
                                 <tr>
+                                    <td>${r.serviceType.name}</td>
+                                    <td>${r.description}</td>
                                     <td>
-                                        <a href="customer?id=${u.id}">
-                                                ${u.name}</a>
-                                    </td>
-                                    <td>
-                                        <a href="customer?id=${u.id}">
-                                                ${u.email}</a>
-                                    </td>
-                                    <td>
-                                        <a href="customer?id=${u.id}">Mere</a>
+                                        <a href="request?id=${r.id}">Mere</a>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -329,31 +312,30 @@
                 <div class="col-md-6">
                         <%-- Display organizations --%>
                     <h3>Organisationer</h3>
-                    <a href="<c:url value="/orgs"/>" class="btn btn-default">Vis Alle</a>
+                    <a href="<c:url value="/orgs"/>" class="btn btn-default">Vis
+                        Alle</a>
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
                             <tr>
                                 <th>Navn</th>
                                 <th>Tlf</th>
-                                <%--<th></th>--%>
+                                    <%--<th></th>--%>
                             </tr>
                             </thead>
                             <tbody>
                             <c:forEach items="${home.orgs}" var="o">
                                 <tr>
                                     <td>
-                                        <a href="org?id=${o.id}">
-                                                ${o.name}</a>
+                                        <a href="org?id=${o.id}">${o.name}</a>
                                     </td>
                                     <td>
-                                        <a href="org?id=${o.id}">
-                                                ${o.phone}</a>
+                                        <a href="org?id=${o.id}">${o.phone}</a>
                                     </td>
-                                    <%--<td>
-                                        <a href="org?id=${o.id}"
-                                           class="btn btn-default">More</a>
-                                    </td>--%>
+                                        <%--<td>
+                                            <a href="org?id=${o.id}"
+                                               class="btn btn-default">More</a>
+                                        </td>--%>
                                 </tr>
                             </c:forEach>
                             </tbody>
@@ -434,13 +416,13 @@
             <c:if test="${home.requests.size() > 0}">
                 <div class="col-md-6">
                         <%-- Display requests --%>
-                    <h3>Anmodninger</h3>
+                    <h3>Forespørgsler</h3>
                     <a href="requests" class="btn btn-default">Vis Alle</a>
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th>Bygnings navn</th>
+                                <th>Service Type</th>
                                 <th>Beskrivelse</th>
                                 <th></th>
                             </tr>
@@ -448,14 +430,8 @@
                             <tbody>
                             <c:forEach items="${home.requests}" var="r">
                                 <tr>
-                                    <td>
-                                        <a href="request?id=${r.id}">
-                                                ${r.building.name}</a>
-                                    </td>
-                                    <td>
-                                        <a href="request?id=${r.id}">
-                                                ${r.description}</a>
-                                    </td>
+                                    <td>${r.serviceType.name}</td>
+                                    <td>${r.description}</td>
                                     <td>
                                         <a href="request?id=${r.id}">Mere</a>
                                     </td>
