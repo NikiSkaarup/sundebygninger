@@ -16,6 +16,7 @@ public class Conn {
     private static String password = "password";
 
     private static Connection conn = null;
+    private static Connection testConn = null;
 
     public static Connection get() {
         if (conn == null) {
@@ -32,13 +33,15 @@ public class Conn {
     }
 
     public static Connection get(String db) {
-        try {
-            Class.forName(driver);
-            String url = "jdbc:mysql://" + ip + ":" + port + "/" + db;
-            return DriverManager.getConnection(url, user, password);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (testConn == null) {
+            try {
+                Class.forName(driver);
+                String url = "jdbc:mysql://" + ip + ":" + port + "/" + db;
+                testConn = DriverManager.getConnection(url, user, password);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        return null;
+        return testConn;
     }
 }
