@@ -37,7 +37,7 @@
             </tr>
             
             <div>
-                <a href="/customer/update?id=${u.id}">Redigér kunde</a>
+                <a href="/customer/update?id=${u.id}">Redigere kunde</a>
             </div>
 
     </body>

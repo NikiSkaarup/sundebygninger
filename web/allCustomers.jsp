@@ -38,7 +38,7 @@
         </table>
 
         <c:if test="${org.id > 0}">
-            <a href="customer/insert?orgid=<c:out value="${org.id}"/>" class="btn btn-primary">Tilføj en ny kunde</a>
+            <a href="customer/insert?orgid=<c:out value="${org.id}"/>" class="btn btn-primary">Opret kunde</a>
         </c:if>
         <script src="js/jquery-2.2.4.js" type="text/javascript"></script>
         <script src="js/bootstrap.js" type="text/javascript"></script>
