@@ -19,7 +19,7 @@
     <body>
         <%@include file="navigation.jsp" %>
         <div class="container-fluid">
-            <h4>Redigér kunde</h4>
+            <h4>Redigere/Opret kunde</h4>
             <div class="row">
                 <div class="col-md-6">
                     <form action="<c:out value="${requestScope.url}"/>" method="POST" class="form-horizontal">
