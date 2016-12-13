@@ -46,7 +46,7 @@ public class UserMapper {
             stmt.setString(2, pass);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next())
-0                    return constructUser(rs);
+                    return constructUser(rs);
                 else
                     throw new PolygonException("getUserLogin No result found," +
                                                        " email: " + email);
