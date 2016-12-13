@@ -64,7 +64,7 @@
             <c:if test="${home.users.size() > 0}">
                 <div class="col-md-6">
                         <%-- Display users --%>
-                    <h3>Kunder</h3>
+                    <h3>Medlemmer</h3>
                     <a href="customers?oid=${home.user.org.id}"
                        class="btn btn-default">Vis Alle</a>
                     <div class="table-responsive">
