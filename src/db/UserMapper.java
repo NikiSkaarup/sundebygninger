@@ -162,7 +162,6 @@ public class UserMapper {
             stmt.setInt(1, limit);
             try (ResultSet rs = stmt.executeQuery()) {
                 List<User> list = new ArrayList<>();
-                stmt.setInt(1, limit);
                 while (rs.next())
                     list.add(constructUser(rs));
                 return list;
